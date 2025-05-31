@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +19,27 @@ public class TbGame implements Screen {
     private List<Bullet> bullets;
 
     private int width, height;
+    private List<Enemy> enemies;
 
     @Override
     public void show() {
+        bullets = new ArrayList<>();
+
         batch = new SpriteBatch();
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
+        enemies = new ArrayList<>();
+        Texture skeletonTexture = new Texture("core/assets/skeleton.png");
+        Texture rangedTexture = new Texture("core/assets/skeleton.png");
+        bulletTexture = new Texture("core/assets/bullet.png");
+
+        enemies.add(new ShortAttackEnemy(skeletonTexture, 500, 300, 100, 100, 200f, 100, 1.5f));
+        enemies.add(new LongAttackEnemy(rangedTexture, 800, 400, 100, 100, 180f, 80, 2.0f, bulletTexture, bullets));
+
         hero = new Hero("core/assets/hero.png", width, height);
         weapon = new Weapon("core/assets/gun.png");
         bulletTexture = new Texture("core/assets/bullet.png");
-        bullets = new ArrayList<>();
     }
 
     @Override
@@ -47,11 +58,17 @@ public class TbGame implements Screen {
         // Draw hero and weapon
         batch.begin();
         hero.draw(batch);
-        weapon.draw(batch, hero.getCenterX(), hero.getCenterY());
+        for (Enemy e : enemies) e.draw(batch);
+        if (hero.getCenterX() + weapon.getWidth()/2f < mouseX)
+            weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
+        else
+            weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
         for (Bullet b : bullets) {
             b.render(batch);
         }
         batch.end();
+
+        for (Enemy e : enemies) e.update(hero, delta);
 
         // Update bullets
         for (int i = bullets.size() - 1; i >= 0; i--) {
@@ -78,8 +95,8 @@ public class TbGame implements Screen {
         if (d) dx += move;
 
         if (dx != 0 && dy != 0) {
-            dx /= Math.sqrt(2);
-            dy /= Math.sqrt(2);
+            dx /= (float) Math.sqrt(2);
+            dy /= (float) Math.sqrt(2);
         }
 
         hero.move(dx, dy);
@@ -92,10 +109,21 @@ public class TbGame implements Screen {
         }
     }
 
-    @Override public void resize(int width, int height) { }
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+    @Override
+    public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+    }
 
     @Override
     public void dispose() {

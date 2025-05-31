@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Weapon {
     private Texture texture;
+
     private final int width = 100, height = 60;
 
     public float getAngle() {
@@ -21,7 +22,7 @@ public class Weapon {
         texture = new Texture(texturePath);
     }
 
-    public void draw(SpriteBatch batch, float centerX, float centerY) {
+    public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             texture,
             centerX, centerY - height,
@@ -31,11 +32,14 @@ public class Weapon {
             angle,
             0, 0,
             texture.getWidth(), texture.getHeight(),
-            false, false
+            false, flip
         );
     }
 
     public void updateAngle(float mouseX, float mouseY, float heroX, float heroY) {
+        if (mouseX<heroX) {
+
+        }
         float dx = mouseX - (heroX + width / 2f);
         float dy = mouseY - (heroY - height / 2f);
         angle = (float) Math.toDegrees(Math.atan2(dy, dx));
@@ -44,4 +48,13 @@ public class Weapon {
     public void dispose() {
         texture.dispose();
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
+
