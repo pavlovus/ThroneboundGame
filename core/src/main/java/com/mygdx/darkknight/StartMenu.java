@@ -38,34 +38,26 @@ public class StartMenu implements Screen {
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        // Завантажуємо текстуру заголовка
         Texture titleTexture = new Texture(Gdx.files.internal("title.png"));
 
-        // Створюємо Image-актор для відображення
         Image titleImage = new Image(titleTexture);
 
-        // Встановлюємо позицію (або використовуйте Table для зручності)
         titleImage.setPosition(
             (Gdx.graphics.getWidth() - titleImage.getWidth()) / 2f,  // Центрування по ширині
             Gdx.graphics.getHeight() - titleImage.getHeight()   // Відступ від верху
         );
 
-        // Додаємо заголовок на сцену
         stage.addActor(titleImage);
 
-        // Завантажуємо текстуру заголовка
         Texture subtitleTexture = new Texture(Gdx.files.internal("subtitle.png"));
 
-        // Створюємо Image-актор для відображення
         Image subtitleImage = new Image(subtitleTexture);
 
-        // Встановлюємо позицію (або використовуйте Table для зручності)
         subtitleImage.setPosition(
             (Gdx.graphics.getWidth() - subtitleImage.getWidth()) / 2f,  // Центрування по ширині
             Gdx.graphics.getHeight() - subtitleImage.getHeight() - 150   // Відступ від верху
         );
 
-        // Додаємо заголовок на сцену
         stage.addActor(subtitleImage);
 
         // Створюємо програмно базовий скин
@@ -86,7 +78,6 @@ public class StartMenu implements Screen {
         // Завантаження звуку кліку
         clickSound = Gdx.audio.newSound(Gdx.files.internal("startButtonSound.mp3"));
 
-        // Завантажуємо шрифт "Cinzel" з файлу
         BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         skin.add("default-font", font);

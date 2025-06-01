@@ -12,12 +12,14 @@ import java.util.List;
 
 public class TbGame implements Screen {
     private SpriteBatch batch;
+    private Texture backgroundTexture;
     private Hero hero;
     private Weapon weapon;
     private Texture bulletTexture;
     private List<Bullet> bullets;
 
     private int width, height;
+    private int widthOfBackground = 300, heightOfBackground = 300;
 
     @Override
     public void show() {
@@ -25,7 +27,8 @@ public class TbGame implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        hero = new Hero("core/assets/hero.png", width, height);
+        backgroundTexture = new Texture("core/assets/background1.png");
+        hero = new Hero("core/assets/hero1.png", width, height);
         weapon = new Weapon("core/assets/gun.png");
         bulletTexture = new Texture("core/assets/bullet.png");
         bullets = new ArrayList<>();
@@ -46,6 +49,9 @@ public class TbGame implements Screen {
 
         // Draw hero and weapon
         batch.begin();
+        for(int i = 0; i < 5; i++){
+            batch.draw(backgroundTexture, i*widthOfBackground, height/2 - heightOfBackground/2, widthOfBackground, heightOfBackground);
+        }
         hero.draw(batch);
         weapon.draw(batch, hero.getCenterX(), hero.getCenterY());
         for (Bullet b : bullets) {
@@ -100,6 +106,7 @@ public class TbGame implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        backgroundTexture.dispose();
         hero.dispose();
         weapon.dispose();
         bulletTexture.dispose();

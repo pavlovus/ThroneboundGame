@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Hero {
     private Texture texture;
     private float x, y;
-    private final int width = 150, height = 150;
+    private final int width = 38, height = 64;
     private int speed = 600;
 
     public Hero(String texturePath, int screenWidth, int screenHeight) {
