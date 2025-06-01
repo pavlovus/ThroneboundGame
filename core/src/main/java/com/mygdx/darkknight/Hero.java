@@ -3,27 +3,31 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Hero {
     private Texture texture;
     private float x, y;
     private final int width = 150, height = 150;
     private int speed = 600;
+    private Rectangle bounds;
 
-    public Hero(String texturePath, int screenWidth, int screenHeight) {
+    public Hero(String texturePath, float screenWidth, float screenHeight) {
         texture = new Texture(texturePath);
         x = screenWidth / 2f - width / 2f;
         y = screenHeight / 2f - height / 2f;
     }
 
-    public void move(float dx, float dy) {
+    public void moveWithCollision(float dx, float dy, GameMap map) {
         float newX = x + dx;
         float newY = y + dy;
 
-        if (newX >= 0 && newX <= Gdx.graphics.getWidth() - width)
+        if (!map.isCellBlocked(newX, y)) {
             x = newX;
-        if (newY >= 0 && newY <= Gdx.graphics.getHeight() - height)
+        }
+        if (!map.isCellBlocked(x, newY)) {
             y = newY;
+        }
     }
 
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TbGame implements Screen {
+    private GameMap gameMap;
+    private OrthographicCamera camera;
     private SpriteBatch batch;
     private Hero hero;
     private Weapon weapon;
@@ -23,9 +26,14 @@ public class TbGame implements Screen {
 
     @Override
     public void show() {
+        System.out.println("🔍 show() запущено");
+        gameMap = new GameMap("gamemap.tmx");
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 600);
+        batch = new SpriteBatch();
+
         bullets = new ArrayList<>();
 
-        batch = new SpriteBatch();
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
@@ -37,7 +45,7 @@ public class TbGame implements Screen {
         enemies.add(new ShortAttackEnemy(skeletonTexture, 500, 300, 100, 100, 200f, 100, 1.5f));
         enemies.add(new LongAttackEnemy(rangedTexture, 800, 400, 100, 100, 180f, 80, 2.0f, bulletTexture, bullets));
 
-        hero = new Hero("core/assets/hero.png", width, height);
+        hero = new Hero("core/assets/hero.png", width / 2f, height / 2f); // початкова позиція героя в центрі екрану
         weapon = new Weapon("core/assets/gun.png");
         bulletTexture = new Texture("core/assets/bullet.png");
     }
@@ -51,15 +59,23 @@ public class TbGame implements Screen {
 
         weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
 
-        // Clear screen
+        // Оновлюємо камеру, щоб слідувала за героєм
+        camera.position.set(hero.getCenterX(), hero.getCenterY(), 0);
+        camera.update();
+
+        // Очищаємо екран
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Draw hero and weapon
+        // Рендеримо карту перед малюванням героя і ворогів
+        gameMap.render(camera); // <<< ДОБАВЛЕНО
+
+        // Малюємо героя, зброю, ворогів і кулі
+        batch.setProjectionMatrix(camera.combined); // <<< ДОБАВЛЕНО
         batch.begin();
         hero.draw(batch);
         for (Enemy e : enemies) e.draw(batch);
-        if (hero.getCenterX() + weapon.getWidth()/2f < mouseX)
+        if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
         else
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
@@ -99,7 +115,7 @@ public class TbGame implements Screen {
             dy /= (float) Math.sqrt(2);
         }
 
-        hero.move(dx, dy);
+        hero.moveWithCollision(dx, dy, gameMap); // <<< ДОБАВЛЕНО - метод з перевіркою колізій
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             float weaponAngle = weapon.getAngle();
@@ -111,6 +127,7 @@ public class TbGame implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        // за потреби можна оновлювати viewport/camera
     }
 
     @Override
@@ -131,5 +148,6 @@ public class TbGame implements Screen {
         hero.dispose();
         weapon.dispose();
         bulletTexture.dispose();
+        gameMap.dispose(); // <<< ДОБАВЛЕНО звільнення ресурсів карти
     }
 }
