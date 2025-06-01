@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -24,7 +25,6 @@ import com.badlogic.gdx.audio.Sound;
 
 public class StartMenu implements Screen {
     private Stage stage;
-    private Skin skin;
     private Texture backgroundTexture;
     private Music backgroundMusic;
     private Sound clickSound;
@@ -38,27 +38,18 @@ public class StartMenu implements Screen {
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        // Створюємо програмно базовий скин
-        skin = new Skin();
-
         // Додаємо шрифт
-        BitmapFont font = new BitmapFont();
-        skin.add("default-font", font);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GothicPixels.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 18;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
 
-        // Створюємо білу текстуру 1x1 піксель для фону кнопки
-        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        Texture pixmapTexture = new Texture(pixmap);
-        skin.add("white", pixmapTexture);
-        pixmap.dispose();
 
         // Створюємо стиль для кнопки
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
         textButtonStyle.fontColor = Color.BLACK;
-
-        skin.add("default", textButtonStyle);
 
         Texture textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
@@ -135,7 +126,6 @@ public class StartMenu implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
-        skin.dispose();
         backgroundMusic.dispose();
         clickSound.dispose();
     }

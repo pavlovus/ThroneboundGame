@@ -16,6 +16,8 @@ public class TbGame implements Screen {
     private GameMap gameMap;
     private OrthographicCamera camera;
     private SpriteBatch batch;
+    private PauseMenu pauseMenu;
+    private boolean isPaused = false;
     private Hero hero;
     private Weapon weapon;
     private Texture bulletTexture;
@@ -26,6 +28,7 @@ public class TbGame implements Screen {
 
     @Override
     public void show() {
+        pauseMenu = new PauseMenu(this);
         System.out.println("🔍 show() запущено");
         gameMap = new GameMap("gamemap.tmx");
         camera = new OrthographicCamera();
@@ -52,8 +55,36 @@ public class TbGame implements Screen {
 
     @Override
     public void render(float delta) {
-        handleInput();
 
+        // Перевірка на паузу під час гри (натискання ESC)
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            isPaused = !isPaused;
+            if (isPaused) {
+                pauseMenu.show();
+            } else {
+                pauseMenu.hide();
+                Gdx.input.setInputProcessor(null); // Повернути обробку вводу у TbGame
+            }
+        }
+
+        if (!isPaused) {
+            // Обробка вводу, оновлення логіки лише коли гра не на паузі
+            handleInput();
+
+            // Оновлення ворогів
+            for (Enemy e : enemies) e.update(hero, delta);
+
+            // Оновлення куль
+            for (int i = bullets.size() - 1; i >= 0; i--) {
+                Bullet b = bullets.get(i);
+                b.update(delta);
+                if (b.isOffScreen(width, height)) {
+                    bullets.remove(i);
+                }
+            }
+        }
+
+        // Отримуємо позицію миші незалежно від паузи для правильного виведення зброї
         float mouseX = Gdx.input.getX();
         float mouseY = height - Gdx.input.getY();
 
@@ -67,36 +98,35 @@ public class TbGame implements Screen {
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Рендеримо карту перед малюванням героя і ворогів
-        gameMap.render(camera); // <<< ДОБАВЛЕНО
+        // Рендеримо карту
+        gameMap.render(camera);
 
-        // Малюємо героя, зброю, ворогів і кулі
-        batch.setProjectionMatrix(camera.combined); // <<< ДОБАВЛЕНО
+        // Малюємо героя, ворогів, зброю і кулі
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
         hero.draw(batch);
         for (Enemy e : enemies) e.draw(batch);
+
         if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
         else
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
+
         for (Bullet b : bullets) {
             b.render(batch);
         }
+
         batch.end();
 
-        for (Enemy e : enemies) e.update(hero, delta);
-
-        // Update bullets
-        for (int i = bullets.size() - 1; i >= 0; i--) {
-            Bullet b = bullets.get(i);
-            b.update(delta);
-            if (b.isOffScreen(width, height)) {
-                bullets.remove(i);
-            }
+        // Якщо пауза активна — малюємо меню поверх
+        if (isPaused) {
+            pauseMenu.render();
         }
     }
 
     private void handleInput() {
+        if (isPaused) return;
         float delta = Gdx.graphics.getDeltaTime();
         float move = hero.getSpeed() * delta;
         boolean w = Gdx.input.isKeyPressed(Input.Keys.W);
@@ -149,5 +179,12 @@ public class TbGame implements Screen {
         weapon.dispose();
         bulletTexture.dispose();
         gameMap.dispose(); // <<< ДОБАВЛЕНО звільнення ресурсів карти
+    }
+
+    public void setPaused(boolean paused) {
+        this.isPaused = paused;
+        if (!paused) {
+            Gdx.input.setInputProcessor(null); // або твій InputProcessor, якщо треба
+        }
     }
 }
