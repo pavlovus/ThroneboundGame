@@ -3,8 +3,10 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -12,10 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TbGame implements Screen {
+    private static final float BAR_WIDTH = 110;
+    private static final float BAR_HEIGHT = 16;
+    private static final float BAR_MARGIN = 15;
+
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private Hero hero;
     private Weapon weapon;
     private Texture bulletTexture;
+    private Texture enemyTexture;
+    private Texture barBackgroundTexture;
+    private Texture heartTexture;
+    private Texture shieldTexture;
     private List<Bullet> bullets;
 
     private int width, height;
@@ -29,17 +40,20 @@ public class TbGame implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
+        shapeRenderer = new ShapeRenderer();
+        barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
+        heartTexture = new Texture(Gdx.files.internal("heart.png"));
+        shieldTexture = new Texture(Gdx.files.internal("shield.png"));
+
         enemies = new ArrayList<>();
-        Texture skeletonTexture = new Texture("core/assets/skeleton.png");
-        Texture rangedTexture = new Texture("core/assets/skeleton.png");
+        enemyTexture = new Texture("core/assets/skeleton.png");
         bulletTexture = new Texture("core/assets/bullet.png");
 
-        enemies.add(new ShortAttackEnemy(skeletonTexture, 500, 300, 100, 100, 200f, 100, 1.5f));
-        enemies.add(new LongAttackEnemy(rangedTexture, 800, 400, 100, 100, 180f, 80, 2.0f, bulletTexture, bullets));
+        enemies.add(new ShortAttackEnemy(enemyTexture, 500, 300, 100, 100, 200f, 3, 1, 1.5f));
+        enemies.add(new LongAttackEnemy(enemyTexture, 800, 400, 100, 100, 180f, 3, 1, 2.0f, bulletTexture, bullets));
 
-        hero = new Hero("core/assets/hero.png", width, height);
-        weapon = new Weapon("core/assets/gun.png");
-        bulletTexture = new Texture("core/assets/bullet.png");
+        hero = new Hero("core/assets/hero.png", width, height, 100, 5);
+        weapon = new Weapon("core/assets/gun.png", 1);
     }
 
     @Override
@@ -66,15 +80,73 @@ public class TbGame implements Screen {
         for (Bullet b : bullets) {
             b.render(batch);
         }
+        batch.draw(barBackgroundTexture, 20, height - 140, 200, 140);
+        batch.draw(heartTexture, 45, height - 64, 32, 32);
+        batch.draw(shieldTexture, 45, height - 96, 32, 32);
         batch.end();
+
+        drawHeroBars();
 
         for (Enemy e : enemies) e.update(hero, delta);
 
-        // Update bullets
+        updateBullets(delta);
+        removeDeadEnemies();
+    }
+
+    private void drawHeroBars() {
+        float x = 80;
+        float y = height - 55;
+        float healthPercentage = (float) hero.getHealth() / hero.getMaxHealth();
+        float armorPercentage = (float) hero.getArmor() / hero.getMaxArmor();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        // Полоска здоров'я
+        shapeRenderer.setColor(0.1f, 0.02f, 0.02f, 1);
+        shapeRenderer.rect(x, y, BAR_WIDTH, BAR_HEIGHT);
+        shapeRenderer.setColor(0.4f, 0.05f, 0.05f, 1);
+        shapeRenderer.rect(x, y, BAR_WIDTH * healthPercentage, BAR_HEIGHT);
+
+        // Полоска броні
+        float armorY = y - BAR_HEIGHT - BAR_MARGIN;
+        shapeRenderer.setColor(0.05f, 0.05f, 0.1f, 1);
+        shapeRenderer.rect(x, armorY, BAR_WIDTH, BAR_HEIGHT);
+        shapeRenderer.setColor(0.15f, 0.25f, 0.4f, 1);
+        shapeRenderer.rect(x, armorY, BAR_WIDTH * armorPercentage, BAR_HEIGHT);
+
+        shapeRenderer.end();
+    }
+
+    private void removeDeadEnemies() {
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            if (enemies.get(i).isDead()) {
+                enemies.remove(i);
+            }
+        }
+    }
+
+    private void updateBullets(float delta) {
         for (int i = bullets.size() - 1; i >= 0; i--) {
             Bullet b = bullets.get(i);
             b.update(delta);
-            if (b.isOffScreen(width, height)) {
+            boolean bulletRemoved  = false;
+
+            for(Enemy e : enemies){
+                if (!b.isOpponent()  && b.getBoundingRectangle().overlaps(e.getBoundingRectangle())){
+                    e.takeDamage(weapon.getDamage());
+                    bullets.remove(i);
+                    bulletRemoved = true;
+                    break;
+                }
+            }
+
+            if (!bulletRemoved && b.isOpponent()  && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())){
+                hero.takeDamage(b.getEnemy().getDamage());
+                bullets.remove(i);
+                bulletRemoved = true;
+                break;
+            }
+
+            if (!bulletRemoved && b.isOffScreen(width, height)) {
                 bullets.remove(i);
             }
         }
@@ -105,7 +177,7 @@ public class TbGame implements Screen {
             float weaponAngle = weapon.getAngle();
             float gunX = hero.getCenterX();
             float gunY = hero.getCenterY();
-            bullets.add(new Bullet(gunX, gunY, weaponAngle, bulletTexture));
+            bullets.add(new Bullet(gunX, gunY, weaponAngle, bulletTexture, false));
         }
     }
 
@@ -128,8 +200,13 @@ public class TbGame implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        shapeRenderer.dispose();
         hero.dispose();
         weapon.dispose();
         bulletTexture.dispose();
+        enemyTexture.dispose();
+        barBackgroundTexture.dispose();
+        heartTexture.dispose();
+        shieldTexture.dispose();
     }
 }
