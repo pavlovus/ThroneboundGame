@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class TbGame implements Screen {
     private static final float BAR_WIDTH = 110;
     private static final float BAR_HEIGHT = 16;
-    private static final float BAR_MARGIN = 15;
+    private static final float BAR_MARGIN = 22;
 
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
@@ -28,6 +29,8 @@ public class TbGame implements Screen {
     private Texture heartTexture;
     private Texture shieldTexture;
     private List<Bullet> bullets;
+    private BitmapFont font;
+    private GlyphLayout layout;
 
     private int width, height;
     private List<Enemy> enemies;
@@ -39,6 +42,11 @@ public class TbGame implements Screen {
         batch = new SpriteBatch();
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
+
+        font = new BitmapFont(); //ПІДІБРАТИ ШРИФТ ПОТІМ
+        font.setColor(Color.WHITE);
+        layout = new GlyphLayout();
+
 
         shapeRenderer = new ShapeRenderer();
         barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
@@ -81,11 +89,15 @@ public class TbGame implements Screen {
             b.render(batch);
         }
         batch.draw(barBackgroundTexture, 20, height - 140, 200, 140);
-        batch.draw(heartTexture, 45, height - 64, 32, 32);
-        batch.draw(shieldTexture, 45, height - 96, 32, 32);
+        batch.draw(heartTexture, 45, height - 66, 32, 32);
+        batch.draw(shieldTexture, 45, height - 106, 32, 32);
         batch.end();
 
         drawHeroBars();
+        //Текст поверх барів
+        batch.begin();
+        drawHeroBarText();
+        batch.end();
 
         for (Enemy e : enemies) e.update(hero, delta);
 
@@ -93,9 +105,27 @@ public class TbGame implements Screen {
         removeDeadEnemies();
     }
 
+    private void drawHeroBarText() {
+        float x = 80;
+        float y = height - 58;
+
+        String hpText = hero.getHealth() + " / " + hero.getMaxHealth();
+        layout.setText(font, hpText);
+        float hpTextX = x + (BAR_WIDTH - layout.width) / 2;
+        float hpTextY = y + BAR_HEIGHT / 2 + layout.height / 2;
+        font.draw(batch, layout, hpTextX, hpTextY);
+
+        float armorY = y - BAR_HEIGHT - BAR_MARGIN;
+        String armorText = hero.getArmor() + " / " + hero.getMaxArmor();
+        layout.setText(font, armorText);
+        float armorTextX = x + (BAR_WIDTH - layout.width) / 2;
+        float armorTextY = armorY + BAR_HEIGHT / 2 + layout.height / 2;
+        font.draw(batch, layout, armorTextX, armorTextY);
+    }
+
     private void drawHeroBars() {
         float x = 80;
-        float y = height - 55;
+        float y = height - 58;
         float healthPercentage = (float) hero.getHealth() / hero.getMaxHealth();
         float armorPercentage = (float) hero.getArmor() / hero.getMaxArmor();
 
