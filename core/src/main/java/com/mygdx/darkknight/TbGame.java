@@ -40,6 +40,8 @@ public class TbGame implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
+
+        bullets = new ArrayList<>();
         enemies = new ArrayList<>();
         Texture skeletonTexture = new Texture("core/assets/skeleton.png");
         Texture rangedTexture = new Texture("core/assets/skeleton.png");
@@ -50,7 +52,6 @@ public class TbGame implements Screen {
 
         hero = new Hero("core/assets/hero.png", width / 2f, height / 2f); // початкова позиція героя в центрі екрану
         weapon = new Weapon("core/assets/gun.png");
-        bulletTexture = new Texture("core/assets/bullet.png");
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             texture,
-            centerX, centerY - height,
+            centerX, centerY - height/2,
             width / 2f, height / 2f,
             width, height,
             1, 1,
