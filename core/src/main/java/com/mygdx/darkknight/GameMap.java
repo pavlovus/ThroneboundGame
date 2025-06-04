@@ -1,22 +1,24 @@
 package com.mygdx.darkknight;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 public class GameMap {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    private TiledMapTileLayer collisionLayer;
+    private MapObjects obstacles;
 
     public GameMap(String mapFilePath) {
         try {
             map = new TmxMapLoader().load(mapFilePath);
             renderer = new OrthogonalTiledMapRenderer(map);
-            collisionLayer = (TiledMapTileLayer) map.getLayers().get("CollisionLayer");
+            obstacles = map.getLayers().get("Obstacles").getObjects();
         } catch (Exception e) {
             System.err.println("Не вдалося завантажити карту: " + e.getMessage());
             e.printStackTrace();
@@ -29,20 +31,17 @@ public class GameMap {
     }
 
     public boolean isCellBlocked(float x, float y) {
-        if (collisionLayer == null) {
-            // Якщо шар колізій відсутній, вважай, що клітинка не заблокована
-            return false;
-        }
-        int tileX = (int)(x / collisionLayer.getTileWidth());
-        int tileY = (int)(y / collisionLayer.getTileHeight());
+        if (obstacles == null) return false;
 
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell(tileX, tileY);
-        if (cell == null || cell.getTile() == null) {
-            return false;
+        for (MapObject object : obstacles) {
+            if (object instanceof RectangleMapObject) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                if (rect.contains(x, y)) {
+                    return true;
+                }
+            }
         }
-
-        return cell.getTile().getProperties().containsKey("blocked") &&
-            cell.getTile().getProperties().get("blocked", Boolean.class);
+        return false;
     }
 
     public void dispose() {

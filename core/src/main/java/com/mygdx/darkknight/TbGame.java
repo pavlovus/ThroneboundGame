@@ -30,7 +30,7 @@ public class TbGame implements Screen {
     public void show() {
         pauseMenu = new PauseMenu(this);
         System.out.println("🔍 show() запущено");
-        gameMap = new GameMap("gamemap.tmx");
+        gameMap = new GameMap("FirstLevelMap.tmx");
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 600);
         batch = new SpriteBatch();
