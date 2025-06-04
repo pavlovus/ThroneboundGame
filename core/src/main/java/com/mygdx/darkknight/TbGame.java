@@ -43,7 +43,8 @@ public class TbGame implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        font = new BitmapFont(); //ПІДІБРАТИ ШРИФТ ПОТІМ
+        font = new BitmapFont();
+        // TODO: Підібрати шрифт потім
         font.setColor(Color.WHITE);
         layout = new GlyphLayout();
 
@@ -81,7 +82,7 @@ public class TbGame implements Screen {
         batch.begin();
         hero.draw(batch);
         for (Enemy e : enemies) e.draw(batch);
-        if (hero.getCenterX() + weapon.getWidth()/2f < mouseX)
+        if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
         else
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
@@ -158,10 +159,10 @@ public class TbGame implements Screen {
         for (int i = bullets.size() - 1; i >= 0; i--) {
             Bullet b = bullets.get(i);
             b.update(delta);
-            boolean bulletRemoved  = false;
+            boolean bulletRemoved = false;
 
-            for(Enemy e : enemies){
-                if (!b.isOpponent()  && b.getBoundingRectangle().overlaps(e.getBoundingRectangle())){
+            for (Enemy e : enemies) {
+                if (!b.isOpponent() && b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
                     e.takeDamage(weapon.getDamage());
                     bullets.remove(i);
                     bulletRemoved = true;
@@ -169,7 +170,7 @@ public class TbGame implements Screen {
                 }
             }
 
-            if (!bulletRemoved && b.isOpponent()  && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())){
+            if (!bulletRemoved && b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
                 hero.takeDamage(b.getEnemy().getDamage());
                 bullets.remove(i);
                 bulletRemoved = true;
