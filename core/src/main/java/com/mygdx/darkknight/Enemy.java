@@ -51,6 +51,10 @@ public abstract class Enemy {
         return y + height / 2f;
     }
 
+    public Vector2 getCenter() {
+        return new Vector2(getCenterX(), getCenterY());
+    }
+
     public float distanceTo(Hero hero) {
         return Vector2.dst(getCenterX(), getCenterY(), hero.getCenterX(), hero.getCenterY());
     }
