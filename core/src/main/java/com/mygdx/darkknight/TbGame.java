@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class TbGame implements Screen {
     public void show() {
         pauseMenu = new PauseMenu(this);
         System.out.println("🔍 show() запущено");
-        gameMap = new GameMap("gamemap.tmx");
+        gameMap = new GameMap("FirstMap.tmx");
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -70,7 +72,7 @@ public class TbGame implements Screen {
         enemies.add(new ShortAttackEnemy(enemyTexture, 500, 300, 100, 100, 200f, 3, 1, 1.5f));
         enemies.add(new LongAttackEnemy(enemyTexture, 800, 400, 100, 100, 180f, 3, 1, 2.0f, bulletTexture, bullets));
 
-        hero = new Hero("core/assets/hero1.png", width, height, 100, 5);
+        hero = new Hero("core/assets/hero1.png", 200, 120, 100, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
     }
 
@@ -116,7 +118,7 @@ public class TbGame implements Screen {
         camera.update();
 
         // Очищаємо екран
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Рендеримо карту
