@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +55,13 @@ public class TbGame implements Screen {
 
         enemies = new ArrayList<>();
         enemyTexture = new Texture("core/assets/skeleton.png");
-        bulletTexture = new Texture("core/assets/bullet.png");
-
+        bulletTexture = new Texture("core/assets/arrow.png");
+        bullets = new ArrayList<>();
         enemies.add(new ShortAttackEnemy(enemyTexture, 500, 300, 100, 100, 200f, 3, 1, 1.5f));
         enemies.add(new LongAttackEnemy(enemyTexture, 800, 400, 100, 100, 180f, 3, 1, 2.0f, bulletTexture, bullets));
 
-        hero = new Hero("core/assets/hero.png", width, height, 100, 5);
-        weapon = new Weapon("core/assets/gun.png", 1);
+        hero = new Hero("core/assets/hero1.png", width, height, 100, 5);
+        weapon = new Weapon("core/assets/bow.png", 1);
     }
 
     @Override

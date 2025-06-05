@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Hero {
     private Texture texture;
     private float x, y;
-    private final int width = 150, height = 150;
+    private final int width = 38, height = 64;
     private int speed = 600;
     private int maxHealth;
     private int maxArmor;

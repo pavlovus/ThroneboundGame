@@ -42,6 +42,7 @@ public class Bullet {
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, WIDTH / 2f, HEIGHT / 2f, WIDTH, HEIGHT, 1, 1, angle, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+
     }
 
     public boolean isOffScreen(int screenWidth, int screenHeight) {
