@@ -29,11 +29,8 @@ public class PauseMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GothicPixels.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 18;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
+
+        BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
@@ -43,7 +40,7 @@ public class PauseMenu {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
         style.font = font;
-        style.fontColor = Color.WHITE;
+        style.fontColor = Color.valueOf("C0C0C0");
 
         shapeRenderer = new ShapeRenderer();
 
@@ -56,13 +53,13 @@ public class PauseMenu {
         TextButton exitButton = new TextButton("Exit game", style);
         TextButton mainMenuButton = new TextButton("Main menu", style);
 
-        table.add(resumeButton).width(200).height(50).pad(10);
+        table.add(resumeButton).width(300).height(90).pad(20);
         table.row();
-        table.add(inventoryButton).width(200).height(50).pad(10);
+        table.add(inventoryButton).width(300).height(90).pad(20);
         table.row();
-        table.add(exitButton).width(200).height(50).pad(10);
+        table.add(exitButton).width(300).height(90).pad(20);
         table.row();
-        table.add(mainMenuButton).width(200).height(50).pad(10);
+        table.add(mainMenuButton).width(300).height(90).pad(20);
 
         stage.addActor(table);
 

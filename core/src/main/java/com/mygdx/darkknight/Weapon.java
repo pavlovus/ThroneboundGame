@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Weapon {
     private Texture texture;
     private int damage;
-    private final int width = 100, height = 60;
+    private final int width = 20, height = 64;
 
     public float getAngle() {
         return angle;

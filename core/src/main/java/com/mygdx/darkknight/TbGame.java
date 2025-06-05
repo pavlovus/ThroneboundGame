@@ -45,7 +45,7 @@ public class TbGame implements Screen {
         System.out.println("🔍 show() запущено");
         gameMap = new GameMap("gamemap.tmx");
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 600);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch = new SpriteBatch();
         width = Gdx.graphics.getWidth();
@@ -136,9 +136,13 @@ public class TbGame implements Screen {
         for (Bullet b : bullets) {
             b.render(batch);
         }
-        batch.draw(barBackgroundTexture, 20, height - 140, 200, 140);
-        batch.draw(heartTexture, 45, height - 66, 32, 32);
-        batch.draw(shieldTexture, 45, height - 106, 32, 32);
+
+        float barX = camera.position.x - (width / 2) + 20;
+        float barY = camera.position.y + (height / 2) - 140;
+
+        batch.draw(barBackgroundTexture, barX, barY, 200, 140);
+        batch.draw(heartTexture, barX + 25, barY + 74, 32, 32);
+        batch.draw(shieldTexture, barX + 25, barY + 34, 32, 32);
         batch.end();
 
         drawHeroBars();
@@ -159,42 +163,45 @@ public class TbGame implements Screen {
     }
 
     private void drawHeroBarText() {
-        float x = 80;
-        float y = height - 58;
+        float barX = Math.round(camera.position.x - (width / 2f) + 80);
+        float barY = Math.round(camera.position.y + (height / 2f) - 58);
 
         String hpText = hero.getHealth() + " / " + hero.getMaxHealth();
         layout.setText(font, hpText);
-        float hpTextX = x + (BAR_WIDTH - layout.width) / 2;
-        float hpTextY = y + BAR_HEIGHT / 2 + layout.height / 2;
+        float hpTextX = Math.round(barX + (BAR_WIDTH - layout.width) / 2f);
+        float hpTextY = Math.round(barY + BAR_HEIGHT / 2f + layout.height / 2f);
         font.draw(batch, layout, hpTextX, hpTextY);
 
-        float armorY = y - BAR_HEIGHT - BAR_MARGIN;
+        float armorY = Math.round(barY - BAR_HEIGHT - BAR_MARGIN);
         String armorText = hero.getArmor() + " / " + hero.getMaxArmor();
         layout.setText(font, armorText);
-        float armorTextX = x + (BAR_WIDTH - layout.width) / 2;
-        float armorTextY = armorY + BAR_HEIGHT / 2 + layout.height / 2;
+        float armorTextX = Math.round(barX + (BAR_WIDTH - layout.width) / 2f);
+        float armorTextY = Math.round(armorY + BAR_HEIGHT / 2f + layout.height / 2f);
         font.draw(batch, layout, armorTextX, armorTextY);
     }
 
     private void drawHeroBars() {
-        float x = 80;
-        float y = height - 58;
+        float barX = camera.position.x - (width / 2) + 80;
+        float barY = camera.position.y + (height / 2) - 58;
+
         float healthPercentage = (float) hero.getHealth() / hero.getMaxHealth();
         float armorPercentage = (float) hero.getArmor() / hero.getMaxArmor();
 
+        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        // Полоска здоров'я
-        shapeRenderer.setColor(0.1f, 0.02f, 0.02f, 1);
-        shapeRenderer.rect(x, y, BAR_WIDTH, BAR_HEIGHT);
-        shapeRenderer.setColor(0.4f, 0.05f, 0.05f, 1);
-        shapeRenderer.rect(x, y, BAR_WIDTH * healthPercentage, BAR_HEIGHT);
 
-        // Полоска броні
-        float armorY = y - BAR_HEIGHT - BAR_MARGIN;
+        // Здоров'я
+        shapeRenderer.setColor(0.1f, 0.02f, 0.02f, 1);
+        shapeRenderer.rect(barX, barY, BAR_WIDTH, BAR_HEIGHT);
+        shapeRenderer.setColor(0.4f, 0.05f, 0.05f, 1);
+        shapeRenderer.rect(barX, barY, BAR_WIDTH * healthPercentage, BAR_HEIGHT);
+
+        // Броня
+        float armorY = barY - BAR_HEIGHT - BAR_MARGIN;
         shapeRenderer.setColor(0.05f, 0.05f, 0.1f, 1);
-        shapeRenderer.rect(x, armorY, BAR_WIDTH, BAR_HEIGHT);
+        shapeRenderer.rect(barX, armorY, BAR_WIDTH, BAR_HEIGHT);
         shapeRenderer.setColor(0.15f, 0.25f, 0.4f, 1);
-        shapeRenderer.rect(x, armorY, BAR_WIDTH * armorPercentage, BAR_HEIGHT);
+        shapeRenderer.rect(barX, armorY, BAR_WIDTH * armorPercentage, BAR_HEIGHT);
 
         shapeRenderer.end();
     }
