@@ -16,10 +16,12 @@ public abstract class Enemy {
 
     protected EnemyAI ai;
 
+    private GameMap gameMap; // Додаємо поле
+
     private float attackCooldown = 0;
     private float attackTimer = 0;
 
-    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, EnemyAI ai) {
+    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, EnemyAI ai, GameMap gameMap) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -29,6 +31,7 @@ public abstract class Enemy {
         this.health = health;
         this.damage = damage;
         this.ai = ai;
+        this.gameMap = gameMap;
     }
 
     public abstract void attack(Hero hero);
@@ -43,8 +46,11 @@ public abstract class Enemy {
     }
 
     public void move(float dx, float dy) {
-        x += dx;
-        y += dy;
+        Rectangle futureRect = new Rectangle(x + dx, y + dy, width, height);
+        if (!gameMap.isCellBlocked(futureRect)) {
+            x += dx;
+            y += dy;
+        }
     }
 
     public float getCenterX() {
@@ -91,5 +97,12 @@ public abstract class Enemy {
     public int getHealth() { return health; }
     public int getDamage() { return damage; }
     public void setAttackCooldown(float cooldown) { this.attackCooldown = cooldown; }
-    public void dispose() { texture.dispose(); }
+
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+
+    public void dispose() {
+        texture.dispose();
+    }
 }

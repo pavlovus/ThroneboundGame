@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +70,8 @@ public class TbGame implements Screen {
         enemyTexture = new Texture("core/assets/skeleton.png");
         bulletTexture = new Texture("core/assets/arrow.png");
         bullets = new ArrayList<>();
-        enemies.add(new ShortAttackEnemy(enemyTexture, 500, 300, 100, 100, 200f, 3, 1, 1.5f));
-        enemies.add(new LongAttackEnemy(enemyTexture, 800, 400, 100, 100, 180f, 3, 1, 2.0f, bulletTexture, bullets));
+        enemies.add(new ShortAttackEnemy(enemyTexture, 300, 200, 20, 30, 200f, 3, 1, 1.5f, gameMap));
+        enemies.add(new LongAttackEnemy(enemyTexture, 300, 100, 20, 30, 180f, 3, 1, 2.0f, bulletTexture, bullets, gameMap));
 
         hero = new Hero("core/assets/hero1.png", 200, 120, 100, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
@@ -108,8 +109,11 @@ public class TbGame implements Screen {
         }
 
         // Отримуємо позицію миші незалежно від паузи для правильного виведення зброї
-        float mouseX = Gdx.input.getX();
-        float mouseY = height - Gdx.input.getY();
+        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(mousePos); // Конвертуємо координати в систему камери
+
+        float mouseX = mousePos.x;
+        float mouseY = mousePos.y;
 
         weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
 
