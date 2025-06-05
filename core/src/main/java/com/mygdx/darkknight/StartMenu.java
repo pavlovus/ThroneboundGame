@@ -38,13 +38,37 @@ public class StartMenu implements Screen {
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        // Додаємо шрифт
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GothicPixels.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 18;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
+        Texture titleTexture = new Texture(Gdx.files.internal("title.png"));
 
+        Image titleImage = new Image(titleTexture);
+
+        titleImage.setPosition(
+            (Gdx.graphics.getWidth() - titleImage.getWidth()) / 2f,  // Центрування по ширині
+            Gdx.graphics.getHeight() - titleImage.getHeight()   // Відступ від верху
+        );
+
+        stage.addActor(titleImage);
+
+        Texture subtitleTexture = new Texture(Gdx.files.internal("subtitle.png"));
+
+        Image subtitleImage = new Image(subtitleTexture);
+
+        subtitleImage.setPosition(
+            (Gdx.graphics.getWidth() - subtitleImage.getWidth()) / 2f,  // Центрування по ширині
+            Gdx.graphics.getHeight() - subtitleImage.getHeight() - 150   // Відступ від верху
+        );
+
+        stage.addActor(subtitleImage);
+
+
+        // Завантаження музики
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("startMusic.mp3"));
+        backgroundMusic.setLooping(true); // повторювати без кінця
+
+        // Завантаження звуку кліку
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("startButtonSound.mp3"));
+
+        BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         // Створюємо стиль для кнопки
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -55,17 +79,9 @@ public class StartMenu implements Screen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
         style.font = font;
-        style.fontColor = Color.WHITE;
+        style.fontColor = Color.valueOf("C0C0C0");
 
-        // Завантаження музики
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("startMusic.mp3"));
-        backgroundMusic.setLooping(true); // повторювати без кінця
-
-        // Завантаження звуку кліку
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("startButtonSound.mp3"));
-
-
-
+        // Кнопки Start Game і Exit тепер будуть використовувати цей стиль
         TextButton startButton = new TextButton("Start Game", style);
         startButton.addListener(new ClickListener() {
             @Override
@@ -80,18 +96,19 @@ public class StartMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 clickSound.play();
-                Gdx.app.exit();  // Закриває вікно та викликає dispose()
+                Gdx.app.exit();
             }
         });
 
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-        table.padTop(600);
+        table.padTop(500);
 
+        table.row();
         table.add(startButton).width(300).height(90).padBottom(20);
         table.row();
-        table.add(exitButton).width(300).height(90);
+        table.add(exitButton).width(300).height(90).padBottom(20);
         stage.addActor(table);
     }
 
@@ -129,5 +146,4 @@ public class StartMenu implements Screen {
         backgroundMusic.dispose();
         clickSound.dispose();
     }
-
 }
