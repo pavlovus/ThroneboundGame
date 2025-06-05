@@ -3,17 +3,28 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Hero {
     private Texture texture;
     private float x, y;
     private final int width = 150, height = 150;
     private int speed = 600;
+    private int maxHealth;
+    private int maxArmor;
+    private int health;
+    private int armor;
+    private boolean dead;
 
-    public Hero(String texturePath, int screenWidth, int screenHeight) {
+    public Hero(String texturePath, int screenWidth, int screenHeight, int health, int armor) {
         texture = new Texture(texturePath);
         x = screenWidth / 2f - width / 2f;
         y = screenHeight / 2f - height / 2f;
+        dead = false;
+        this.health = health;
+        this.armor = armor;
+        maxHealth = health;
+        maxArmor = armor;
     }
 
     public void move(float dx, float dy) {
@@ -26,6 +37,10 @@ public class Hero {
             y = newY;
     }
 
+    public void takeDamage(int dmg) {
+        health -= dmg;
+        if (health <= 0){dead = true;}
+    }
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture, x, y, width, height);
@@ -54,6 +69,16 @@ public class Hero {
     public int getSpeed() {
         return speed;
     }
+
+    public Rectangle getBoundingRectangle() {return new Rectangle(x, y, width, height);}
+
+    public int getMaxHealth() {return maxHealth;}
+
+    public int getMaxArmor() {return maxArmor;}
+
+    public int getHealth() {return health;}
+
+    public int getArmor() {return armor;}
 
     public void setSpeed(int speed) {
         this.speed = speed;

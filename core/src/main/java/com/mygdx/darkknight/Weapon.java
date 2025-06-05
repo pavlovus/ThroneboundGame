@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Weapon {
     private Texture texture;
-
+    private int damage;
     private final int width = 100, height = 60;
 
     public float getAngle() {
@@ -18,8 +18,9 @@ public class Weapon {
 
     private float angle = 0;
 
-    public Weapon(String texturePath) {
+    public Weapon(String texturePath, int damage) {
         texture = new Texture(texturePath);
+        this.damage = damage;
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
@@ -56,5 +57,7 @@ public class Weapon {
     public int getHeight() {
         return height;
     }
+
+    public int getDamage() {return damage;}
 }
 

@@ -2,6 +2,7 @@ package com.mygdx.darkknight;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Enemy {
@@ -10,13 +11,15 @@ public abstract class Enemy {
     private int width, height;
     private float speed;
     private int health;
+    private int damage;
+    private boolean dead;
 
     protected EnemyAI ai;
 
     private float attackCooldown = 0;
     private float attackTimer = 0;
 
-    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, EnemyAI ai) {
+    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, EnemyAI ai) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -24,6 +27,7 @@ public abstract class Enemy {
         this.height = height;
         this.speed = speed;
         this.health = health;
+        this.damage = damage;
         this.ai = ai;
     }
 
@@ -61,11 +65,7 @@ public abstract class Enemy {
 
     public void takeDamage(int dmg) {
         health -= dmg;
-        if (health <= 0) die();
-    }
-
-    public void die() {
-        // TODO: remove enemy from game
+        if (health <= 0){dead = true;}
     }
 
     public boolean canAttack() {
@@ -81,12 +81,15 @@ public abstract class Enemy {
     }
 
     // --- Getters and Setters ---
+    public Rectangle getBoundingRectangle() {return new Rectangle(x, y, width, height);}
+    public boolean isDead() {return dead;}
     public float getX() { return x; }
     public float getY() { return y; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
     public float getSpeed() { return speed; }
     public int getHealth() { return health; }
+    public int getDamage() { return damage; }
     public void setAttackCooldown(float cooldown) { this.attackCooldown = cooldown; }
     public void dispose() { texture.dispose(); }
 }
