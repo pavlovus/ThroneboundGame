@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Bullet {
     private static final float SPEED = 600f;
     private static final int WIDTH = 30;
-    private static final int HEIGHT = 30;
+    private static final int HEIGHT = 10;
 
     private Vector2 position;
     private Vector2 velocity;
