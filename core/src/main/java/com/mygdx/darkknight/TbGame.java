@@ -41,6 +41,7 @@ public class TbGame implements Screen {
 
     private int width, height;
     private List<Enemy> enemies;
+    private List<FightLevel> fightLevels = new ArrayList<>();
 
     @Override
     public void show() {
@@ -64,17 +65,19 @@ public class TbGame implements Screen {
         barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
         heartTexture = new Texture(Gdx.files.internal("heart.png"));
         shieldTexture = new Texture(Gdx.files.internal("shield.png"));
+        enemyTexture = new Texture("core/assets/skeleton.png");
 
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
-        enemyTexture = new Texture("core/assets/skeleton.png");
         bulletTexture = new Texture("core/assets/arrow.png");
         bullets = new ArrayList<>();
-        enemies.add(new ShortAttackEnemy(enemyTexture, 300, 200, 20, 30, 200f, 3, 1, 1.5f, gameMap));
-        enemies.add(new LongAttackEnemy(enemyTexture, 300, 100, 20, 30, 180f, 3, 1, 2.0f, bulletTexture, bullets, gameMap));
 
         hero = new Hero("core/assets/hero1.png", 200, 120, 100, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
+
+        fightLevels.add(new FightLevel(
+                3150, 70, 650, 380, 5, bulletTexture, bullets, gameMap
+        ));
     }
 
     @Override
@@ -97,15 +100,6 @@ public class TbGame implements Screen {
 
             // Оновлення ворогів
             for (Enemy e : enemies) e.update(hero, delta);
-
-            // Оновлення куль
-            for (int i = bullets.size() - 1; i >= 0; i--) {
-                Bullet b = bullets.get(i);
-                b.update(delta);
-                if (b.isOffScreen(width, height)) {
-                    bullets.remove(i);
-                }
-            }
         }
 
         // Отримуємо позицію миші незалежно від паузи для правильного виведення зброї
@@ -157,16 +151,28 @@ public class TbGame implements Screen {
         drawHeroBarText();
         batch.end();
 
-        for (Enemy e : enemies) e.update(hero, delta);
-
         updateBullets(delta);
         removeDeadEnemies();
 
-        // Якщо пауза активна — малюємо меню поверх
-        if (isPaused) {
-            pauseMenu.render();
+        drawCoordinateSystem();
+
+        for (FightLevel level : fightLevels) {
+            level.activateIfNeeded(hero, enemies);
         }
+
+        if (isPaused) pauseMenu.render();
     }
+
+    private void drawCoordinateSystem() {
+        Vector3 mouseWorld = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        font.getData().setScale(2f);
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        font.draw(batch, String.format("Hero: X=%.1f Y=%.1f", hero.getX(), hero.getY()), camera.position.x - camera.viewportWidth / 2 + 10, camera.position.y + camera.viewportHeight / 2 - 120);
+        font.draw(batch, String.format("Mouse: X=%.1f Y=%.1f", mouseWorld.x, mouseWorld.y), camera.position.x - camera.viewportWidth / 2 + 10, camera.position.y + camera.viewportHeight / 2 - 160);
+        batch.end();
+    }
+
 
     private void drawHeroBarText() {
         float barX = Math.round(camera.position.x - (width / 2f) + 80);
@@ -224,6 +230,14 @@ public class TbGame implements Screen {
         for (int i = bullets.size() - 1; i >= 0; i--) {
             Bullet b = bullets.get(i);
             b.update(delta);
+
+            // Нова умова видалення
+            if (b.shouldRemove()) {
+                bullets.remove(i);
+                continue;
+            }
+
+            // Існуюча логіка перевірки колізій...
             boolean bulletRemoved = false;
 
             for (Enemy e : enemies) {
@@ -240,10 +254,6 @@ public class TbGame implements Screen {
                 bullets.remove(i);
                 bulletRemoved = true;
                 break;
-            }
-
-            if (!bulletRemoved && b.isOffScreen(width, height)) {
-                bullets.remove(i);
             }
         }
     }
@@ -307,7 +317,7 @@ public class TbGame implements Screen {
         shieldTexture.dispose();
     }
 
-    public void setPaused( boolean paused) {
+    public void setPaused(boolean paused) {
         isPaused = paused;
     }
 }

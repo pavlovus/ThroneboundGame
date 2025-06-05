@@ -56,6 +56,21 @@ public class GameMap {
         return new Vector2(0, 0); // якщо не знайдено
     }
 
+    public boolean hasLineOfSight(Vector2 start, Vector2 end) {
+        float dx = end.x - start.x;
+        float dy = end.y - start.y;
+        float distance = Vector2.dst(start.x, start.y, end.x, end.y);
+        float steps = distance / 8f; // Check every 8 pixels
+
+        for (float i = 0; i <= 1; i += 1f/steps) {
+            float x = start.x + dx * i;
+            float y = start.y + dy * i;
+            if (isCellBlocked(new Rectangle(x, y, 1, 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void dispose() {
         map.dispose();

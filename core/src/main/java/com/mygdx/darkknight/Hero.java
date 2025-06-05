@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class Hero {
     private Texture texture;
@@ -85,5 +86,9 @@ public class Hero {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public Vector2 getCenter() {
+        return new Vector2(getCenterX(), getCenterY());
     }
 }
