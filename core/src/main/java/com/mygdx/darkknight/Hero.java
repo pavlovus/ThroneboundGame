@@ -15,7 +15,6 @@ public class Hero {
     private int health;
     private int armor;
     private boolean dead;
-    private Rectangle bounds;
 
     public Hero(String texturePath, float x, float y, int health, int armor) {
         texture = new Texture(texturePath);
@@ -86,4 +85,6 @@ public class Hero {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public boolean isDead(){return dead;}
 }
