@@ -25,7 +25,6 @@ import com.badlogic.gdx.audio.Sound;
 
 public class StartMenu implements Screen {
     private Stage stage;
-    private Skin skin;
     private Texture backgroundTexture;
     private Music backgroundMusic;
     private Sound clickSound;
@@ -38,13 +37,6 @@ public class StartMenu implements Screen {
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
-
-        // Додаємо шрифт
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GothicPixels.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 18;
-//        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
 
         Texture titleTexture = new Texture(Gdx.files.internal("title.png"));
 
@@ -68,16 +60,6 @@ public class StartMenu implements Screen {
 
         stage.addActor(subtitleImage);
 
-        // Створюємо програмно базовий скин
-        skin = new Skin();
-
-        // Створюємо білу текстуру 1x1 піксель для фону кнопки
-        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        Texture pixmapTexture = new Texture(pixmap);
-        skin.add("white", pixmapTexture);
-        pixmap.dispose();
 
         // Завантаження музики
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("startMusic.mp3"));
@@ -87,8 +69,6 @@ public class StartMenu implements Screen {
         clickSound = Gdx.audio.newSound(Gdx.files.internal("startButtonSound.mp3"));
 
         BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
-
-        skin.add("default-font", font);
 
         // Створюємо стиль для кнопки
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -166,5 +146,4 @@ public class StartMenu implements Screen {
         backgroundMusic.dispose();
         clickSound.dispose();
     }
-
 }
