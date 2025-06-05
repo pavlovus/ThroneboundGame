@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Hero {
     private Texture texture;
     private float x, y;
-    private final int width = 38, height = 64;
+    private final int width = 25, height = 32;
     private int speed = 600;
     private int maxHealth;
     private int maxArmor;
@@ -17,10 +17,10 @@ public class Hero {
     private boolean dead;
     private Rectangle bounds;
 
-    public Hero(String texturePath, float screenWidth, float screenHeight, int health, int armor) {
+    public Hero(String texturePath, float x, float y, int health, int armor) {
         texture = new Texture(texturePath);
-        x = screenWidth / 2f - width / 2f;
-        y = screenHeight / 2f - height / 2f;
+        this.x = x;
+        this.y = y;
         dead = false;
         this.health = health;
         this.armor = armor;
@@ -29,14 +29,14 @@ public class Hero {
     }
 
     public void moveWithCollision(float dx, float dy, GameMap map) {
-        float newX = x + dx;
-        float newY = y + dy;
-
-        if (!map.isCellBlocked(newX, y)) {
-            x = newX;
+        Rectangle futureRect = new Rectangle(x + dx, y, width, height);
+        if (!map.isCellBlocked(futureRect)) {
+            x += dx;
         }
-        if (!map.isCellBlocked(x, newY)) {
-            y = newY;
+
+        futureRect.setPosition(x, y + dy);
+        if (!map.isCellBlocked(futureRect)) {
+            y += dy;
         }
     }
 
