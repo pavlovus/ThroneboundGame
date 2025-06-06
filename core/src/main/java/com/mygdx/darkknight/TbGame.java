@@ -74,7 +74,7 @@ public class TbGame implements Screen {
         bulletTexture = new Texture("core/assets/arrow.png");
         bullets = new ArrayList<>();
 
-        hero = new Hero("core/assets/hero1.png",200, 120, 5, 5);
+        hero = new Hero("core/assets/hero1.png",200, 120, 100, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
 
         fightLevels.add(new FightLevel(
@@ -169,12 +169,13 @@ public class TbGame implements Screen {
 
         for (FightLevel level : fightLevels) {
             level.activateIfNeeded(hero, enemies);
-        // Якщо пауза активна — малюємо меню поверх
-        if (isPaused) {
-            pauseMenu.render();
-        }
-        if (gameOver) {
-            restartMenu.render();
+            // Якщо пауза активна — малюємо меню поверх
+            if (isPaused) {
+                pauseMenu.render();
+            }
+            if (gameOver) {
+                restartMenu.render();
+            }
         }
     }
 
