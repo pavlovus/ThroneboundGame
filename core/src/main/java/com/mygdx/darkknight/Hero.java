@@ -91,4 +91,6 @@ public class Hero {
     public Vector2 getCenter() {
         return new Vector2(getCenterX(), getCenterY());
     }
+
+    public boolean isDead(){return dead;}
 }

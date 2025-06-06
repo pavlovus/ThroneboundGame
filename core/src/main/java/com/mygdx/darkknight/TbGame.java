@@ -25,7 +25,9 @@ public class TbGame implements Screen {
     private GameMap gameMap;
     private OrthographicCamera camera;
     private PauseMenu pauseMenu;
+    private RestartMenu restartMenu;
     private boolean isPaused = false;
+    private boolean gameOver = false;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private Hero hero;
@@ -46,7 +48,7 @@ public class TbGame implements Screen {
     @Override
     public void show() {
         pauseMenu = new PauseMenu(this);
-        System.out.println("🔍 show() запущено");
+        restartMenu = new RestartMenu(this);
         gameMap = new GameMap("FirstMap.tmx");
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -72,7 +74,7 @@ public class TbGame implements Screen {
         bulletTexture = new Texture("core/assets/arrow.png");
         bullets = new ArrayList<>();
 
-        hero = new Hero("core/assets/hero1.png", 200, 120, 100, 5);
+        hero = new Hero("core/assets/hero1.png",200, 120, 5, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
 
         fightLevels.add(new FightLevel(
@@ -94,12 +96,21 @@ public class TbGame implements Screen {
             }
         }
 
-        if (!isPaused) {
+        if (hero.isDead() && !gameOver) {
+            gameOver = true;
+            restartMenu.show();
+        }
+
+
+        if (!isPaused && !gameOver) {
             // Обробка вводу, оновлення логіки лише коли гра не на паузі
             handleInput();
 
             // Оновлення ворогів
             for (Enemy e : enemies) e.update(hero, delta);
+
+            updateBullets(delta);
+            removeDeadEnemies();
         }
 
         // Отримуємо позицію миші незалежно від паузи для правильного виведення зброї
@@ -158,9 +169,13 @@ public class TbGame implements Screen {
 
         for (FightLevel level : fightLevels) {
             level.activateIfNeeded(hero, enemies);
+        // Якщо пауза активна — малюємо меню поверх
+        if (isPaused) {
+            pauseMenu.render();
         }
-
-        if (isPaused) pauseMenu.render();
+        if (gameOver) {
+            restartMenu.render();
+        }
     }
 
     private void drawCoordinateSystem() {
@@ -308,6 +323,8 @@ public class TbGame implements Screen {
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
+        gameMap.dispose();
+        font.dispose();
         hero.dispose();
         weapon.dispose();
         bulletTexture.dispose();
@@ -315,6 +332,8 @@ public class TbGame implements Screen {
         barBackgroundTexture.dispose();
         heartTexture.dispose();
         shieldTexture.dispose();
+        pauseMenu.dispose();
+        restartMenu.dispose();
     }
 
     public void setPaused(boolean paused) {

@@ -26,6 +26,12 @@ import com.badlogic.gdx.audio.Sound;
 public class StartMenu implements Screen {
     private Stage stage;
     private Texture backgroundTexture;
+    private Texture titleTexture;
+    private Texture subtitleTexture;
+    private Texture textureUp;
+    private TextButton startButton;
+    private TextButton exitButton;
+    private BitmapFont font;
     private Music backgroundMusic;
     private Sound clickSound;
 
@@ -38,7 +44,7 @@ public class StartMenu implements Screen {
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        Texture titleTexture = new Texture(Gdx.files.internal("title.png"));
+        titleTexture = new Texture(Gdx.files.internal("title.png"));
 
         Image titleImage = new Image(titleTexture);
 
@@ -49,7 +55,7 @@ public class StartMenu implements Screen {
 
         stage.addActor(titleImage);
 
-        Texture subtitleTexture = new Texture(Gdx.files.internal("subtitle.png"));
+        subtitleTexture = new Texture(Gdx.files.internal("subtitle.png"));
 
         Image subtitleImage = new Image(subtitleTexture);
 
@@ -68,30 +74,30 @@ public class StartMenu implements Screen {
         // Завантаження звуку кліку
         clickSound = Gdx.audio.newSound(Gdx.files.internal("startButtonSound.mp3"));
 
-        BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
-        // Створюємо стиль для кнопки
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.fontColor = Color.BLACK;
-
-        Texture textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
+        textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
         style.font = font;
         style.fontColor = Color.valueOf("C0C0C0");
 
         // Кнопки Start Game і Exit тепер будуть використовувати цей стиль
-        TextButton startButton = new TextButton("Start Game", style);
+        startButton = new TextButton("Start Game", style);
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 clickSound.play();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new TbGame());
+                Game game = (Game) Gdx.app.getApplicationListener();
+                Screen oldScreen = game.getScreen();
+                game.setScreen(new TbGame());
+                if (oldScreen != null) {
+                    oldScreen.dispose();  // Звільняємо ресурси старого екрану
+                }
             }
         });
 
-        TextButton exitButton = new TextButton("Exit", style);
+        exitButton = new TextButton("Exit", style);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -143,7 +149,12 @@ public class StartMenu implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
+        titleTexture.dispose();
+        subtitleTexture.dispose();
+        textureUp.dispose();
+        font.dispose();
         backgroundMusic.dispose();
         clickSound.dispose();
+        Gdx.input.setInputProcessor(null);
     }
 }
