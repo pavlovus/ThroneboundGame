@@ -74,7 +74,7 @@ public class FightLevel {
                         3,     // health
                         1,     // damage
                         1.5f,  // attackCooldown
-                        gameMap
+                        gameMap, new ShortAttackAI(this.roomArea)
                 ) :
                 new LongAttackEnemy(
                         new Texture("core/assets/long1.png"),
@@ -85,7 +85,7 @@ public class FightLevel {
                         180f,
                         3,
                         1,
-                        2.0f,
+                        1.0f,
                         bulletTexture,
                         bullets,
                         gameMap, new LongAttackAI(this.roomArea)

@@ -76,7 +76,7 @@ public class TbGame implements Screen {
         weapon = new Weapon("core/assets/bow.png", 1);
 
         fightLevels.add(new FightLevel(
-                3150, 70, 650, 380, 5, bulletTexture, bullets, gameMap
+                3120, 70, 650, 380, 5, bulletTexture, bullets, gameMap
         ));
     }
 

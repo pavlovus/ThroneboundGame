@@ -53,6 +53,21 @@ public abstract class Enemy {
         }
     }
 
+    /**
+     * Встановлює позицію ворога, враховуючи колізії зі стінами.
+     * Якщо нова позиція заблокована, ворог не переміщується.
+     *
+     * @param x Нова координата X
+     * @param y Нова координата Y
+     */
+    public void setPosition(float x, float y) {
+        Rectangle futureRect = new Rectangle(x, y, width, height);
+        if (!gameMap.isCellBlocked(futureRect)) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public float getCenterX() {
         return x + width / 2f;
     }
@@ -71,7 +86,9 @@ public abstract class Enemy {
 
     public void takeDamage(int dmg) {
         health -= dmg;
-        if (health <= 0){dead = true;}
+        if (health <= 0) {
+            dead = true;
+        }
     }
 
     public boolean canAttack() {
@@ -87,16 +104,45 @@ public abstract class Enemy {
     }
 
     // --- Getters and Setters ---
-    public Rectangle getBoundingRectangle() {return new Rectangle(x, y, width, height);}
-    public boolean isDead() {return dead;}
-    public float getX() { return x; }
-    public float getY() { return y; }
-    public int getWidth() { return width; }
-    public int getHeight() { return height; }
-    public float getSpeed() { return speed; }
-    public int getHealth() { return health; }
-    public int getDamage() { return damage; }
-    public void setAttackCooldown(float cooldown) { this.attackCooldown = cooldown; }
+    public Rectangle getBoundingRectangle() {
+        return new Rectangle(x, y, width, height);
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setAttackCooldown(float cooldown) {
+        this.attackCooldown = cooldown;
+    }
 
     public GameMap getGameMap() {
         return gameMap;

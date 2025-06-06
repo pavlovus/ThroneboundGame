@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class LongAttackAI implements EnemyAI {
-    private static final float DESIRED_RANGE = 1000f;
-    private static final float RANGE_TOLERANCE = 250f;
+    private static final float DESIRED_RANGE = 400f;
+    private static final float RANGE_TOLERANCE = 100f;
     private Rectangle roomBounds;
 
     public LongAttackAI(Rectangle roomBounds) {
@@ -34,14 +34,9 @@ public class LongAttackAI implements EnemyAI {
         }
 
         // Attack only with clear line of sight
-        if (self.canAttack() && isInRange(dist) && hasClearShot(self, hero)) {
+        if (self.canAttack()&& hasClearShot(self, hero)) {
             self.attack(hero);
         }
-    }
-
-    private boolean isInRange(float distance) {
-        return distance >= (DESIRED_RANGE - RANGE_TOLERANCE)
-                && distance <= (DESIRED_RANGE + RANGE_TOLERANCE);
     }
 
     private boolean hasClearShot(Enemy enemy, Hero hero) {
