@@ -29,6 +29,7 @@ public class TbGame implements Screen {
     private boolean isPaused = false;
     private boolean gameOver = false;
     private SpriteBatch batch;
+    private SpriteBatch uiBatch; // окремий шар для рендеру графічних ефектів, того, що лишатиметься нерухомим
     private ShapeRenderer shapeRenderer;
     private Hero hero;
     private Weapon weapon;
@@ -40,7 +41,6 @@ public class TbGame implements Screen {
     private List<Bullet> bullets;
     private BitmapFont font;
     private GlyphLayout layout;
-
     private int width, height;
     private List<Enemy> enemies;
     private List<FightLevel> fightLevels = new ArrayList<>();
@@ -51,9 +51,10 @@ public class TbGame implements Screen {
         restartMenu = new RestartMenu(this);
         gameMap = new GameMap("FirstMap.tmx");
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);    //  Контролюємо стиснення камери
 
         batch = new SpriteBatch();
+        uiBatch = new SpriteBatch();
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
@@ -72,7 +73,6 @@ public class TbGame implements Screen {
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
         bulletTexture = new Texture("core/assets/arrow.png");
-        bullets = new ArrayList<>();
 
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
@@ -123,7 +123,13 @@ public class TbGame implements Screen {
         weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
 
         // Оновлюємо камеру, щоб слідувала за героєм
-        camera.position.set(hero.getCenterX(), hero.getCenterY(), 0);
+        float lerp = 3f * Gdx.graphics.getDeltaTime(); // коефіцієнт згладжування (можна 2–5)
+        Vector3 position = camera.position;
+
+        position.x += (hero.getCenterX() - position.x) * lerp;
+        position.y += (hero.getCenterY() - position.y) * lerp;
+
+        camera.position.set(position.x, position.y, 0);
         camera.update();
 
         // Очищаємо екран
@@ -156,16 +162,11 @@ public class TbGame implements Screen {
         batch.draw(shieldTexture, barX + 25, barY + 34, 32, 32);
         batch.end();
 
-        drawHeroBars();
-        //Текст поверх барів
-        batch.begin();
-        drawHeroBarText();
-        batch.end();
+        // Рендеримо статичний інтерфейс
+        renderUI();
 
         updateBullets(delta);
         removeDeadEnemies();
-
-        drawCoordinateSystem();
 
         for (FightLevel level : fightLevels) {
             level.activateIfNeeded(hero, enemies);
@@ -179,43 +180,65 @@ public class TbGame implements Screen {
         }
     }
 
-    private void drawCoordinateSystem() {
-        Vector3 mouseWorld = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-        font.getData().setScale(2f);
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        font.draw(batch, String.format("Hero: X=%.1f Y=%.1f", hero.getX(), hero.getY()), camera.position.x - camera.viewportWidth / 2 + 10, camera.position.y + camera.viewportHeight / 2 - 120);
-        font.draw(batch, String.format("Mouse: X=%.1f Y=%.1f", mouseWorld.x, mouseWorld.y), camera.position.x - camera.viewportWidth / 2 + 10, camera.position.y + camera.viewportHeight / 2 - 160);
-        batch.end();
+    private void renderUI() {
+        float barX = 20;
+        float barY = height - 140;
+
+        // Малюємо фон бару + іконки
+        uiBatch.begin();
+        uiBatch.draw(barBackgroundTexture, barX, barY, 200, 140);
+        uiBatch.draw(heartTexture, barX + 25, barY + 74, 32, 32);
+        uiBatch.draw(shieldTexture, barX + 25, barY + 34, 32, 32);
+        uiBatch.end();
+
+        // Малюємо бари здоров’я / броні через ShapeRenderer
+        drawHeroBars();
+
+        // Малюємо значення HP/Armor поверх барів
+        uiBatch.begin();
+        drawHeroBarText();
+        uiBatch.end();
+
+        // Координати героя
+        drawCoordinates();
     }
 
+    private void drawCoordinates() {
+        uiBatch.begin();
+        String posText = String.format("Hero: X=%.1f Y=%.1f", hero.getX(), hero.getY());
+        font.getData().setScale(1.5f);
+        font.draw(uiBatch, posText, 20, 30);
+        uiBatch.end();
+    }
 
     private void drawHeroBarText() {
-        float barX = Math.round(camera.position.x - (width / 2f) + 80);
-        float barY = Math.round(camera.position.y + (height / 2f) - 58);
+        float barX = 80;
+        float barY = height - 58;
+
+        font.getData().setScale(2f);
 
         String hpText = hero.getHealth() + " / " + hero.getMaxHealth();
         layout.setText(font, hpText);
-        float hpTextX = Math.round(barX + (BAR_WIDTH - layout.width) / 2f);
-        float hpTextY = Math.round(barY + BAR_HEIGHT / 2f + layout.height / 2f);
-        font.draw(batch, layout, hpTextX, hpTextY);
+        float hpTextX = barX + (BAR_WIDTH - layout.width) / 2f;
+        float hpTextY = barY + BAR_HEIGHT / 2f + layout.height / 2f;
+        font.draw(uiBatch, layout, hpTextX, hpTextY);
 
-        float armorY = Math.round(barY - BAR_HEIGHT - BAR_MARGIN);
+        float armorY = barY - BAR_HEIGHT - BAR_MARGIN;
         String armorText = hero.getArmor() + " / " + hero.getMaxArmor();
         layout.setText(font, armorText);
-        float armorTextX = Math.round(barX + (BAR_WIDTH - layout.width) / 2f);
-        float armorTextY = Math.round(armorY + BAR_HEIGHT / 2f + layout.height / 2f);
-        font.draw(batch, layout, armorTextX, armorTextY);
+        float armorTextX = barX + (BAR_WIDTH - layout.width) / 2f;
+        float armorTextY = armorY + BAR_HEIGHT / 2f + layout.height / 2f;
+        font.draw(uiBatch, layout, armorTextX, armorTextY);
     }
 
     private void drawHeroBars() {
-        float barX = camera.position.x - (width / 2) + 80;
-        float barY = camera.position.y + (height / 2) - 58;
+        float barX = 80;
+        float barY = height - 58;
 
         float healthPercentage = (float) hero.getHealth() / hero.getMaxHealth();
         float armorPercentage = (float) hero.getArmor() / hero.getMaxArmor();
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(uiBatch.getProjectionMatrix()); // Використовуємо screen projection
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         // Здоров'я
@@ -323,6 +346,7 @@ public class TbGame implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        uiBatch.dispose();
         shapeRenderer.dispose();
         gameMap.dispose();
         font.dispose();
