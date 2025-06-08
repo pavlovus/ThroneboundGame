@@ -16,11 +16,8 @@ public class Bullet {
     private Texture texture;
     private boolean isOpponent;
     private Enemy enemy;
-    private final float maxDistance = 3000f;
-    private float distanceTraveled = 0;
     private final Vector2 startPosition;
-    private float timeAlive = 0;
-    private final float maxLifetime = 4f; // 4 секунди
+    private boolean remove;
 
     public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent) {
         this.texture = texture;
@@ -30,6 +27,7 @@ public class Bullet {
         float angleRadians = (float) Math.toRadians(angleDegrees);
         this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(SPEED);
         this.startPosition = new Vector2(startX, startY);
+        this.remove = false;
     }
 
     public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, Enemy owner) {
@@ -43,24 +41,21 @@ public class Bullet {
         this.startPosition = new Vector2(startX, startY);
     }
 
-    public void update(float delta) {
+    public void update(float delta, GameMap map) {
         // Рух кулі
         float dx = (float) (SPEED * Math.cos(Math.toRadians(angle))) * delta;
         float dy = (float) (SPEED * Math.sin(Math.toRadians(angle))) * delta;
-        position.x += dx;
-        position.y += dy;
-
-        // Оновлення параметрів
-        distanceTraveled = startPosition.dst(position.x, position.y);
-        timeAlive += delta;
+        Rectangle futureRect = new Rectangle(position.x + dx, position.y + dy, WIDTH, HEIGHT);
+        if(!map.isCellBlocked(futureRect)) {
+            position.x += dx;
+            position.y += dy;
+        } else {
+            remove = true;
+        }
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, WIDTH / 2f, HEIGHT / 2f, WIDTH, HEIGHT, 1, 1, angle, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
-    }
-
-    public boolean isOffScreen(int screenWidth, int screenHeight) {
-        return position.x < -WIDTH || position.x > screenWidth || position.y < -HEIGHT || position.y > screenHeight;
     }
 
     public Rectangle getBoundingRectangle() {
@@ -75,7 +70,5 @@ public class Bullet {
         return enemy;
     }
 
-    public boolean shouldRemove() {
-        return distanceTraveled >= maxDistance || timeAlive >= maxLifetime;
-    }
+    public boolean shouldRemove() {return remove;}
 }

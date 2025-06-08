@@ -268,9 +268,8 @@ public class TbGame implements Screen {
     private void updateBullets(float delta) {
         for (int i = bullets.size() - 1; i >= 0; i--) {
             Bullet b = bullets.get(i);
-            b.update(delta);
+            b.update(delta, gameMap);
 
-            // Нова умова видалення
             if (b.shouldRemove()) {
                 bullets.remove(i);
                 continue;
