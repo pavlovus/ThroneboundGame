@@ -22,7 +22,7 @@ public class Power extends Effect {
 
     @Override
     protected void end(Hero hero) {
-        hero.setSpeed(hero.getSpeed() - damageBoost);
+        hero.getCurrentWeapon().setDamage(hero.getCurrentWeapon().getDamage() - damageBoost);
         icon.dispose();
     }
 }

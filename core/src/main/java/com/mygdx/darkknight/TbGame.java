@@ -50,6 +50,9 @@ public class TbGame implements Screen {
 
     @Override
     public void show() {
+        // Завантажуємо всі текстури
+        Assets.load();
+        
         pauseMenu = new PauseMenu(this);
         restartMenu = new RestartMenu(this);
         gameMap = new GameMap("FirstMap.tmx");
@@ -79,18 +82,18 @@ public class TbGame implements Screen {
 
         weapon = new Weapon("core/assets/bow.png", 1);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
-        /*Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
-        hero.addEffect(testEffect);
-        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
-        hero.addEffect(testEffect1);
-        Weakness testEffect = new Weakness(100f, 1, new Texture(Gdx.files.internal("weakness.png")));
-        hero.addEffect(testEffect);
-        Power testEffect = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
-        hero.addEffect(testEffect);
-        Poison testEffect = new Poison(20f, 1, 4f, new Texture(Gdx.files.internal("poison.png")));
-        hero.addEffect(testEffect);
-        Regeneration testEffect = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
-        hero.addEffect(testEffect);*/
+//        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
+//        hero.addEffect(testEffect);
+//        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
+//        hero.addEffect(testEffect1);
+//        Weakness testEffect = new Weakness(100f, 1, new Texture(Gdx.files.internal("weakness.png")));
+//        hero.addEffect(testEffect);
+//        Power testEffect = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
+//        hero.addEffect(testEffect);
+//        Poison testEffect = new Poison(20f, 1, 4f, new Texture(Gdx.files.internal("poison.png")));
+//        hero.addEffect(testEffect);
+//        Regeneration testEffect = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
+//        hero.addEffect(testEffect);
 
 
         fightLevels.add(new FightLevel(

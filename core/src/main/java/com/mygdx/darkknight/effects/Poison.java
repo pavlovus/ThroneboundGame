@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.effects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.darkknight.Hero;
 
@@ -18,6 +19,12 @@ public class Poison extends Effect {
     public Poison(float duration, int healthDamagePerSecond, Texture texture) {
         super(duration, texture);
         this.healthDamagePerSecond = healthDamagePerSecond;
+        this.timePerDamage = 1f;
+    }
+    
+    public Poison(float duration) {
+        super(duration, new Texture(Gdx.files.internal("poison.png")));
+        this.healthDamagePerSecond = 1;
         this.timePerDamage = 1f;
     }
 

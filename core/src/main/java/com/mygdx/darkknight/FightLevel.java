@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.*;
+import com.mygdx.darkknight.Assets;
 
 import java.util.List;
 import java.util.Random;
@@ -123,33 +124,48 @@ public class FightLevel {
     }
 
     private Enemy createEnemy(Vector2 pos) {
-        return MathUtils.randomBoolean(0.5f) ?
-                new ShortAttackEnemy(
-                        new Texture("core/assets/short1.png"),
-                        pos.x,
-                        pos.y,
-                        20,    // width
-                        30,    // height
-                        200f,  // speed
-                        3,     // health
-                        1,     // damage
-                        1.5f,  // attackCooldown
-                        gameMap, new ShortAttackAI(this.roomArea)
-                ) :
-                new LongAttackEnemy(
-                        new Texture("core/assets/long1.png"),
-                        pos.x,
-                        pos.y,
-                        20,
-                        30,
-                        180f,
-                        3,
-                        1,
-                        1.0f,
-                        bulletTexture,
-                        bullets,
-                        gameMap, new LongAttackAI(this.roomArea)
-                );
+        // Додаємо шанс 20% на створення привида
+        float randomValue = MathUtils.random(0f, 1f);
+        
+        if (randomValue < 0.2f) {
+            // Створюємо привида
+            return new Ghost(
+                    pos.x,
+                    pos.y,
+                    gameMap,
+                    this.roomArea
+            );
+        } else if (randomValue < 0.6f) {
+            // Створюємо ворога з ближньою атакою (40% шанс)
+            return new ShortAttackEnemy(
+                    Assets.shortEnemyTexture,
+                    pos.x,
+                    pos.y,
+                    20,    // width
+                    30,    // height
+                    200f,  // speed
+                    3,     // health
+                    1,     // damage
+                    1.5f,  // attackCooldown
+                    gameMap, new ShortAttackAI(this.roomArea)
+            );
+        } else {
+            // Створюємо ворога з дальньою атакою (40% шанс)
+            return new LongAttackEnemy(
+                    Assets.longEnemyTexture,
+                    pos.x,
+                    pos.y,
+                    20,
+                    30,
+                    180f,
+                    3,
+                    1,
+                    1.0f,
+                    Assets.bulletTexture, // Використовуємо текстуру з Assets
+                    bullets,
+                    gameMap, new LongAttackAI(this.roomArea)
+            );
+        }
     }
 
     public String getStateName() {
