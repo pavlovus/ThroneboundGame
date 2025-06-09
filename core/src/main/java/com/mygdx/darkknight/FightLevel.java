@@ -9,6 +9,8 @@ import com.mygdx.darkknight.enemies.*;
 import java.util.List;
 import java.util.Random;
 
+import static javax.accessibility.AccessibleState.ACTIVE;
+
 public class FightLevel {
     private final Rectangle roomArea;
     private final int maxEnemies;
@@ -18,13 +20,59 @@ public class FightLevel {
     private final List<Bullet> bullets;
     private final GameMap gameMap;
 
-    public FightLevel(float x, float y, float width, float height, int maxEnemies, Texture bulletTex, List<Bullet> bullets, GameMap map) {
+    private int totalWaves;
+    private LevelState state = LevelState.INACTIVE;
+    private int currentWave = 0;
+    private float waveDelayTimer = 0f;
+    private final float delayBetweenWaves = 3f;
+    private enum LevelState {
+        INACTIVE, ACTIVE, WAITING_NEXT_WAVE, COMPLETED
+    }
+
+    public FightLevel(float x, float y, float width, float height, int maxEnemies, Texture bulletTex, List<Bullet> bullets, GameMap map, int totalWaves) {
         this.roomArea = new Rectangle(x, y, width, height);
         this.maxEnemies = maxEnemies;
         this.bulletTexture = bulletTex;
         this.bullets = bullets;
         this.gameMap = map;
         this.random = new Random();
+        this.totalWaves = totalWaves;
+    }
+
+    public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
+        switch (state) {
+            case INACTIVE:
+                if (roomArea.contains(hero.getBoundingRectangle())) {
+                    state = LevelState.ACTIVE;
+                    spawnEnemies(globalEnemies);
+                    gameMap.closeDoors();
+                }
+                break;
+
+            case ACTIVE:
+                if (checkIfEnemiesIsDead(globalEnemies)) {
+                    currentWave++;
+                    if (currentWave >= totalWaves) {
+                        state = LevelState.COMPLETED;
+                        gameMap.openDoors();
+                    } else {
+                        state = LevelState.WAITING_NEXT_WAVE;
+                        waveDelayTimer = delayBetweenWaves;
+                    }
+                }
+                break;
+
+            case WAITING_NEXT_WAVE:
+                waveDelayTimer -= deltaTime;
+                if (waveDelayTimer <= 0f) {
+                    state = LevelState.ACTIVE;
+                    spawnEnemies(globalEnemies);
+                }
+                break;
+
+            case COMPLETED:
+                break;
+        }
     }
 
     public void activateIfNeeded(Hero hero, List<Enemy> enemies) {
@@ -41,6 +89,17 @@ public class FightLevel {
                 enemies.add(createEnemy(pos));
             }
         }
+    }
+
+    private boolean checkIfEnemiesIsDead(List<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            if (enemy.isDead()) {
+                continue;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Vector2 findValidSpawnPosition() {
@@ -91,5 +150,9 @@ public class FightLevel {
                         bullets,
                         gameMap, new LongAttackAI(this.roomArea)
                 );
+    }
+
+    public String getStateName() {
+        return state.name();
     }
 }

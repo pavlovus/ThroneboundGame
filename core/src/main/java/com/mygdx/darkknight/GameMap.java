@@ -9,18 +9,28 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 
 public class GameMap {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private MapObjects obstacles;
+    private MapObjects doors;
+    private boolean doorsClosed = false;
 
     public GameMap(String mapFilePath) {
         try {
             map = new TmxMapLoader().load(mapFilePath);
             renderer = new OrthogonalTiledMapRenderer(map);
             obstacles = map.getLayers().get("Obstacles").getObjects();
+            if (map.getLayers().get("Doors") != null)
+                doors = map.getLayers().get("Doors").getObjects();
+
+            // Вимикаємо графічний шар дверей на старті
+            if (map.getLayers().get("DoorsModels") != null)
+                map.getLayers().get("DoorsModels").setVisible(false);
+
         } catch (Exception e) {
             System.err.println("Не вдалося завантажити карту: " + e.getMessage());
             e.printStackTrace();
@@ -29,7 +39,22 @@ public class GameMap {
 
     public void render(OrthographicCamera camera) {
         renderer.setView(camera);
-        renderer.render();
+
+        // Збираємо всі індекси видимих tile-шарів
+        Array<Integer> visibleLayers = new Array<>();
+        for (int i = 0; i < map.getLayers().getCount(); i++) {
+            if (map.getLayers().get(i).isVisible()) {
+                visibleLayers.add(i);
+            }
+        }
+
+        // Перетворюємо на int[]
+        int[] layerIndices = new int[visibleLayers.size];
+        for (int i = 0; i < visibleLayers.size; i++) {
+            layerIndices[i] = visibleLayers.get(i);
+        }
+
+        renderer.render(layerIndices);
     }
 
     public boolean isCellBlocked(Rectangle rect) {
@@ -43,8 +68,36 @@ public class GameMap {
                 }
             }
         }
+
+        if (doorsClosed && doors != null) {
+            for (MapObject obj : doors) {
+                if (obj instanceof RectangleMapObject) {
+                    Rectangle door = ((RectangleMapObject) obj).getRectangle();
+                    if (rect.overlaps(door)) return true;
+                }
+            }
+        }
+
         return false;
     }
+
+    public void closeDoors() {
+        doorsClosed = true;
+
+        if (map.getLayers().get("DoorsModels") != null) {
+            map.getLayers().get("DoorsModels").setVisible(true);
+        }
+    }
+
+    public void openDoors() {
+        doorsClosed = false;
+
+        if (map.getLayers().get("DoorsModels") != null) {
+            map.getLayers().get("DoorsModels").setVisible(false);
+        }
+    }
+
+
     public Vector2 getHeroSpawn() {
         for (MapObject obj : map.getLayers().get("Spawn").getObjects()) {
             if ("Spawn".equals(obj.getName())) {

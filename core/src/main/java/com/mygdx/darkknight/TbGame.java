@@ -46,6 +46,7 @@ public class TbGame implements Screen {
     private int width, height;
     private List<Enemy> enemies;
     private List<FightLevel> fightLevels = new ArrayList<>();
+    private String currentLevelState = "INACTIVE";
 
     @Override
     public void show() {
@@ -93,7 +94,7 @@ public class TbGame implements Screen {
 
 
         fightLevels.add(new FightLevel(
-                3120, 70, 650, 380, 5, bulletTexture, bullets, gameMap
+                3120, 70, 650, 380, 5, bulletTexture, bullets, gameMap, 4
         ));
     }
 
@@ -182,7 +183,9 @@ public class TbGame implements Screen {
         removeDeadEnemies();
 
         for (FightLevel level : fightLevels) {
-            level.activateIfNeeded(hero, enemies);
+            level.update(delta, hero, enemies);
+            currentLevelState = level.getStateName();
+            //level.activateIfNeeded(hero, enemies);
             // Якщо пауза активна — малюємо меню поверх
             if (isPaused) {
                 pauseMenu.render();
@@ -242,6 +245,7 @@ public class TbGame implements Screen {
         String posText = String.format("Hero: X=%.1f Y=%.1f", hero.getX(), hero.getY());
         font.getData().setScale(1.5f);
         font.draw(uiBatch, posText, 20, 30);
+        font.draw(uiBatch, "Level: " + currentLevelState, 20, 55);
         uiBatch.end();
     }
 
