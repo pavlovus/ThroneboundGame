@@ -1,9 +1,11 @@
-package com.mygdx.darkknight;
+package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.GameMap;
+import com.mygdx.darkknight.Hero;
 
 public abstract class Enemy {
     private Texture texture;

@@ -6,14 +6,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.darkknight.effects.*;
+import com.mygdx.darkknight.enemies.Enemy;
+import com.mygdx.darkknight.menus.PauseMenu;
+import com.mygdx.darkknight.menus.RestartMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +76,21 @@ public class TbGame implements Screen {
         enemies = new ArrayList<>();
         bulletTexture = new Texture("core/assets/arrow.png");
 
-        hero = new Hero("core/assets/hero1.png",200, 120, 100, 5);
         weapon = new Weapon("core/assets/bow.png", 1);
+        hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
+        /*Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
+        hero.addEffect(testEffect);
+        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
+        hero.addEffect(testEffect1);
+        Weakness testEffect = new Weakness(100f, 1, new Texture(Gdx.files.internal("weakness.png")));
+        hero.addEffect(testEffect);
+        Power testEffect = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
+        hero.addEffect(testEffect);
+        Poison testEffect = new Poison(20f, 1, 4f, new Texture(Gdx.files.internal("poison.png")));
+        hero.addEffect(testEffect);
+        Regeneration testEffect = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
+        hero.addEffect(testEffect);*/
+
 
         fightLevels.add(new FightLevel(
                 3120, 70, 650, 380, 5, bulletTexture, bullets, gameMap
@@ -105,6 +120,7 @@ public class TbGame implements Screen {
         if (!isPaused && !gameOver) {
             // Обробка вводу, оновлення логіки лише коли гра не на паузі
             handleInput();
+            hero.updateEffects(delta);
 
             // Оновлення ворогів
             for (Enemy e : enemies) e.update(hero, delta);
@@ -157,9 +173,6 @@ public class TbGame implements Screen {
         float barX = camera.position.x - (width / 2) + 20;
         float barY = camera.position.y + (height / 2) - 140;
 
-        batch.draw(barBackgroundTexture, barX, barY, 200, 140);
-        batch.draw(heartTexture, barX + 25, barY + 74, 32, 32);
-        batch.draw(shieldTexture, barX + 25, barY + 34, 32, 32);
         batch.end();
 
         // Рендеримо статичний інтерфейс
@@ -201,6 +214,27 @@ public class TbGame implements Screen {
 
         // Координати героя
         drawCoordinates();
+        renderHeroEffects();
+    }
+
+    private void renderHeroEffects() {
+        List<Effect> effects = hero.getActiveEffects();
+        float startX = 230;
+        float startY = height - 50;
+        float size = 48;
+        float padding = 8;
+
+        uiBatch.begin();
+        for (int i = 0; i < effects.size(); i++) {
+            Effect effect = effects.get(i);
+            Texture icon = effect.getIcon();
+            if (icon != null) {
+                float x = startX + i * (size + padding);
+                float y = startY;
+                uiBatch.draw(icon, x, y, size, size);
+            }
+        }
+        uiBatch.end();
     }
 
     private void drawCoordinates() {

@@ -1,10 +1,9 @@
-package com.mygdx.darkknight;
+package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
-
-import java.util.List;
+import com.mygdx.darkknight.Hero;
 
 public class ShortAttackAI implements EnemyAI {
     private static final float ATTACK_RANGE = 30f;

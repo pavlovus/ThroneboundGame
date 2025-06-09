@@ -1,7 +1,9 @@
-package com.mygdx.darkknight;
+package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.GameMap;
+import com.mygdx.darkknight.Hero;
 
 public class ShortAttackEnemy extends Enemy {
     private static final float MAX_ATTACK_BACK_DISTANCE = 8f; // Наскільки далеко відступає

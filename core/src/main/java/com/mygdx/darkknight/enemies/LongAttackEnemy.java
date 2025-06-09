@@ -1,6 +1,9 @@
-package com.mygdx.darkknight;
+package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.darkknight.Bullet;
+import com.mygdx.darkknight.GameMap;
+import com.mygdx.darkknight.Hero;
 
 public class LongAttackEnemy extends Enemy {
     private Texture bulletTexture;

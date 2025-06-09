@@ -1,7 +1,8 @@
-package com.mygdx.darkknight;
+package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.Hero;
 
 public class LongAttackAI implements EnemyAI {
     private static final float DESIRED_RANGE = 400f;
