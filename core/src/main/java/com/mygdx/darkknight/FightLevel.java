@@ -43,7 +43,7 @@ public class FightLevel {
     public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
         switch (state) {
             case INACTIVE:
-                if (roomArea.contains(hero.getBoundingRectangle())) {
+                if (roomArea.contains(hero.getBoundingRectangle()) && !(gameMap.isTouchingDoors(hero.getBoundingRectangle())) ) {
                     state = LevelState.ACTIVE;
                     spawnEnemies(globalEnemies);
                     gameMap.closeDoors();

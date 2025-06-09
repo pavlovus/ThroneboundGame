@@ -81,6 +81,20 @@ public class GameMap {
         return false;
     }
 
+    public boolean isTouchingDoors(Rectangle rect) {
+        if (doors != null) {
+            for (MapObject obj : doors) {
+                if (obj instanceof RectangleMapObject) {
+                    Rectangle door = ((RectangleMapObject) obj).getRectangle();
+                    if (rect.overlaps(door)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void closeDoors() {
         doorsClosed = true;
 
