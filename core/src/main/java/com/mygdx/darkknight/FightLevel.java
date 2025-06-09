@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.*;
 import com.mygdx.darkknight.Assets;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.List;
 import java.util.Random;
@@ -124,19 +125,34 @@ public class FightLevel {
     }
 
     private Enemy createEnemy(Vector2 pos) {
-        // Додаємо шанс 20% на створення привида
+        // Adjusted probabilities (without Meteor)
         float randomValue = MathUtils.random(0f, 1f);
-        
-        if (randomValue < 0.2f) {
-            // Створюємо привида
+
+        if (randomValue < 0.20f) {  // Ghost - 20% chance (was 15%)
             return new Ghost(
                     pos.x,
                     pos.y,
                     gameMap,
                     this.roomArea
             );
-        } else if (randomValue < 0.6f) {
-            // Створюємо ворога з ближньою атакою (40% шанс)
+        } else if (randomValue < 0.40f) {  // Turret - 20% chance (was 15%)
+            Turret.TurretMode mode = Turret.TurretMode.values()[MathUtils.random(0, 3)];
+            return new Turret(
+                    pos.x,
+                    pos.y,
+                    gameMap,
+                    this.roomArea,
+                    bullets,
+                    mode
+            );
+        } else if (randomValue < 0.60f) {  // Teleporter - 20% chance (was 15%)
+            return new Teleporter(
+                    pos.x,
+                    pos.y,
+                    gameMap,
+                    this.roomArea
+            );
+        } else if (randomValue < 0.80f) {  // ShortAttackEnemy - 20% chance (was 20%)
             return new ShortAttackEnemy(
                     Assets.shortEnemyTexture,
                     pos.x,
@@ -149,8 +165,7 @@ public class FightLevel {
                     1.5f,  // attackCooldown
                     gameMap, new ShortAttackAI(this.roomArea)
             );
-        } else {
-            // Створюємо ворога з дальньою атакою (40% шанс)
+        } else {  // LongAttackEnemy - 20% chance (was 25%)
             return new LongAttackEnemy(
                     Assets.longEnemyTexture,
                     pos.x,
@@ -161,7 +176,7 @@ public class FightLevel {
                     3,
                     1,
                     1.0f,
-                    Assets.bulletTexture, // Використовуємо текстуру з Assets
+                    Assets.bulletTexture,
                     bullets,
                     gameMap, new LongAttackAI(this.roomArea)
             );

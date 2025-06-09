@@ -8,7 +8,7 @@ import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 
 public abstract class Enemy {
-    private Texture texture;
+    Texture texture;
     private float x, y;
     private int width, height;
     private float speed;
