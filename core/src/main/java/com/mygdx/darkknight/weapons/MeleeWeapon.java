@@ -14,7 +14,7 @@ public class MeleeWeapon extends Weapon {
     private boolean damageApplied = false;
     private boolean flip;
     private float attackTime = 0;
-    private final float attackDuration = 0.2f; // у секундах
+    private final float attackDuration = 0.1f; // у секундах
     private float startAngle, targetAngle;
     private List<Enemy> enemies;
     private Hero hero;
@@ -29,7 +29,7 @@ public class MeleeWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            centerX, flip ? centerY - getHeight()* 1.5f : centerY - getHeight() /2,
+            centerX, flip ? centerY - getHeight() - getHeight()/3 : centerY - getHeight()/3,
             0, flip ? getWidth() : 0,
             getWidth(), getHeight(),
             1, 1,
@@ -74,7 +74,9 @@ public class MeleeWeapon extends Weapon {
     }
 
     public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies, Texture bulletTexture){
-        startAttack(hero, enemies);
+        if (!isAttacking()){
+            startAttack(hero, enemies);
+        }
     }
 
     public void startAttack(Hero hero, List<Enemy> enemies) {
@@ -92,9 +94,15 @@ public class MeleeWeapon extends Weapon {
     }
 
     private void applyDamage() {
-        float attackStartAngle = startAngle + 45;
-        float attackEndAngle = targetAngle + 45;
-
+        float attackStartAngle;
+        float attackEndAngle;
+        if (flip){
+            attackStartAngle = startAngle;
+            attackEndAngle = targetAngle;
+        } else {
+            attackStartAngle = startAngle + 180;
+            attackEndAngle = targetAngle + 180;
+        }
         for (Enemy enemy : enemies) {
             float ex = enemy.getX() - hero.getCenterX();
             float ey = enemy.getY() - hero.getCenterY();
