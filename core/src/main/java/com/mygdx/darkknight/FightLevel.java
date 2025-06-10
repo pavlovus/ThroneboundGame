@@ -128,14 +128,20 @@ public class FightLevel {
         // Adjusted probabilities (without Meteor)
         float randomValue = MathUtils.random(0f, 1f);
 
-        if (randomValue < 0.20f) {  // Ghost - 20% chance (was 15%)
-            return new Ghost(
-                    pos.x,
-                    pos.y,
-                    gameMap,
-                    this.roomArea
+        if (randomValue <= 1f) {  // Ghost - 20% chance (was 15%)
+            return new ShortAttackEnemy(
+                Assets.shortEnemyTexture,
+                pos.x,
+                pos.y,
+                20,    // width
+                30,    // height
+                200f,  // speed
+                3,     // health
+                1,     // damage
+                1.5f,  // attackCooldown
+                gameMap, new ShortAttackAI(this.roomArea)
             );
-        } else if (randomValue < 0.40f) {  // Turret - 20% chance (was 15%)
+        } /*else if (randomValue < 0.40f) {  // Turret - 20% chance (was 15%)
             Turret.TurretMode mode = Turret.TurretMode.values()[MathUtils.random(0, 3)];
             return new Turret(
                     pos.x,
@@ -153,17 +159,11 @@ public class FightLevel {
                     this.roomArea
             );
         } else if (randomValue < 0.80f) {  // ShortAttackEnemy - 20% chance (was 20%)
-            return new ShortAttackEnemy(
-                    Assets.shortEnemyTexture,
-                    pos.x,
-                    pos.y,
-                    20,    // width
-                    30,    // height
-                    200f,  // speed
-                    3,     // health
-                    1,     // damage
-                    1.5f,  // attackCooldown
-                    gameMap, new ShortAttackAI(this.roomArea)
+            return new Ghost(
+                pos.x,
+                pos.y,
+                gameMap,
+                this.roomArea
             );
         } else {  // LongAttackEnemy - 20% chance (was 25%)
             return new LongAttackEnemy(
@@ -180,7 +180,8 @@ public class FightLevel {
                     bullets,
                     gameMap, new LongAttackAI(this.roomArea)
             );
-        }
+        }*/
+        return null;
     }
 
     public String getStateName() {

@@ -1,11 +1,11 @@
 package com.mygdx.darkknight;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.effects.Effect;
+import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;

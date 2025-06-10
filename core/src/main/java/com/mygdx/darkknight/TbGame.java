@@ -16,6 +16,9 @@ import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
+import com.mygdx.darkknight.weapons.MeleeWeapon;
+import com.mygdx.darkknight.weapons.RangedWeapon;
+import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,7 @@ public class TbGame implements Screen {
     public void show() {
         // Завантажуємо всі текстури
         Assets.load();
-        
+
         pauseMenu = new PauseMenu(this);
         restartMenu = new RestartMenu(this);
         gameMap = new GameMap("FirstMap.tmx");
@@ -80,7 +83,7 @@ public class TbGame implements Screen {
         enemies = new ArrayList<>();
         bulletTexture = new Texture("core/assets/arrow.png");
 
-        weapon = new Weapon("core/assets/bow.png", 1);
+        weapon = new MeleeWeapon("core/assets/sword.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
 //        hero.addEffect(testEffect);
@@ -165,6 +168,7 @@ public class TbGame implements Screen {
 
         hero.draw(batch);
         for (Enemy e : enemies) e.draw(batch);
+        weapon.update(delta, hero);
         if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
             weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
         else
@@ -360,10 +364,7 @@ public class TbGame implements Screen {
         hero.moveWithCollision(dx, dy, gameMap); // <<< ДОБАВЛЕНО - метод з перевіркою колізій
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            float weaponAngle = weapon.getAngle();
-            float gunX = hero.getCenterX();
-            float gunY = hero.getCenterY();
-            bullets.add(new Bullet(gunX, gunY, weaponAngle, bulletTexture, false));
+            weapon.attack(hero, bullets, enemies, bulletTexture);
         }
     }
 
