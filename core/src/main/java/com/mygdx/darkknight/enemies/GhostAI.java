@@ -12,133 +12,75 @@ import com.mygdx.darkknight.effects.Slowness;
 import com.mygdx.darkknight.effects.Weakness;
 
 public class GhostAI implements EnemyAI {
-    private static final float TELEPORT_COOLDOWN = 5f; // Час між телепортаціями
     private static final float EFFECT_DURATION = 5f; // Тривалість ефектів
-    private static final float VISIBILITY_CHANGE_TIME = 2f; // Час зміни видимості
-    
+    private static final float MIN_ALPHA = 0.3f; // Мінімальна прозорість (30%)
+    private static final float MAX_ALPHA = 0.7f; // Максимальна прозорість (70%)
+    private static final float ALPHA_CHANGE_SPEED = 0.5f; // Швидкість зміни прозорості
+
     private Rectangle roomBounds;
-    private float teleportTimer = 0f;
-    private float visibilityTimer = 0f;
-    private float currentAlpha = 1.0f; // Поточна прозорість (1.0 = повністю видимий)
-    private boolean fadingIn = false; // Чи стає привид більш видимим
-    
+    private boolean increasingAlpha = true; // Чи збільшується прозорість
+
     public GhostAI(Rectangle roomBounds) {
         this.roomBounds = roomBounds;
-        // Одразу телепортуємо привида при створенні
-        teleportTimer = 0f;
     }
-    
+
     @Override
     public void update(Enemy self, Hero hero, float delta) {
-        // Оновлюємо таймери
-        teleportTimer -= delta;
-        visibilityTimer -= delta;
-        
-        // Оновлюємо видимість привида
-        updateVisibility(self, delta);
-        
-        // Перевіряємо, чи час телепортуватися
-        if (teleportTimer <= 0) {
-            teleportToRandomLocation(self);
-            teleportTimer = TELEPORT_COOLDOWN;
-        }
-        
-        // Рухаємося прямо до гравця (крізь стіни)
-        moveTowardsHero(self, hero, delta);
-        
-        // Перевіряємо зіткнення з гравцем
-        if (self.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
-            applyRandomEffect(hero);
-            // Привид зникає після зіткнення (помирає)
-            self.takeDamage(1);
-        }
-    }
-    
-    /**
-     * Телепортує привида у випадкове місце в межах кімнати
-     */
-    private void teleportToRandomLocation(Enemy self) {
-        float x = MathUtils.random(roomBounds.x, roomBounds.x + roomBounds.width - self.getWidth());
-        float y = MathUtils.random(roomBounds.y, roomBounds.y + roomBounds.height - self.getHeight());
-        
-        // Встановлюємо нову позицію без перевірки колізій
-        self.setPosition(x, y);
-        
-        // Починаємо з'являтися
-        fadingIn = true;
-        currentAlpha = 0.1f;
-        visibilityTimer = VISIBILITY_CHANGE_TIME;
-    }
-    
-    /**
-     * Оновлює видимість привида (прозорість)
-     */
-    private void updateVisibility(Enemy self, float delta) {
-        if (visibilityTimer <= 0) {
-            // Змінюємо напрямок зміни прозорості
-            fadingIn = !fadingIn;
-            visibilityTimer = VISIBILITY_CHANGE_TIME;
-        }
-        
-        // Змінюємо прозорість
-        if (fadingIn) {
-            currentAlpha += delta / VISIBILITY_CHANGE_TIME;
-            if (currentAlpha > 1.0f) currentAlpha = 1.0f;
+        // 1. Рух до героя
+        Vector2 direction = new Vector2(hero.getCenterX() - self.getCenterX(), hero.getCenterY() - self.getCenterY()).nor();
+        float dx = direction.x * self.getSpeed() * delta;
+        float dy = direction.y * self.getSpeed() * delta;
+
+        // Тепер викликаємо перевизначений метод move() з Ghost, який ігнорує колізії
+        self.move(dx, dy); // <<< ЗМІНА ТУТ
+
+        // Обмежуємо позицію в межах кімнати (привид не має вилітати за межі ігрового поля)
+        float newX = self.getX();
+        float newY = self.getY();
+
+        newX = MathUtils.clamp(newX, roomBounds.x, roomBounds.x + roomBounds.width - self.getWidth());
+        newY = MathUtils.clamp(newY, roomBounds.y, roomBounds.y + roomBounds.height - self.getHeight());
+
+        // Встановлюємо остаточну позицію після обмеження в межах кімнати
+        // Це важливо, якщо roomBounds менші за карту, щоб привид не вилетів.
+        self.setPosition(newX, newY); // >>> Це має викликати простий Enemy.setPosition або Ghost.setPosition, якщо він такий же простий
+
+        // 2. Зміна прозорості
+        float currentAlpha = ((Ghost) self).getAlpha();
+        if (increasingAlpha) {
+            currentAlpha += ALPHA_CHANGE_SPEED * delta;
+            if (currentAlpha >= MAX_ALPHA) {
+                currentAlpha = MAX_ALPHA;
+                increasingAlpha = false;
+            }
         } else {
-            currentAlpha -= delta / VISIBILITY_CHANGE_TIME;
-            if (currentAlpha < 0.2f) currentAlpha = 0.2f; // Не робимо повністю невидимим
+            currentAlpha -= ALPHA_CHANGE_SPEED * delta;
+            if (currentAlpha <= MIN_ALPHA) {
+                currentAlpha = MIN_ALPHA;
+                increasingAlpha = true;
+            }
         }
-        
-        // Встановлюємо прозорість привида
-        if (self instanceof Ghost) {
-            ((Ghost) self).setAlpha(currentAlpha);
+        ((Ghost) self).setAlpha(currentAlpha);
+
+        // 3. Накладання ефекту при контакті
+        if (hero.getBoundingRectangle().overlaps(self.getBoundingRectangle()) && self.canAttack()) {
+            applyRandomEffect(hero);
+            self.resetAttackCooldown(); // Скидаємо кулдаун для ефекту
+
+            // Після накладання ефекту, привид зникає (телепортується в випадкову позицію в межах кімнати)
+            // і знову починає рухатися до героя.
+            teleportToRandomPosition(self);
+            ((Ghost) self).setAlpha(MIN_ALPHA); // Робимо його знову напівпрозорим після телепортації
         }
     }
-    
-    /**
-     * Рухає привида прямо до гравця, ігноруючи перешкоди
-     */
-    private void moveTowardsHero(Enemy self, Hero hero, float delta) {
-        Vector2 ghostPos = self.getCenter();
-        Vector2 heroPos = hero.getCenter();
-        
-        // Обчислюємо напрямок до гравця
-        Vector2 direction = new Vector2(heroPos).sub(ghostPos).nor();
-        
-        // Рухаємося до гравця з постійною швидкістю
-        float moveSpeed = self.getSpeed() * delta;
-        
-        // Використовуємо спеціальний метод для руху крізь стіни
-        moveGhostThroughWalls(self, direction.x * moveSpeed, direction.y * moveSpeed);
-    }
-    
-    /**
-     * Спеціальний метод для руху привида крізь стіни
-     */
-    private void moveGhostThroughWalls(Enemy self, float dx, float dy) {
-        // Просто змінюємо позицію без перевірки колізій
-        float newX = self.getX() + dx;
-        float newY = self.getY() + dy;
-        
-        // Перевіряємо лише межі кімнати
-        if (newX < roomBounds.x) newX = roomBounds.x;
-        if (newX > roomBounds.x + roomBounds.width - self.getWidth()) 
-            newX = roomBounds.x + roomBounds.width - self.getWidth();
-        if (newY < roomBounds.y) newY = roomBounds.y;
-        if (newY > roomBounds.y + roomBounds.height - self.getHeight()) 
-            newY = roomBounds.y + roomBounds.height - self.getHeight();
-        
-        // Встановлюємо нову позицію
-        self.setPosition(newX, newY);
-    }
-    
+
     /**
      * Накладає випадковий ефект на гравця
      */
     private void applyRandomEffect(Hero hero) {
         int effectType = MathUtils.random(0, 2); // 0-2 для трьох типів ефектів
         Effect effect = null;
-        
+
         switch (effectType) {
             case 0:
                 effect = new Poison(EFFECT_DURATION, 1, 1f, new Texture(Gdx.files.internal("poison.png")));
@@ -150,9 +92,30 @@ public class GhostAI implements EnemyAI {
                 effect = new Weakness(EFFECT_DURATION, 1, new Texture(Gdx.files.internal("weakness.png")));
                 break;
         }
-        
         if (effect != null) {
             hero.addEffect(effect);
         }
+    }
+
+    /**
+     * Телепортує привида в випадкову допустиму позицію в межах кімнати
+     */
+    private void teleportToRandomPosition(Enemy self) {
+        final int MAX_ATTEMPTS = 100;
+        for (int i = 0; i < MAX_ATTEMPTS; i++) {
+            float randomX = roomBounds.x + MathUtils.random(0, roomBounds.width - self.getWidth());
+            float randomY = roomBounds.y + MathUtils.random(0, roomBounds.height - self.getHeight());
+            Vector2 newPos = new Vector2(randomX, randomY);
+
+            // Оскільки привид пролітає крізь стіни, нам не потрібно перевіряти map.isCellBlocked()
+            // Просто перевіряємо, чи позиція знаходиться в межах кімнати
+            if (roomBounds.contains(newPos.x, newPos.y)) {
+                self.setPosition(newPos.x, newPos.y);
+                return;
+            }
+        }
+        // Якщо не вдалося знайти випадкову позицію після багатьох спроб,
+        // просто перемістимо його в центр кімнати.
+        self.setPosition(roomBounds.x + roomBounds.width / 2, roomBounds.y + roomBounds.height / 2);
     }
 }

@@ -12,7 +12,8 @@ import java.awt.*;
 
 public abstract class Enemy {
     Texture texture;
-    private float x, y;
+    float x;
+    float y;
     private int width, height;
     private float speed;
     private int health;
