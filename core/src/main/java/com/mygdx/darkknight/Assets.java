@@ -14,9 +14,8 @@ public class Assets {
     public static Texture meteorTexture;
     public static Texture meteorWarningTexture;
     public static Texture meteorFireTexture;
-
-    // Bullet Texture
-    public static Texture bulletTexture;
+    public static Texture enemyBulletTexture;
+    public static Texture turretBulletTexture;
 
     // Effect Textures
     public static Texture poisonEffectTexture;
@@ -35,7 +34,8 @@ public class Assets {
         meteorFireTexture = new Texture("core/assets/fire.png");
 
         // Load bullet texture
-       //bulletTexture = new Texture("core/assets/bullet.png");
+       enemyBulletTexture = new Texture("core/assets/enemy_bullet.png");
+       turretBulletTexture = new Texture("core/assets/turret_bullet.png");
 
         // Load effect textures
         poisonEffectTexture = new Texture("assets/poison.png");
@@ -55,7 +55,7 @@ public class Assets {
         meteorFireTexture.dispose();
 
         // Dispose of bullet texture
-        bulletTexture.dispose();
+        enemyBulletTexture.dispose();
 
         // Dispose of effect textures
         poisonEffectTexture.dispose();

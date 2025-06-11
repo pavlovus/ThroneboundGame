@@ -14,9 +14,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
+import com.mygdx.darkknight.levels.FightLevel;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
 import com.mygdx.darkknight.weapons.*;
+import com.mygdx.darkknight.levels.FirstLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,11 +80,11 @@ public class TbGame implements Screen {
 
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
-        bulletTexture = new Texture("core/assets/fireball.png");
+        bulletTexture = new Texture("core/assets/arrow.png");
 
         //weapon = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 32);
-        //weapon = new ArrowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
-        weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
+        weapon = new ArrowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
+        //weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
         //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
@@ -99,9 +101,7 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FightLevel(
-                3120, 70, 650, 380, 5, bulletTexture, bullets, gameMap, 4
-        ));
+        fightLevels.add(new FirstLevel(3120, 70, 650, 380, gameMap));
     }
 
     @Override
