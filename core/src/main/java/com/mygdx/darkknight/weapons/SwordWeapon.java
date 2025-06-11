@@ -1,6 +1,5 @@
 package com.mygdx.darkknight.weapons;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
@@ -8,7 +7,7 @@ import com.mygdx.darkknight.enemies.Enemy;
 
 import java.util.List;
 
-public class MeleeWeapon extends Weapon {
+public class SwordWeapon extends Weapon {
     private float radius;
     private boolean attacking = false;
     private boolean damageApplied = false;
@@ -21,7 +20,7 @@ public class MeleeWeapon extends Weapon {
     private enum AttackPhase { FORWARD, RETURN }
     private AttackPhase attackPhase = null;
 
-    public MeleeWeapon(String texturePath, int damage, int width, int height, float radius) {
+    public SwordWeapon(String texturePath, int damage, int width, int height, float radius) {
         super(texturePath, damage, width, height);
         this.radius = radius;
     }
@@ -73,7 +72,7 @@ public class MeleeWeapon extends Weapon {
         }
     }
 
-    public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies, Texture bulletTexture){
+    public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies){
         if (!isAttacking()){
             startAttack(hero, enemies);
         }

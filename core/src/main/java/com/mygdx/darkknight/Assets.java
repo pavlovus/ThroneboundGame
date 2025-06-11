@@ -35,7 +35,7 @@ public class Assets {
         meteorFireTexture = new Texture("core/assets/fire.png");
 
         // Load bullet texture
-        bulletTexture = new Texture("core/assets/bullet.png");
+       //bulletTexture = new Texture("core/assets/bullet.png");
 
         // Load effect textures
         poisonEffectTexture = new Texture("assets/poison.png");

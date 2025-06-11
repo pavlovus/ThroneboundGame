@@ -20,7 +20,7 @@ public class LongAttackEnemy extends Enemy {
     public void attack(Hero hero) {
         float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
 
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, true, this));
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, true, this, 30, 10,600f));
         resetAttackCooldown();
 
     }

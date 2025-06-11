@@ -6,47 +6,50 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.Enemy;
 
-public class Bullet {
-    private static final float SPEED = 600f;
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 10;
+import java.util.List;
 
-    private Vector2 position;
+public class Bullet {
+    protected float speed;
+    protected int width, height;
+    protected Vector2 position;
     private Vector2 velocity;
-    private float angle;
+    protected float angle;
     private Texture texture;
     private boolean isOpponent;
     private Enemy enemy;
     private final Vector2 startPosition;
-    private boolean remove;
+    protected boolean remove;
 
-    public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent) {
+    public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, int width, int height, float speed) {
         this.texture = texture;
+        this.speed = speed;
+        this.height = height;
+        this.width = width;
         this.isOpponent = isOpponent;
-        this.position = new Vector2(startX - WIDTH / 2f, startY - HEIGHT / 2f);
+        this.position = new Vector2(startX - width / 2f, startY - height / 2f);
         this.angle = angleDegrees;
         float angleRadians = (float) Math.toRadians(angleDegrees);
-        this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(SPEED);
+        this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(speed);
         this.startPosition = new Vector2(startX, startY);
         this.remove = false;
     }
 
-    public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, Enemy owner) {
+    public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, Enemy owner,  int width, int height, float speed) {
         this.texture = texture;
         this.isOpponent = isOpponent;
         this.enemy = owner;
-        this.position = new Vector2(startX - WIDTH / 2f, startY - HEIGHT / 2f);
+        this.position = new Vector2(startX - width / 2f, startY - height / 2f);
         this.angle = angleDegrees;
         float angleRadians = (float) Math.toRadians(angleDegrees);
-        this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(SPEED);
+        this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(speed);
         this.startPosition = new Vector2(startX, startY);
     }
 
-    public void update(float delta, GameMap map) {
+    public void update(float delta, GameMap map, List<Enemy> enemies) {
         // Рух кулі
-        float dx = (float) (SPEED * Math.cos(Math.toRadians(angle))) * delta;
-        float dy = (float) (SPEED * Math.sin(Math.toRadians(angle))) * delta;
-        Rectangle futureRect = new Rectangle(position.x + dx, position.y + dy, WIDTH, HEIGHT);
+        float dx = (float) (speed * Math.cos(Math.toRadians(angle))) * delta;
+        float dy = (float) (speed * Math.sin(Math.toRadians(angle))) * delta;
+        Rectangle futureRect = new Rectangle(position.x + dx, position.y + dy, width, height);
         if(!map.isCellBlocked(futureRect)) {
             position.x += dx;
             position.y += dy;
@@ -56,11 +59,11 @@ public class Bullet {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x, position.y, WIDTH / 2f, HEIGHT / 2f, WIDTH, HEIGHT, 1, 1, angle, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        batch.draw(texture, position.x, position.y, width / 2f, height / 2f, width, height, 1, 1, angle, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
 
     public Rectangle getBoundingRectangle() {
-        return new Rectangle(position.x, position.y, WIDTH, HEIGHT);
+        return new Rectangle(position.x, position.y, width, height);
     }
 
     public boolean isOpponent() {

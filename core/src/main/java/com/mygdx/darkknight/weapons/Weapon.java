@@ -22,7 +22,7 @@ public abstract class Weapon {
     }
 
     public abstract void draw(SpriteBatch batch, float centerX, float centerY, boolean flip);
-    public abstract void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies, Texture bulletTexture);
+    public abstract void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies);
     public abstract void update(float deltaTime, Hero hero);
 
     public void updateAngle(float mouseX, float mouseY, float heroX, float heroY) {

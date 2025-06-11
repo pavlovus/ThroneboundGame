@@ -6,6 +6,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
+import com.badlogic.gdx.math.Polygon;
+
+import java.awt.*;
 
 public abstract class Enemy {
     Texture texture;
@@ -108,6 +111,18 @@ public abstract class Enemy {
     // --- Getters and Setters ---
     public Rectangle getBoundingRectangle() {
         return new Rectangle(x, y, width, height);
+    }
+
+    public Polygon getBoundingPolygon() {
+        float[] vertices = new float[] {
+            0, 0,
+            getWidth(), 0,
+            getWidth(), getHeight(),
+            0, getHeight()
+        };
+        Polygon p = new Polygon(vertices);
+        p.setPosition(x, y);
+        return p;
     }
 
     public boolean isDead() {

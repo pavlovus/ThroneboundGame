@@ -16,9 +16,7 @@ import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
-import com.mygdx.darkknight.weapons.MeleeWeapon;
-import com.mygdx.darkknight.weapons.RangedWeapon;
-import com.mygdx.darkknight.weapons.Weapon;
+import com.mygdx.darkknight.weapons.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,6 @@ public class TbGame implements Screen {
     private Hero hero;
     private Weapon weapon;
     private Texture bulletTexture;
-    private Texture enemyTexture;
     private Texture barBackgroundTexture;
     private Texture heartTexture;
     private Texture shieldTexture;
@@ -77,13 +74,16 @@ public class TbGame implements Screen {
         barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
         heartTexture = new Texture(Gdx.files.internal("heart.png"));
         shieldTexture = new Texture(Gdx.files.internal("shield.png"));
-        enemyTexture = new Texture("core/assets/skeleton.png");
+
 
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
-        bulletTexture = new Texture("core/assets/arrow.png");
+        bulletTexture = new Texture("core/assets/fireball.png");
 
-        weapon = new MeleeWeapon("core/assets/sword.png", 3, 32, 32, 32);
+        //weapon = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 32);
+        //weapon = new ArrowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
+        weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
+        //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
 //        hero.addEffect(testEffect);
@@ -313,7 +313,7 @@ public class TbGame implements Screen {
     private void updateBullets(float delta) {
         for (int i = bullets.size() - 1; i >= 0; i--) {
             Bullet b = bullets.get(i);
-            b.update(delta, gameMap);
+            b.update(delta, gameMap, enemies);
 
             if (b.shouldRemove()) {
                 bullets.remove(i);
@@ -328,6 +328,7 @@ public class TbGame implements Screen {
                     e.takeDamage(weapon.getDamage());
                     bullets.remove(i);
                     bulletRemoved = true;
+                    if(b instanceof MagicBullet) ((MagicBullet) b).explode(enemies);
                     break;
                 }
             }
@@ -364,7 +365,7 @@ public class TbGame implements Screen {
         hero.moveWithCollision(dx, dy, gameMap); // <<< ДОБАВЛЕНО - метод з перевіркою колізій
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            weapon.attack(hero, bullets, enemies, bulletTexture);
+            weapon.attack(hero, bullets, enemies);
         }
     }
 
@@ -394,7 +395,6 @@ public class TbGame implements Screen {
         hero.dispose();
         weapon.dispose();
         bulletTexture.dispose();
-        enemyTexture.dispose();
         barBackgroundTexture.dispose();
         heartTexture.dispose();
         shieldTexture.dispose();
