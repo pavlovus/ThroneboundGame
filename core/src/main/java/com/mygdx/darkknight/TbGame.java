@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.levels.FightLevel;
+import com.mygdx.darkknight.levels.SecondLevel;
+import com.mygdx.darkknight.levels.ThirdLevel;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
 import com.mygdx.darkknight.weapons.*;
@@ -102,6 +104,8 @@ public class TbGame implements Screen {
 
 
         fightLevels.add(new FirstLevel(3120, 70, 650, 380, gameMap, bullets));
+        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets));
+        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets));
     }
 
     @Override
