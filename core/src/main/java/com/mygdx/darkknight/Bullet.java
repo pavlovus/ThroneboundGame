@@ -40,9 +40,13 @@ public class Bullet {
         this.enemy = owner;
         this.position = new Vector2(startX - width / 2f, startY - height / 2f);
         this.angle = angleDegrees;
+        this.height = height;
+        this.width = width;
         float angleRadians = (float) Math.toRadians(angleDegrees);
         this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(speed);
         this.startPosition = new Vector2(startX, startY);
+        this.remove = false;
+        this.speed = speed;
     }
 
     public void update(float delta, GameMap map, List<Enemy> enemies) {

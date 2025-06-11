@@ -34,7 +34,7 @@ public class Assets {
         meteorFireTexture = new Texture("core/assets/fire.png");
 
         // Load bullet texture
-       enemyBulletTexture = new Texture("core/assets/enemy_bullet.png");
+       enemyBulletTexture = new Texture("core/assets/arrow.png");
        turretBulletTexture = new Texture("core/assets/turret_bullet.png");
 
         // Load effect textures

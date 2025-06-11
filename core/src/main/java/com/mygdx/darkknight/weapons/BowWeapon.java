@@ -8,10 +8,10 @@ import com.mygdx.darkknight.enemies.Enemy;
 
 import java.util.List;
 
-public class ArrowWeapon extends Weapon {
+public class BowWeapon extends Weapon {
     private Texture bulletTexture;
 
-    public ArrowWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
+    public BowWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
     }
