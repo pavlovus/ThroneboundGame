@@ -8,12 +8,14 @@ import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.Enemy;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 public abstract class FightLevel {
     protected final Rectangle roomArea;
-    protected int maxEnemies;
+    protected int maxEnemiesPerWave; // Змінено на кількість ворогів на хвилю
     protected Texture bulletTexture;
     protected List<Bullet> bullets;
     protected GameMap gameMap;
@@ -21,10 +23,13 @@ public abstract class FightLevel {
     protected int totalWaves;
     protected int currentWave = 0;
     protected float waveDelayTimer = 0f;
-    protected final float delayBetweenWaves = 3f;
+    protected final float delayBetweenWaves = 1.5f;
+    protected final float delayBeforeDoorOpen = 1f; // Затримка перед відкриттям дверей
+
+    protected List<Enemy> currentWaveEnemies; // Список ворогів поточної хвилі
 
     protected enum LevelState {
-        INACTIVE, ACTIVE, WAITING_NEXT_WAVE, COMPLETED
+        INACTIVE, ACTIVE, WAITING_NEXT_WAVE, WAITING_FOR_DOOR_OPEN, COMPLETED
     }
     protected LevelState state = LevelState.INACTIVE;
 
@@ -32,24 +37,34 @@ public abstract class FightLevel {
 
     public FightLevel(float x, float y, float width, float height) {
         this.roomArea = new Rectangle(x, y, width, height);
+        this.currentWaveEnemies = new ArrayList<>(); // Ініціалізуємо список ворогів поточної хвилі
     }
 
     public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
+        // Очищаємо список currentWaveEnemies від мертвих ворогів
+        Iterator<Enemy> iterator = currentWaveEnemies.iterator();
+        while (iterator.hasNext()) {
+            Enemy enemy = iterator.next();
+            if (enemy.isDead()) {
+                iterator.remove();
+            }
+        }
+
         switch (state) {
             case INACTIVE:
                 if (roomArea.contains(hero.getBoundingRectangle()) && !gameMap.isTouchingDoors(hero.getBoundingRectangle())) {
                     state = LevelState.ACTIVE;
+                    currentWave = 1; // Починаємо з першої хвилі
                     spawnEnemies(globalEnemies);
                     gameMap.closeDoors();
                 }
                 break;
 
             case ACTIVE:
-                if (!checkIfEnemiesAreAliveInRoom(globalEnemies)) {
-                    currentWave++;
+                if (currentWaveEnemies.isEmpty()) { // Перевіряємо, чи всі вороги поточної хвилі мертві
                     if (currentWave >= totalWaves) {
-                        state = LevelState.COMPLETED;
-                        gameMap.openDoors();
+                        state = LevelState.WAITING_FOR_DOOR_OPEN;
+                        waveDelayTimer = delayBeforeDoorOpen; // Затримка перед відкриттям дверей
                     } else {
                         state = LevelState.WAITING_NEXT_WAVE;
                         waveDelayTimer = delayBetweenWaves;
@@ -57,35 +72,39 @@ public abstract class FightLevel {
                 }
                 break;
 
+            case WAITING_FOR_DOOR_OPEN:
+                waveDelayTimer -= deltaTime;
+                if (waveDelayTimer <= 0f) {
+                    state = LevelState.COMPLETED;
+                    gameMap.openDoors();
+                }
+                break;
+
             case WAITING_NEXT_WAVE:
                 waveDelayTimer -= deltaTime;
                 if (waveDelayTimer <= 0f) {
+                    currentWave++;
                     state = LevelState.ACTIVE;
                     spawnEnemies(globalEnemies);
                 }
                 break;
 
             case COMPLETED:
+                // Нічого не робимо, рівень завершено
                 break;
         }
     }
 
-    protected void spawnEnemies(List<Enemy> enemies) {
-        for (int i = 0; i < maxEnemies; i++) {
+    protected void spawnEnemies(List<Enemy> globalEnemies) {
+        currentWaveEnemies.clear(); // Очищаємо список ворогів поточної хвилі перед спавном
+        for (int i = 0; i < maxEnemiesPerWave; i++) { // Використовуємо maxEnemiesPerWave
             Vector2 pos = findValidSpawnPosition();
             if (pos != null) {
-                enemies.add(createEnemy(pos));
+                Enemy newEnemy = createEnemy(pos);
+                globalEnemies.add(newEnemy);
+                currentWaveEnemies.add(newEnemy); // Додаємо ворога до списку поточної хвилі
             }
         }
-    }
-
-    protected boolean checkIfEnemiesAreAliveInRoom(List<Enemy> enemies) {
-        for (Enemy enemy : enemies) {
-            if (!enemy.isDead() && roomArea.contains(enemy.getBoundingRectangle())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     protected Vector2 findValidSpawnPosition() {
@@ -108,6 +127,10 @@ public abstract class FightLevel {
     }
 
     protected abstract Enemy createEnemy(Vector2 pos);
+
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
+    }
 
     public String getStateName() {
         return state.name();

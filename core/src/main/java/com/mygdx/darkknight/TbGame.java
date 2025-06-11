@@ -83,8 +83,8 @@ public class TbGame implements Screen {
         bulletTexture = new Texture("core/assets/arrow.png");
 
         //weapon = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 32);
-        //weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
-        weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
+        weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
+        //weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
         //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
