@@ -13,41 +13,45 @@ import java.util.List;
 public class AxeWeapon extends Weapon {
     private float radius;
     private boolean attacking = false;
-    private boolean damageApplied = false;
     private float attackTime = 0;
-    private final float attackDuration = 1f; // у секундах
-    private float startAngle, targetAngle;
+    private final float attackDuration = 0.5f; // у секундах
+    private float startAngle;
+    private float targetAngle;
     private List<Enemy> enemies;
     private Hero hero;
     private Polygon bounds;
     private float cooldownTime = 0;
     private final float cooldownDuration = 3f;
 
+    private final float fixedStartAngle = 45f;
+
     public AxeWeapon(String texturePath, int damage, int width, int height, float radius) {
         super(texturePath, damage, width, height);
         this.radius = radius;
+        setAngle(fixedStartAngle);
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            centerX, centerY - getHeight()/3,
+            centerX + getWidth()/3, centerY - getHeight() / 3f,
             0, 0,
             getWidth(), getHeight(),
             1, 1,
-            getAngle(),
+            attacking ? getAngle() : 45f,
             0, 0,
             getTexture().getWidth(), getTexture().getHeight(),
             false, false
         );
-        float[] vertices = new float[] {
+
+        float[] vertices = new float[]{
             0, 0,
             getWidth(), 0,
             getWidth(), getHeight(),
             0, getHeight()
         };
         bounds = new Polygon(vertices);
-        bounds.setPosition(centerX, centerY - getHeight()/3);
+        bounds.setPosition(centerX, centerY - getHeight() / 3f);
         bounds.setOrigin(0, 0);
         bounds.setRotation(getAngle());
     }
@@ -73,13 +77,13 @@ public class AxeWeapon extends Weapon {
 
         if (progress >= 1f) {
             attacking = false;
-            damageApplied = false;
             cooldownTime = cooldownDuration;
+            setAngle(fixedStartAngle); // повернути до стартового кута після атаки
         }
     }
 
     public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies) {
-        if (!isAttacking()){
+        if (!isAttacking()) {
             startAttack(hero, enemies);
         }
     }
@@ -89,13 +93,20 @@ public class AxeWeapon extends Weapon {
         this.attackTime = 0;
         this.enemies = enemies;
         this.hero = hero;
-        this.startAngle = getAngle();
-        this.targetAngle = getAngle() - 360;
+        this.startAngle = fixedStartAngle;
+        this.targetAngle = fixedStartAngle - 360f;
+        setAngle(fixedStartAngle);
     }
 
-    public boolean isAttacking(){return attacking;}
+    public boolean isAttacking() {
+        return attacking;
+    }
 
-    public float getRadius(){return radius;}
+    public float getRadius() {
+        return radius;
+    }
 
-    public Polygon getBounds(){ return bounds;}
+    public Polygon getBounds() {
+        return bounds;
+    }
 }

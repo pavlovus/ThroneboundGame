@@ -14,7 +14,7 @@ public class Bullet {
     protected Vector2 position;
     private Vector2 velocity;
     protected float angle;
-    private Texture texture;
+    protected Texture texture;
     private boolean isOpponent;
     private Enemy enemy;
     private final Vector2 startPosition;
@@ -79,4 +79,6 @@ public class Bullet {
     }
 
     public boolean shouldRemove() {return remove;}
+
+    public void setRemove(boolean remove) {this.remove = remove;}
 }

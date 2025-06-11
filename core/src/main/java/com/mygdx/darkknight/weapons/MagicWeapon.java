@@ -12,7 +12,7 @@ import java.util.List;
 public class MagicWeapon extends Weapon {
     private Texture bulletTexture;
     private float cooldownTime = 0;
-    private final float cooldownDuration = 3f;
+    private final float cooldownDuration = 2f;
 
     public MagicWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
@@ -22,14 +22,14 @@ public class MagicWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            centerX, centerY - getHeight() /2,
+            centerX - getWidth()/8, centerY - getHeight() /2,
             getWidth() / 2f, getHeight() / 2f,
             getWidth(), getHeight(),
             1, 1,
-            getAngle(),
+            45f,
             0, 0,
             getTexture().getWidth(), getTexture().getHeight(),
-            false, flip
+            false, false
         );
     }
 
@@ -40,9 +40,9 @@ public class MagicWeapon extends Weapon {
     public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies) {
         if (cooldownTime <= 0) {
             float weaponAngle = getAngle();
-            float gunX = hero.getCenterX();
-            float gunY = hero.getCenterY();
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle, bulletTexture, false, 16, 16, 200f, 1f, this));
+            float gunX = hero.getCenterX() + getWidth()/2;
+            float gunY = hero.getCenterY() + getHeight() /2;
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle, bulletTexture, false, 16, 16, 200f, 1.5f, this));
             cooldownTime = cooldownDuration;
         }
     }
