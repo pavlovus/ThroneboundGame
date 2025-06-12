@@ -35,7 +35,7 @@ public class Turret extends Enemy {
 
     public Turret(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, TurretMode mode) {
         // Турель має 5 HP, не рухається (швидкість 0) і завдає 1 шкоди
-        super(Assets.turretTopTexture, x, y, 32, 32, 0f, 5, 1, new TurretAI(roomBounds), gameMap);
+        super(Assets.turretTopTexture, x, y, 64, 64, 0f, 5, 1, new TurretAI(roomBounds), gameMap);
 
         this.bulletTexture = Assets.turretBulletTexture;
         this.bullets = bullets;
@@ -175,7 +175,7 @@ public class Turret extends Enemy {
     @Override
     public void draw(SpriteBatch batch) {
         // Малюємо основу турелі
-        batch.draw(baseTexture, getX(), getY(), getWidth(), getHeight());
+        batch.draw(baseTexture, getX()+10, getY()-5, getWidth()-20, getHeight()-20);
 
         // Малюємо верхню частину турелі з поворотом
         batch.draw(

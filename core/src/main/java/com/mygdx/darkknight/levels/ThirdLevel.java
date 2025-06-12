@@ -34,7 +34,7 @@ public class ThirdLevel extends FightLevel {
                 gameMap,
                 this.roomArea,
                 bullets,
-                Turret.TurretMode.AIMED
+                Turret.TurretMode.BURST
             );
         } else if (randomValue <= 0.15f + 0.25f) { // 15% + 25% = 40%
             // Телепортер

@@ -14,8 +14,8 @@ public class SecondLevel extends FightLevel {
     public SecondLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
         super(x, y, width, height);
 
-        this.maxEnemiesPerWave = 6; // Збільшимо кількість ворогів, оскільки типів більше
-        this.totalWaves = 4; // Збільшимо кількість хвиль
+        this.maxEnemiesPerWave = 1; // Збільшимо кількість ворогів, оскільки типів більше
+        this.totalWaves = 0; // Збільшимо кількість хвиль
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;

@@ -27,35 +27,44 @@ public class FirstLevel extends FightLevel {
     protected Enemy createEnemy(Vector2 pos) {
         float randomValue = (float) Math.random();
 
-        if (randomValue <= 0.5f) {
-            return new ShortAttackEnemy(
-                Assets.shortEnemyTexture,
-                pos.x,
-                pos.y,
-                20,
-                30,
-                200f,
-                3,
-                1,
-                1.5f,
-                gameMap, new ShortAttackAI(this.roomArea)
-            );
-        } else {
-            return new LongAttackEnemy(
-                Assets.longEnemyTexture,
-                pos.x,
-                pos.y,
-                20,
-                30,
-                150f,
-                2,
-                1,
-                1.5f,
-                bulletTexture,
-                bullets,
-                gameMap,
-                new LongAttackAI(this.roomArea)
-            );
-        }
+        return new Turret(
+            pos.x,
+            pos.y,
+            gameMap,
+            this.roomArea,
+            bullets,
+            Turret.TurretMode.ROTATING
+        );
+
+//        if (randomValue <= 0.5f) {
+//            return new ShortAttackEnemy(
+//                Assets.shortEnemyTexture,
+//                pos.x,
+//                pos.y,
+//                20,
+//                30,
+//                200f,
+//                3,
+//                1,
+//                1.5f,
+//                gameMap, new ShortAttackAI(this.roomArea)
+//            );
+//        } else {
+//            return new LongAttackEnemy(
+//                Assets.longEnemyTexture,
+//                pos.x,
+//                pos.y,
+//                20,
+//                30,
+//                150f,
+//                2,
+//                1,
+//                1.5f,
+//                bulletTexture,
+//                bullets,
+//                gameMap,
+//                new LongAttackAI(this.roomArea)
+//            );
+//        }
     }
 }
