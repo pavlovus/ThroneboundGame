@@ -31,8 +31,7 @@ public class GhostAI implements EnemyAI {
         float dx = direction.x * self.getSpeed() * delta;
         float dy = direction.y * self.getSpeed() * delta;
 
-        // Тепер викликаємо перевизначений метод move() з Ghost, який ігнорує колізії
-        self.move(dx, dy); // <<< ЗМІНА ТУТ
+        self.move(dx, dy); // Привид ігнорує колізії, як і раніше
 
         // Обмежуємо позицію в межах кімнати (привид не має вилітати за межі ігрового поля)
         float newX = self.getX();
@@ -41,9 +40,7 @@ public class GhostAI implements EnemyAI {
         newX = MathUtils.clamp(newX, roomBounds.x, roomBounds.x + roomBounds.width - self.getWidth());
         newY = MathUtils.clamp(newY, roomBounds.y, roomBounds.y + roomBounds.height - self.getHeight());
 
-        // Встановлюємо остаточну позицію після обмеження в межах кімнати
-        // Це важливо, якщо roomBounds менші за карту, щоб привид не вилетів.
-        self.setPosition(newX, newY); // >>> Це має викликати простий Enemy.setPosition або Ghost.setPosition, якщо він такий же простий
+        self.setPosition(newX, newY);
 
         // 2. Зміна прозорості
         float currentAlpha = ((Ghost) self).getAlpha();
@@ -62,15 +59,13 @@ public class GhostAI implements EnemyAI {
         }
         ((Ghost) self).setAlpha(currentAlpha);
 
-        // 3. Накладання ефекту при контакті
+        // 3. Накладання ефекту при контакті та зменшення здоров'я
         if (hero.getBoundingRectangle().overlaps(self.getBoundingRectangle()) && self.canAttack()) {
             applyRandomEffect(hero);
             self.resetAttackCooldown(); // Скидаємо кулдаун для ефекту
 
-            // Після накладання ефекту, привид зникає (телепортується в випадкову позицію в межах кімнати)
-            // і знову починає рухатися до героя.
-            teleportToRandomPosition(self);
-            ((Ghost) self).setAlpha(MIN_ALPHA); // Робимо його знову напівпрозорим після телепортації
+            // Зменшуємо здоров'я привида на 1
+            self.takeDamage(1); // Додано виклик takeDamage
         }
     }
 
@@ -95,27 +90,5 @@ public class GhostAI implements EnemyAI {
         if (effect != null) {
             hero.addEffect(effect);
         }
-    }
-
-    /**
-     * Телепортує привида в випадкову допустиму позицію в межах кімнати
-     */
-    private void teleportToRandomPosition(Enemy self) {
-        final int MAX_ATTEMPTS = 100;
-        for (int i = 0; i < MAX_ATTEMPTS; i++) {
-            float randomX = roomBounds.x + MathUtils.random(0, roomBounds.width - self.getWidth());
-            float randomY = roomBounds.y + MathUtils.random(0, roomBounds.height - self.getHeight());
-            Vector2 newPos = new Vector2(randomX, randomY);
-
-            // Оскільки привид пролітає крізь стіни, нам не потрібно перевіряти map.isCellBlocked()
-            // Просто перевіряємо, чи позиція знаходиться в межах кімнати
-            if (roomBounds.contains(newPos.x, newPos.y)) {
-                self.setPosition(newPos.x, newPos.y);
-                return;
-            }
-        }
-        // Якщо не вдалося знайти випадкову позицію після багатьох спроб,
-        // просто перемістимо його в центр кімнати.
-        self.setPosition(roomBounds.x + roomBounds.width / 2, roomBounds.y + roomBounds.height / 2);
     }
 }

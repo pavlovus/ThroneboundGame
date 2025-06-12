@@ -11,6 +11,10 @@ import com.mygdx.darkknight.Assets;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Teleporter extends Enemy {
     private static final float TELEPORT_COOLDOWN = 3.0f; // Час між телепортаціями
     private static final float ATTACK_RANGE = 40f; // Відстань атаки
@@ -24,6 +28,9 @@ public class Teleporter extends Enemy {
     private Vector2 teleportTarget; // Цільова позиція телепортації
     private Texture teleportEffectTexture; // Текстура ефекту телепортації
 
+    private List<TeleportAttackEffect> activeExplosions;
+
+
     public Teleporter(float x, float y, GameMap gameMap, Rectangle roomBounds) {
         // Телепортер має 3 HP, високу швидкість і 1 шкоди
         super(Assets.teleporterTexture, x, y, 32, 32, 200f, 3, 1, new TeleporterAI(roomBounds), gameMap);
@@ -35,6 +42,8 @@ public class Teleporter extends Enemy {
         this.teleportTarget = new Vector2();
         this.teleportEffectTexture = Assets.teleportEffectTexture;
 
+        this.activeExplosions = new ArrayList<>();
+
         // Встановлюємо перезарядку атаки
         setAttackCooldown(0.8f);
     }
@@ -45,6 +54,15 @@ public class Teleporter extends Enemy {
             // Обробка процесу телепортації
             updateTeleportation(delta);
             return;
+        }
+
+        Iterator<TeleportAttackEffect> iterator = activeExplosions.iterator();
+        while (iterator.hasNext()) {
+            TeleportAttackEffect effect = iterator.next();
+            effect.update(delta);
+            if (effect.isFinished()) {
+                iterator.remove();
+            }
         }
 
         // Оновлюємо таймер телепортації
@@ -175,6 +193,11 @@ public class Teleporter extends Enemy {
             // Звичайне малювання
             super.draw(batch);
         }
+
+        // Малюємо ефекти атаки
+        for (TeleportAttackEffect effect : activeExplosions) {
+            effect.draw(batch);
+        }
     }
 
     @Override
@@ -182,6 +205,12 @@ public class Teleporter extends Enemy {
         // Атакуємо гравця
         hero.takeDamage(getDamage());
         resetAttackCooldown();
+
+        // Створюємо ефект атаки на позиції героя з більшим розміром
+        activeExplosions.add(new TeleportAttackEffect(
+            hero.getX(), hero.getY(),              // Позиція ефекту (лівий нижній кут героя)
+            32, 32                                 // Розмір ефекту (збільшений для кращої видимості)
+        ));
 
         // Після атаки є шанс одразу телепортуватися
         if (MathUtils.randomBoolean(0.3f)) {
@@ -192,8 +221,7 @@ public class Teleporter extends Enemy {
     @Override
     public void dispose() {
         super.dispose();
-        // Не потрібно викликати dispose() для teleportEffectTexture,
-        // оскільки ця текстура керується класом Assets
+        activeExplosions.clear();
     }
 
     private Texture getTexture() {

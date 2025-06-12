@@ -347,7 +347,6 @@ public class TbGame implements Screen {
             if (!bulletRemoved && b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
                 hero.takeDamage(b.getEnemy().getDamage());
                 bullets.remove(i);
-                bulletRemoved = true;
                 break;
             }
         }

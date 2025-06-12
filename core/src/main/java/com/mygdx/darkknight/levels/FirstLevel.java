@@ -15,8 +15,8 @@ public class FirstLevel extends FightLevel {
     public FirstLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
         super(x, y, width, height);
 
-        this.maxEnemiesPerWave = 5;
-        this.totalWaves = 3;
+        this.maxEnemiesPerWave = 1;
+        this.totalWaves = 1;
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
