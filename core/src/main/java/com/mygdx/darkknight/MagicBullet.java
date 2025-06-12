@@ -15,21 +15,17 @@ import java.util.List;
 public class MagicBullet extends Bullet {
     private float timeToLive;
     private float aliveTime;
-    private Weapon weapon;
     private Animation<TextureRegion> explosionAnimation;
-    private Texture animationTexture;
     private float explosionTime = 0f;
     private boolean exploded = false;
     private Vector2 explosionPosition;
     private float explosionSize;
 
     public MagicBullet(float startX, float startY, float angleDegrees, Texture texture, String animationTexturePath, boolean isOpponent, int width, int height, float speed, float timeToLive, float explosionSize, Weapon weapon) {
-        super(startX, startY, angleDegrees, texture, isOpponent, width, height, speed);
+        super(startX, startY, angleDegrees, texture,animationTexturePath, isOpponent, width, height, speed, weapon);
         this.timeToLive = timeToLive;
         this.aliveTime = 0.0f;
         this.explosionSize = explosionSize;
-        this.weapon = weapon;
-        this.animationTexture = new Texture(animationTexturePath);
         initExplosionAnimation();
     }
 

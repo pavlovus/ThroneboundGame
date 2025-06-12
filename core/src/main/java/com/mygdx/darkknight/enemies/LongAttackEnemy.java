@@ -21,7 +21,7 @@ public class LongAttackEnemy extends Enemy {
     @Override
     public void attack(Hero hero) {
         float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, true, this, 30, 10,450f));
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, "core/assets/sparkle.png", true, this, 30, 10,450f));
         resetAttackCooldown();
     }
 }

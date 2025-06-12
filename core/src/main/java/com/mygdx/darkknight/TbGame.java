@@ -85,9 +85,9 @@ public class TbGame implements Screen {
         bulletTexture = new Texture("core/assets/arrow.png");
 
         //weapon = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
-        //weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
+        weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
         //weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
-        weapon = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
+        //weapon = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
         //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
@@ -198,13 +198,12 @@ public class TbGame implements Screen {
             level.update(delta, hero, enemies);
             currentLevelState = level.getStateName();
             //level.activateIfNeeded(hero, enemies);
-            // Якщо пауза активна — малюємо меню поверх
-            if (isPaused) {
-                pauseMenu.render();
-            }
-            if (gameOver) {
-                restartMenu.render();
-            }
+        }
+        if (isPaused) {
+            pauseMenu.render();
+        }
+        if (gameOver) {
+            restartMenu.render();
         }
     }
 
@@ -325,8 +324,6 @@ public class TbGame implements Screen {
                 continue;
             }
 
-            boolean bulletRemoved = false;
-
             if (!b.isOpponent()) {
                 for (Enemy e : enemies) {
                     if (b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
@@ -336,16 +333,16 @@ public class TbGame implements Screen {
                                 magicBullet.explode(enemies);
                             }
                         } else {
-                            e.takeDamage(weapon.getDamage());
-                            bullets.remove(i);
-                            bulletRemoved = true;
+                            if(!b.isStrike()){
+                                b.strike(e);
+                            }
                         }
                         break;
                     }
                 }
             }
 
-            if (!bulletRemoved && b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
+            if (b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
                 hero.takeDamage(b.getEnemy().getDamage());
                 bullets.remove(i);
                 break;

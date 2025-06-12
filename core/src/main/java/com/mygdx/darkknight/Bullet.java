@@ -1,10 +1,13 @@
 package com.mygdx.darkknight;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.Enemy;
+import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.List;
 
@@ -19,8 +22,14 @@ public class Bullet {
     private Enemy enemy;
     private final Vector2 startPosition;
     protected boolean remove;
+    protected Texture animationTexture;
+    private boolean strike;
+    private Animation<TextureRegion> strikeAnimation;
+    private float strikeTime = 0f;
+    private Vector2 strikePosition;
+    protected Weapon weapon;
 
-    public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, int width, int height, float speed) {
+    public Bullet(float startX, float startY, float angleDegrees, Texture texture, String animationTexturePath, boolean isOpponent, int width, int height, float speed, Weapon weapon) {
         this.texture = texture;
         this.speed = speed;
         this.height = height;
@@ -31,10 +40,13 @@ public class Bullet {
         float angleRadians = (float) Math.toRadians(angleDegrees);
         this.velocity = new Vector2((float) Math.cos(angleRadians), (float) Math.sin(angleRadians)).scl(speed);
         this.startPosition = new Vector2(startX, startY);
+        this.weapon = weapon;
         this.remove = false;
+        this.animationTexture = new Texture(animationTexturePath);
+        initStrikeAnimation();
     }
 
-    public Bullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, Enemy owner,  int width, int height, float speed) {
+    public Bullet(float startX, float startY, float angleDegrees, Texture texture, String animationTexturePath, boolean isOpponent, Enemy owner,  int width, int height, float speed) {
         this.texture = texture;
         this.isOpponent = isOpponent;
         this.enemy = owner;
@@ -47,14 +59,23 @@ public class Bullet {
         this.startPosition = new Vector2(startX, startY);
         this.remove = false;
         this.speed = speed;
+        this.animationTexture = new Texture(animationTexturePath);
+        initStrikeAnimation();
     }
 
     public void update(float delta, GameMap map, List<Enemy> enemies) {
-        // Рух кулі
+        if (strike) {
+            strikeTime += delta;
+            if (strikeAnimation.isAnimationFinished(strikeTime)) {
+                remove = true;
+            }
+            return;
+        }
+
         float dx = (float) (speed * Math.cos(Math.toRadians(angle))) * delta;
         float dy = (float) (speed * Math.sin(Math.toRadians(angle))) * delta;
         Rectangle futureRect = new Rectangle(position.x + dx, position.y + dy, width, height);
-        if(!map.isCellBlocked(futureRect)) {
+        if (!map.isCellBlocked(futureRect)) {
             position.x += dx;
             position.y += dy;
         } else {
@@ -63,7 +84,36 @@ public class Bullet {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x, position.y, width / 2f, height / 2f, width, height, 1, 1, angle, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        if (strike && strikeAnimation != null) {
+            TextureRegion currentFrame = strikeAnimation.getKeyFrame(strikeTime, false);
+            batch.draw(currentFrame, strikePosition.x, strikePosition.y);
+        } else {
+            batch.draw(texture, position.x, position.y, width / 2f, height / 2f,
+                width, height, 1, 1, angle, 0, 0,
+                texture.getWidth(), texture.getHeight(), false, false);
+        }
+    }
+
+    public void strike(Enemy e) {
+        strike = true;
+        strikeTime = 0f;
+
+        float centerX = position.x + width / 2f;
+        float centerY = position.y + height / 2f;
+
+        strikePosition = new Vector2(centerX, centerY);
+
+        e.takeDamage(weapon.getDamage());
+    }
+
+    private void initStrikeAnimation() {
+        Texture sheet = animationTexture;
+        TextureRegion[][] tmp = TextureRegion.split(sheet, 32, 32);
+        TextureRegion[] frames = new TextureRegion[tmp.length];
+        for (int i = 0; i < tmp.length; i++) {
+            frames[i] = tmp[i][0];
+        }
+        strikeAnimation = new Animation<>(0.1f, frames);
     }
 
     public Rectangle getBoundingRectangle() {
@@ -81,4 +131,6 @@ public class Bullet {
     public boolean shouldRemove() {return remove;}
 
     public void setRemove(boolean remove) {this.remove = remove;}
+
+    public boolean isStrike() {return strike;}
 }

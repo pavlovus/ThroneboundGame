@@ -36,6 +36,6 @@ public class BowWeapon extends Weapon {
         float weaponAngle = getAngle();
         float gunX = hero.getCenterX();
         float gunY = hero.getCenterY();
-        bullets.add(new Bullet(gunX, gunY, weaponAngle, bulletTexture, false, 30, 10, 600f));
+        bullets.add(new Bullet(gunX, gunY, weaponAngle, bulletTexture, "core/assets/strike.png", false, 30, 10, 600f, this));
     }
 }

@@ -169,7 +169,7 @@ public class Turret extends Enemy {
     }
 
     private void shootBullet(float angle) {
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, true, this, 30, 10, 600));
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, "core/assets/sparkle.png", true, this, 30, 10, 600));
     }
 
     @Override

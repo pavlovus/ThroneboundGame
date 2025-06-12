@@ -21,7 +21,7 @@ public class AxeWeapon extends Weapon {
     private Hero hero;
     private Polygon bounds;
     private float cooldownTime = 0;
-    private final float cooldownDuration = 3f;
+    private final float cooldownDuration = 2f;
 
     private final float fixedStartAngle = 45f;
 
