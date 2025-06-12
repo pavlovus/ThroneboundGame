@@ -37,6 +37,15 @@ public class Hero {
     }
 
     public void moveWithCollision(float dx, float dy, GameMap map) {
+        if (x < 4440 && 4340 < x && y < 4600 && 4539 < y) {
+            x = 2378;
+            y = 4921;
+        }
+
+        if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
+            x = 566;
+            y = 10015;
+        }
         Rectangle futureRect = new Rectangle(x + dx, y, width, height);
         if (!map.isCellBlocked(futureRect)) {
             x += dx;
