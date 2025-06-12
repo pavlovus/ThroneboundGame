@@ -1,17 +1,15 @@
 package com.mygdx.darkknight.levels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.darkknight.Bullet;
-import com.mygdx.darkknight.GameMap;
-import com.mygdx.darkknight.Hero;
+import com.mygdx.darkknight.*;
 import com.mygdx.darkknight.enemies.Enemy;
+import com.mygdx.darkknight.weapons.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public abstract class FightLevel {
     protected final Rectangle roomArea;
@@ -19,6 +17,9 @@ public abstract class FightLevel {
     protected Texture bulletTexture;
     protected List<Bullet> bullets;
     protected GameMap gameMap;
+    protected Hero hero;
+    protected Inventory inventory;
+    protected List<Chest> chests;
 
     protected int totalWaves;
     protected int currentWave = 0;
@@ -35,12 +36,33 @@ public abstract class FightLevel {
 
     protected final Random random = new Random();
 
-    public FightLevel(float x, float y, float width, float height) {
+    public FightLevel(Hero hero, float x, float y, float width, float height) {
+        this.hero = hero;
         this.roomArea = new Rectangle(x, y, width, height);
         this.currentWaveEnemies = new ArrayList<>(); // Ініціалізуємо список ворогів поточної хвилі
+
+//        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
+//        Weapon bow = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
+//        Weapon magic = new MagicWeapon("magicWand.png", 3, 32, 32, "fireball.png");
+//        Weapon wizard = new WizardWeapon("magicStaff.png", 3, 32, 32, "spark.png");
+//        Weapon axe = new AxeWeapon("axe.png", 3, 32, 32, 32);
+//        List<Weapon> list1 = new LinkedList<>() {{add(sword); add(bow);}};
+//        List<Weapon> list2 = new LinkedList<>() {{add(sword); add(bow);}};
+//        List<Weapon> list3 = new LinkedList<>() {{add(sword); add(bow);}};
+//        Chest chest1 = new Chest(1,2, list1);
+//        chests.add(chest1);
+//        Chest chest2 = new Chest();
+//        Chest chest3 = new Chest();
+//        Chest chest4 = new Chest();
+//        Chest chest5 = new Chest();
+//        Chest chest6 = new Chest();
+
     }
 
     public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
+        if (inventory == null) {
+            inventory = new Inventory(gameMap);
+        }
         // Очищаємо список currentWaveEnemies від мертвих ворогів
         Iterator<Enemy> iterator = currentWaveEnemies.iterator();
         while (iterator.hasNext()) {
@@ -61,6 +83,7 @@ public abstract class FightLevel {
                 break;
 
             case ACTIVE:
+                inventory.hideChest();
                 if (currentWaveEnemies.isEmpty()) { // Перевіряємо, чи всі вороги поточної хвилі мертві
                     if (currentWave >= totalWaves) {
                         state = LevelState.WAITING_FOR_DOOR_OPEN;
@@ -76,6 +99,7 @@ public abstract class FightLevel {
                 waveDelayTimer -= deltaTime;
                 if (waveDelayTimer <= 0f) {
                     state = LevelState.COMPLETED;
+                    inventory.showChest();
                     gameMap.openDoors();
                 }
                 break;
@@ -90,7 +114,9 @@ public abstract class FightLevel {
                 break;
 
             case COMPLETED:
-                // Нічого не робимо, рівень завершено
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    inventory.openChest();
+                }
                 break;
         }
     }

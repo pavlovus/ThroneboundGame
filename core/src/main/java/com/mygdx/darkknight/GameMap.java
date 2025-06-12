@@ -139,6 +139,10 @@ public class GameMap {
         return true;
     }
 
+    public TiledMap getTiledMap() {
+        return map;
+    }
+
     public void dispose() {
         map.dispose();
         renderer.dispose();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
+import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.*;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class FirstLevel extends FightLevel {
 
-    public FirstLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
-        super(x, y, width, height);
+    public FirstLevel(Hero hero, float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
+        super(hero, x, y, width, height);
 
         this.maxEnemiesPerWave = 1;
         this.totalWaves = 1;

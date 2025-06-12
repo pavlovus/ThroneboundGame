@@ -5,14 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
+import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.*;
 
 import java.util.List;
 
 public class ThirdLevel extends FightLevel {
 
-    public ThirdLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
-        super(x, y, width, height);
+    public ThirdLevel(Hero hero, float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
+        super(hero, x, y, width, height);
 
         this.maxEnemiesPerWave = 7; // Збільшимо кількість ворогів
         this.totalWaves = 5; // Збільшимо кількість хвиль
