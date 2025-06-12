@@ -13,9 +13,9 @@ public class Assets {
     public static Texture teleportEffectTexture;
     public static Texture meteorTexture;
     public static Texture meteorWarningTexture;
-    public static Texture meteorFireTexture;
     public static Texture enemyBulletTexture;
     public static Texture turretBulletTexture;
+    public static Texture meteorExplosionTexture;
 
     // Effect Textures
     public static Texture poisonEffectTexture;
@@ -31,7 +31,7 @@ public class Assets {
         teleportEffectTexture = new Texture("core/assets/teleport_effect.png");
         meteorTexture = new Texture("core/assets/meteor.png");
         meteorWarningTexture = new Texture("core/assets/warning.png");
-        meteorFireTexture = new Texture("core/assets/fire.png");
+        meteorExplosionTexture = new Texture("core/assets/meteor_explosion.png");
 
         // Load bullet texture
        enemyBulletTexture = new Texture("core/assets/arrow.png");
@@ -52,7 +52,6 @@ public class Assets {
         teleportEffectTexture.dispose();
         meteorTexture.dispose();
         meteorWarningTexture.dispose();
-        meteorFireTexture.dispose();
 
         // Dispose of bullet texture
         enemyBulletTexture.dispose();

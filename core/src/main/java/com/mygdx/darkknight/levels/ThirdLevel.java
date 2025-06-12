@@ -8,16 +8,16 @@ import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.enemies.*;
 
 import java.util.List;
+import java.util.Random;
 
 public class ThirdLevel extends FightLevel {
 
     public ThirdLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
-        super(x, y, width, height);
+        super(x, y, width, height, 4.0f, 15, Assets.meteorWarningTexture, Assets.meteorExplosionTexture);
+        this.maxEnemiesPerWave = 7; // Змінено з maxEnemies
+        this.totalWaves = 5;
 
-        this.maxEnemiesPerWave = 7; // Збільшимо кількість ворогів
-        this.totalWaves = 5; // Збільшимо кількість хвиль
-
-        this.bulletTexture = Assets.enemyBulletTexture; // Використовуємо існуючу текстуру для куль
+        this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
         this.gameMap = gameMap;
     }
@@ -28,13 +28,15 @@ public class ThirdLevel extends FightLevel {
 
         if (randomValue <= 0.15f) { // 15%
             // Турель. Режим TURRET.AIMED стріляє по гравцю.
+            Random random = new Random();
+            int mode = random.nextInt(3);
             return new Turret(
                 pos.x,
                 pos.y,
                 gameMap,
                 this.roomArea,
                 bullets,
-                Turret.TurretMode.BURST
+                Turret.TurretMode.values()[mode]
             );
         } else if (randomValue <= 0.15f + 0.25f) { // 15% + 25% = 40%
             // Телепортер
@@ -45,15 +47,6 @@ public class ThirdLevel extends FightLevel {
                 this.roomArea
             );
         } else if (randomValue <= 0.15f + 0.25f + 0.30f) { // 40% + 30% = 70%
-            // Метеорит
-//            return new Meteor(
-//                pos.x,
-//                pos.y,
-//                gameMap,
-//                this.roomArea
-//            );
-
-            //TODO: повернути метеорити
             return new Ghost(pos.x, pos.y, gameMap, this.roomArea);
         } else { // 70% + 30% = 100%
             // Ворог ближнього бою

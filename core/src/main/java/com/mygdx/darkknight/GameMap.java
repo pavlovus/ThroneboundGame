@@ -143,4 +143,8 @@ public class GameMap {
         map.dispose();
         renderer.dispose();
     }
+
+    public boolean isDoorsClosed() {
+        return doorsClosed;
+    }
 }

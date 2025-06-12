@@ -103,7 +103,7 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(3120, 70, 650, 380, gameMap, bullets));
+        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets));
         fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets));
         fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets));
     }
@@ -182,6 +182,10 @@ public class TbGame implements Screen {
             b.render(batch);
         }
 
+        if (fightLevels.get(2).getStateName().equals("ACTIVE")) {
+            fightLevels.get(2).drawMeteorStrikes(batch);
+        }
+
         float barX = camera.position.x - (width / 2) + 20;
         float barY = camera.position.y + (height / 2) - 140;
 
@@ -190,14 +194,9 @@ public class TbGame implements Screen {
         // Рендеримо статичний інтерфейс
         renderUI();
 
-        updateBullets(delta);
-        removeDeadEnemies();
-
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
             currentLevelState = level.getStateName();
-            //level.activateIfNeeded(hero, enemies);
-            // Якщо пауза активна — малюємо меню поверх
             if (isPaused) {
                 pauseMenu.render();
             }
