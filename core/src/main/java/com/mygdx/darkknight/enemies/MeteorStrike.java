@@ -99,7 +99,7 @@ public class MeteorStrike {
     public void draw(SpriteBatch batch) {
         if (isWarningPhase) {
             // Миготіння попереджувальної текстури
-            float alpha = 0.3f + (float) Math.sin(timer * 10) * 0.2f; // Миготіння
+            float alpha = 0.25f + (float) Math.sin(timer * 10) * 0.1f; // Миготіння
             Color oldColor = batch.getColor().cpy();
             batch.setColor(1, 1, 1, alpha);
             batch.draw(warningTexture, hitArea.x, hitArea.y, hitArea.width, hitArea.height);
