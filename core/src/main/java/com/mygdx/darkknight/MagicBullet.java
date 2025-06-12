@@ -17,15 +17,19 @@ public class MagicBullet extends Bullet {
     private float aliveTime;
     private Weapon weapon;
     private Animation<TextureRegion> explosionAnimation;
+    private Texture animationTexture;
     private float explosionTime = 0f;
     private boolean exploded = false;
     private Vector2 explosionPosition;
+    private float explosionSize;
 
-    public MagicBullet(float startX, float startY, float angleDegrees, Texture texture, boolean isOpponent, int width, int height, float speed, float timeToLive, Weapon weapon) {
+    public MagicBullet(float startX, float startY, float angleDegrees, Texture texture, String animationTexturePath, boolean isOpponent, int width, int height, float speed, float timeToLive, float explosionSize, Weapon weapon) {
         super(startX, startY, angleDegrees, texture, isOpponent, width, height, speed);
         this.timeToLive = timeToLive;
         this.aliveTime = 0.0f;
+        this.explosionSize = explosionSize;
         this.weapon = weapon;
+        this.animationTexture = new Texture(animationTexturePath);
         initExplosionAnimation();
     }
 
@@ -73,13 +77,12 @@ public class MagicBullet extends Bullet {
         exploded = true;
         explosionTime = 0f;
 
-        float explosionSize = 32f;
         float halfSize = explosionSize / 2f;
 
         float centerX = position.x + width / 2f;
         float centerY = position.y + height / 2f;
 
-        explosionPosition = new Vector2(centerX - 16f, centerY - 16f);
+        explosionPosition = new Vector2(centerX, centerY);
 
         Rectangle explosionArea = new Rectangle(
             centerX - halfSize,
@@ -96,7 +99,7 @@ public class MagicBullet extends Bullet {
     }
 
     private void initExplosionAnimation() {
-        Texture sheet = new Texture("core/assets/explosion.png");
+        Texture sheet = animationTexture;
         TextureRegion[][] tmp = TextureRegion.split(sheet, 32, 32);
         TextureRegion[] frames = new TextureRegion[tmp.length];
         for (int i = 0; i < tmp.length; i++) {

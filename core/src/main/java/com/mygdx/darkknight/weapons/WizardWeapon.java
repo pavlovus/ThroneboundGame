@@ -9,12 +9,12 @@ import com.mygdx.darkknight.enemies.Enemy;
 
 import java.util.List;
 
-public class MagicWeapon extends Weapon {
+public class WizardWeapon extends Weapon {
     private Texture bulletTexture;
     private float cooldownTime = 0;
-    private final float cooldownDuration = 1.5f;
+    private final float cooldownDuration = 1f;
 
-    public MagicWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
+    public WizardWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
     }
@@ -42,7 +42,10 @@ public class MagicWeapon extends Weapon {
             float weaponAngle = getAngle();
             float gunX = hero.getCenterX() + getWidth()/2;
             float gunY = hero.getCenterY() + getHeight() /2;
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle, bulletTexture, "core/assets/explosion.png", false, 24, 24, 300f, 2f, 32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle + 7.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle - 7.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f,this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle + 22.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle - 22.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f, this));
             cooldownTime = cooldownDuration;
         }
     }
