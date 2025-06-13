@@ -19,10 +19,7 @@ public abstract class FightLevel {
     protected List<Bullet> bullets;
     protected GameMap gameMap;
     protected Hero hero;
-    protected Inventory inventory;
-    protected List<Chest> chests = new ArrayList<>();
     protected SpriteBatch batch;
-    private int pointer = 0;
 
     protected int totalWaves;
     protected int currentWave = 0;
@@ -45,28 +42,9 @@ public abstract class FightLevel {
         this.gameMap = gameMap;
         this.roomArea = new Rectangle(x, y, width, height);
         this.currentWaveEnemies = new ArrayList<>(); // Ініціалізуємо список ворогів поточної хвилі
-
-//        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
-//        Weapon bow = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
-//        Weapon magic = new MagicWeapon("magicWand.png", 3, 32, 32, "fireball.png");
-//        Weapon wizard = new WizardWeapon("magicStaff.png", 3, 32, 32, "spark.png");
-//        Weapon axe = new AxeWeapon("axe.png", 3, 32, 32, 32);
-//
-        Chest chest1 = new Chest(114, 544, hero.getCurrentWeapon());
-        Chest chest2 = new Chest(137, 462, hero.getCurrentWeapon());
-        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
-        chests.add(chest1);
-        chests.add(chest2);
-        chests.add(chest3);
-
-
     }
 
     public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
-        if (inventory == null) {
-            inventory = new Inventory(gameMap);
-        }
-        // Очищаємо список currentWaveEnemies від мертвих ворогів
         Iterator<Enemy> iterator = currentWaveEnemies.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -74,8 +52,6 @@ public abstract class FightLevel {
                 iterator.remove();
             }
         }
-        inventory.renderWeapons(batch);
-        inventory.showChest(batch, chests.get(pointer));
 
         switch (state) {
             case INACTIVE:
@@ -88,10 +64,8 @@ public abstract class FightLevel {
                 break;
 
             case ACTIVE:
-                pointer++;
                 if (currentWaveEnemies.isEmpty()) { // Перевіряємо, чи всі вороги поточної хвилі мертві
                     if (currentWave >= totalWaves) {
-                        chests.get(pointer).setVisible(true);
                         state = LevelState.WAITING_FOR_DOOR_OPEN;
                         waveDelayTimer = delayBeforeDoorOpen; // Затримка перед відкриттям дверей
                     } else {
@@ -119,37 +93,8 @@ public abstract class FightLevel {
                 break;
 
             case COMPLETED:
-                for (Chest chest : chests) {
-                    if (!chest.isOpened() && isPlayerNearChest(hero, chest)) {
-                        System.out.println("Near to chest" + chest);
-                        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                            System.out.println("Try to open chest" + chest);
-                            inventory.openChest(chest);
-                            break;
-                        }
-                    }
-
-                    if (chest.isOpened() && chest.getWeapon() != null && isPlayerNearChest(hero, chest)) {
-                        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                            hero.addWeapon(chest.getWeapon());
-                            hero.setCurrentWeapon(chest.getWeapon());
-                            chest.setWeapon(null);
-                            break;
-                        }
-                    }
-                }
+                break;
         }
-    }
-
-    private boolean isPlayerNearChest(Hero hero, Chest chest) {
-        float chestPixelX = chest.getX() * 32;
-        float chestPixelY = chest.getY() * 32;
-
-        float dx = hero.getX() - chestPixelX;
-        float dy = hero.getY() - chestPixelY;
-
-        float distanceSquared = dx * dx + dy * dy;
-        return distanceSquared < 40 * 40; // радіус 40 пікселів
     }
 
     protected void spawnEnemies(List<Enemy> globalEnemies) {

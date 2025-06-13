@@ -44,7 +44,8 @@ public class Chest {
         this.weapon = weapon;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTexture(String texturePath) {
+        texture = new Texture(texturePath);
         this.texture = texture;
     }
 

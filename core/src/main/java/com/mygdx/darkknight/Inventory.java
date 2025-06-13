@@ -41,12 +41,30 @@ public class Inventory {
         }
     }
 
-    public void showChest(SpriteBatch batch, Chest chest) {
-        chest.setTexture(map.getTiledMap().getTileSets().getTile(1).getTextureRegion().getTexture());
-        if (chest.isVisible()) {
-            batch.begin();
-            batch.draw(chest.getTexture(), chest.getX() * 32, (chest.getY() - 1) * 32, 32, 32);
-            batch.end();
+     boolean isPlayerNearChest(Hero hero, Chest chest) {
+        float chestPixelX = chest.getX() * 32;
+        float chestPixelY = chest.getY() * 32;
+
+        float dx = hero.getX() - chestPixelX;
+        float dy = hero.getY() - chestPixelY;
+
+        float distanceSquared = dx * dx + dy * dy;
+        return distanceSquared < 40 * 40;
+    }
+
+    public void showChest(SpriteBatch batch, List<Chest> chests) {
+        for (Chest chest : chests) {
+            if (chest.isOpened()) {
+                chest.setTexture("core/assets/chestOpened.png");
+            } else {
+                chest.setTexture("core/assets/chestClosed.png");
+            }
+            if (chest.isVisible()) {
+                System.out.println("Chest is visible");
+                batch.begin();
+                batch.draw(chest.getTexture(), chest.getX() * 32, (chest.getY() - 1) * 32, 32, 32);
+                batch.end();
+            }
         }
     }
 
@@ -55,7 +73,6 @@ public class Inventory {
         if (!openedChests.contains(chest)) {
             openedChests.add(chest);
         }
-        chest.setTexture(map.getTiledMap().getTileSets().getTile(1).getTextureRegion().getTexture());
     }
 
     public void hideChest(Chest chest) {

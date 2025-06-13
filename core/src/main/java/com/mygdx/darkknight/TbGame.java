@@ -52,6 +52,9 @@ public class TbGame implements Screen {
     private int width, height;
     private List<Enemy> enemies;
     private List<FightLevel> fightLevels = new ArrayList<>();
+    private List<Chest> chests = new ArrayList<>();
+    private Inventory inventory;
+    private int pointer = 0;
     private String currentLevelState = "INACTIVE";
 
     private List<Rectangle> weaponIconBounds = new ArrayList<>();
@@ -112,6 +115,14 @@ public class TbGame implements Screen {
         fightLevels.add(new FirstLevel(hero, batch,3120, 70, 650, 380, gameMap, bullets));
         fightLevels.add(new SecondLevel(hero, batch,3072, 1470, 1128, 576, gameMap, bullets));
         fightLevels.add(new ThirdLevel(hero, batch,2241, 2592, 1248, 701, gameMap, bullets));
+
+        Chest chest1 = new Chest(114, 544, sword);
+        Chest chest2 = new Chest(137, 462, magic);
+        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
+        chests.add(chest1);
+        chests.add(chest2);
+        chests.add(chest3);
+        inventory = new Inventory(gameMap);
     }
 
     @Override
@@ -201,10 +212,14 @@ public class TbGame implements Screen {
         updateBullets(delta);
         removeDeadEnemies();
 
+        // Рендеримо сундуки
+        updateChests();
+
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
             currentLevelState = level.getStateName();
-            //level.activateIfNeeded(hero, enemies);
+            if (pointer >= 0)
+                chests.get(pointer).setVisible(true);
         }
         if (isPaused) {
             pauseMenu.render();
@@ -345,6 +360,39 @@ public class TbGame implements Screen {
             weaponIconBounds.add(new Rectangle(x, y, iconSize, iconSize));
         }
         uiBatch.end();
+    }
+
+    public void updateChests() {
+        inventory.showChest(batch, chests);
+        inventory.renderWeapons(batch);
+
+        boolean justOpenedChest = false;
+
+        for (Chest chest : chests) {
+            if (!chest.isOpened() && inventory.isPlayerNearChest(hero, chest)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    inventory.openChest(chest);
+                    justOpenedChest = true;
+                    break;
+                }
+            }
+        }
+
+        if (!justOpenedChest) {
+            for (Chest chest : chests) {
+                if (chest.isOpened() && chest.getWeapon() != null && inventory.isPlayerNearChest(hero, chest)) {
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                        hero.addWeapon(chest.getWeapon());
+                        chest.setWeapon(null);
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (justOpenedChest && pointer < chests.size()) {
+            pointer++;
+        }
     }
 
     private void handleWeaponNumberInput() {
