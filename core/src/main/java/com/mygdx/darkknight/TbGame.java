@@ -88,7 +88,7 @@ public class TbGame implements Screen {
         weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
         //weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
         //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
-        hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
+        hero = new Hero("core/assets/hero1.png", 200, 120, 100, 5, weapon);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
 //        hero.addEffect(testEffect);
 //        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
@@ -111,8 +111,8 @@ public class TbGame implements Screen {
         fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new NinthLevel(4000, 11000, 1200, 800, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new TenthLevel(5500, 12000, 1400, 1000, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new TenthLevel(3363, 13311, 4520-3363, 13821-13311, gameMap, bullets, enemiesToAdd));
     }
 
     @Override
@@ -193,8 +193,12 @@ public class TbGame implements Screen {
             b.render(batch);
         }
 
-        if (fightLevels.get(2).getStateName().equals("ACTIVE")) {
-            fightLevels.get(2).drawMeteorStrikes(batch);
+        if (fightLevels.get(7).getStateName().equals("ACTIVE")) {
+            fightLevels.get(7).drawMeteorStrikes(batch);
+        } else if (fightLevels.get(8).getStateName().equals("ACTIVE")) {
+            fightLevels.get(8).drawMeteorStrikes(batch);
+        } else if (fightLevels.get(9).getStateName().equals("ACTIVE")) {
+            fightLevels.get(9).drawMeteorStrikes(batch);
         }
 
         float barX = camera.position.x - (width / 2) + 20;
@@ -207,7 +211,8 @@ public class TbGame implements Screen {
 
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
-            currentLevelState = level.getStateName();
+            if (!level.getStateName().equals("INACTIVE"))
+                currentLevelState = level.getStateName();
             if (isPaused) {
                 pauseMenu.render();
             }
