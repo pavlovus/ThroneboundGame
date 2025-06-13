@@ -3,7 +3,19 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Assets {
-    // Enemy Textures
+    public static Texture ghost_2Texture;
+    public static Texture ghost_3Texture;
+    public static Texture healer_2Texture;
+    public static Texture healer_3Texture;
+    public static Texture long_1Texture;
+    public static Texture long_2Texture;
+    public static Texture long_3Texture;
+    public static Texture mom_1Texture;
+    public static Texture mom_2Texture;
+    public static Texture mom_3Texture;
+    public static Texture short_1Texture;
+    public static Texture short_2Texture;
+    public static Texture short_3Texture;
     public static Texture shortEnemyTexture;
     public static Texture longEnemyTexture;
     public static Texture ghostEnemyTexture;
@@ -13,15 +25,30 @@ public class Assets {
     public static Texture teleportEffectTexture;
     public static Texture meteorTexture;
     public static Texture meteorWarningTexture;
-    public static Texture meteorFireTexture;
     public static Texture enemyBulletTexture;
     public static Texture turretBulletTexture;
+    public static Texture meteorExplosionTexture;
+    public static Texture healerEnemyTexture;
+    public static Texture healingEffectTexture; // НОВА ТЕКСТУРА ДЛЯ ЕФЕКТУ ЗЦІЛЕННЯ
 
-    // Effect Textures
+    public static Texture matriarchTexture;
+
     public static Texture poisonEffectTexture;
 
     public static void load() {
-        // Load enemy textures
+        ghost_2Texture = new Texture("core/assets/ghost_2.png");
+        ghost_3Texture = new Texture("core/assets/ghost_3.png");
+        healer_2Texture = new Texture("core/assets/healer_2.png");
+        healer_3Texture = new Texture("core/assets/healer_3.png");
+        long_1Texture = new Texture("core/assets/long_1.png");
+        long_2Texture = new Texture("core/assets/long_2.png");
+        long_3Texture = new Texture("core/assets/long_3.png");
+        mom_1Texture = new Texture("core/assets/mom_1.png");
+        mom_2Texture = new Texture("core/assets/mom_2.png");
+        mom_3Texture = new Texture("core/assets/mom_3.png");
+        short_1Texture = new Texture("core/assets/short_1.png");
+        short_2Texture = new Texture("core/assets/short_2.png");
+        short_3Texture = new Texture("core/assets/short_3.png");
         shortEnemyTexture = new Texture("core/assets/short1.png");
         longEnemyTexture = new Texture("core/assets/long1.png");
         ghostEnemyTexture = new Texture("core/assets/spec1.png");
@@ -31,18 +58,20 @@ public class Assets {
         teleportEffectTexture = new Texture("core/assets/teleport_effect.png");
         meteorTexture = new Texture("core/assets/meteor.png");
         meteorWarningTexture = new Texture("core/assets/warning.png");
-        meteorFireTexture = new Texture("core/assets/fire.png");
+        meteorExplosionTexture = new Texture("core/assets/meteor_explosion.png");
 
-        // Load bullet texture
-       enemyBulletTexture = new Texture("core/assets/arrow.png");
-       turretBulletTexture = new Texture("core/assets/turret_bullet.png");
+        matriarchTexture = new Texture("core/assets/matriarch.png");
 
-        // Load effect textures
+        enemyBulletTexture = new Texture("core/assets/arrow.png");
+        turretBulletTexture = new Texture("core/assets/turret_bullet.png");
+
         poisonEffectTexture = new Texture("assets/poison.png");
+
+        healerEnemyTexture = new Texture("core/assets/healer.png");
+        healingEffectTexture = new Texture("core/assets/healing_effect.png"); // ЗАВАНТАЖЕННЯ НОВОЇ ТЕКСТУРИ
     }
 
     public static void dispose() {
-        // Dispose of enemy textures
         shortEnemyTexture.dispose();
         longEnemyTexture.dispose();
         ghostEnemyTexture.dispose();
@@ -52,12 +81,15 @@ public class Assets {
         teleportEffectTexture.dispose();
         meteorTexture.dispose();
         meteorWarningTexture.dispose();
-        meteorFireTexture.dispose();
+        meteorExplosionTexture.dispose();
 
-        // Dispose of bullet texture
+        if (matriarchTexture != null) matriarchTexture.dispose();
+
         enemyBulletTexture.dispose();
+        turretBulletTexture.dispose();
 
-        // Dispose of effect textures
         poisonEffectTexture.dispose();
+        healerEnemyTexture.dispose();
+        healingEffectTexture.dispose();
     }
 }

@@ -10,19 +10,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
-import com.mygdx.darkknight.levels.FightLevel;
-import com.mygdx.darkknight.levels.SecondLevel;
-import com.mygdx.darkknight.levels.ThirdLevel;
+import com.mygdx.darkknight.levels.*;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
 import com.mygdx.darkknight.weapons.*;
-import com.mygdx.darkknight.levels.FirstLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +46,11 @@ public class TbGame implements Screen {
     private GlyphLayout layout;
     private int width, height;
     private List<Enemy> enemies;
-    private List<FightLevel> fightLevels = new ArrayList<>();
-    private List<Chest> chests = new ArrayList<>();
-    private Inventory inventory;
-    private int pointer = 0;
-    private String currentLevelState = "INACTIVE";
 
-    private List<Rectangle> weaponIconBounds = new ArrayList<>();
+    private List<Enemy> enemiesToAdd = new ArrayList<>();
+
+    private List<FightLevel> fightLevels = new ArrayList<>();
+    private String currentLevelState = "INACTIVE";
 
     @Override
     public void show() {
@@ -91,13 +84,11 @@ public class TbGame implements Screen {
         enemies = new ArrayList<>();
         bulletTexture = new Texture("core/assets/arrow.png");
 
-        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
+        //weapon = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 32);
         weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
-        Weapon magic = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
-        Weapon wizard = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
-        Weapon axe = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
+        //weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
+        //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
-        hero.addWeapon(sword, magic, wizard, axe);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
 //        hero.addEffect(testEffect);
 //        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
@@ -112,22 +103,20 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(hero, batch,3120, 70, 650, 380, gameMap, bullets));
-        fightLevels.add(new SecondLevel(hero, batch,3072, 1470, 1128, 576, gameMap, bullets));
-        fightLevels.add(new ThirdLevel(hero, batch,2241, 2592, 1248, 701, gameMap, bullets));
-
-        Chest chest1 = new Chest(114, 544, sword);
-        Chest chest2 = new Chest(137, 462, magic);
-        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
-        chests.add(chest1);
-        chests.add(chest2);
-        chests.add(chest3);
-        inventory = new Inventory(gameMap);
+        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new NinthLevel(4000, 11000, 1200, 800, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new TenthLevel(5500, 12000, 1400, 1000, gameMap, bullets, enemiesToAdd));
     }
 
     @Override
     public void render(float delta) {
-        weapon = hero.getCurrentWeapon();
 
         // Перевірка на паузу під час гри (натискання ESC)
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -151,8 +140,12 @@ public class TbGame implements Screen {
             handleInput();
             hero.updateEffects(delta);
 
+            enemiesToAdd.clear();
+
             // Оновлення ворогів
             for (Enemy e : enemies) e.update(hero, delta);
+
+            enemies.addAll(enemiesToAdd);
 
             updateBullets(delta);
             removeDeadEnemies();
@@ -200,6 +193,10 @@ public class TbGame implements Screen {
             b.render(batch);
         }
 
+        if (fightLevels.get(2).getStateName().equals("ACTIVE")) {
+            fightLevels.get(2).drawMeteorStrikes(batch);
+        }
+
         float barX = camera.position.x - (width / 2) + 20;
         float barY = camera.position.y + (height / 2) - 140;
 
@@ -207,25 +204,16 @@ public class TbGame implements Screen {
 
         // Рендеримо статичний інтерфейс
         renderUI();
-        handleWeaponNumberInput();
-
-        updateBullets(delta);
-        removeDeadEnemies();
-
-        // Рендеримо сундуки
-        updateChests();
 
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
             currentLevelState = level.getStateName();
-            if (pointer >= 0)
-                chests.get(pointer).setVisible(true);
-        }
-        if (isPaused) {
-            pauseMenu.render();
-        }
-        if (gameOver) {
-            restartMenu.render();
+            if (isPaused) {
+                pauseMenu.render();
+            }
+            if (gameOver) {
+                restartMenu.render();
+            }
         }
     }
 
@@ -251,9 +239,6 @@ public class TbGame implements Screen {
         // Координати героя
         drawCoordinates();
         renderHeroEffects();
-
-        // Іконки зброї
-        renderWeaponIcons();
     }
 
     private void renderHeroEffects() {
@@ -331,80 +316,6 @@ public class TbGame implements Screen {
         shapeRenderer.end();
     }
 
-    private void renderWeaponIcons() {
-        List<Weapon> weapons = hero.getWeapons();
-
-        float iconSize = 32f;
-        float padding = 8f;
-        int count = weapons.size();
-        float totalWidth = count * iconSize + (count - 1) * padding;
-
-        float startX = width - totalWidth - 20;
-        float startY = height - iconSize - 20;
-
-        weaponIconBounds.clear(); // очищаємо попередні дані
-        uiBatch.begin();
-        for (int i = 0; i < count; i++) {
-            Weapon w = weapons.get(i);
-            float x = startX + i * (iconSize + padding);
-            float y = startY;
-
-            // Малюємо іконку
-            uiBatch.draw(w.getTexture(), x, y, iconSize, iconSize);
-
-            // Малюємо номер
-            font.getData().setScale(1f);
-            font.setColor(Color.WHITE);
-            font.draw(uiBatch, String.valueOf(i + 1), x + 2, y + iconSize - 4);
-
-            weaponIconBounds.add(new Rectangle(x, y, iconSize, iconSize));
-        }
-        uiBatch.end();
-    }
-
-    public void updateChests() {
-        inventory.showChest(batch, chests);
-        inventory.renderWeapons(batch);
-
-        boolean justOpenedChest = false;
-
-        for (Chest chest : chests) {
-            if (!chest.isOpened() && inventory.isPlayerNearChest(hero, chest)) {
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                    inventory.openChest(chest);
-                    justOpenedChest = true;
-                    break;
-                }
-            }
-        }
-
-        if (!justOpenedChest) {
-            for (Chest chest : chests) {
-                if (chest.isOpened() && chest.getWeapon() != null && inventory.isPlayerNearChest(hero, chest)) {
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                        hero.addWeapon(chest.getWeapon());
-                        chest.setWeapon(null);
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (justOpenedChest && pointer < chests.size()) {
-            pointer++;
-        }
-    }
-
-    private void handleWeaponNumberInput() {
-        List<Weapon> weapons = hero.getWeapons();
-        for (int i = 0; i < weapons.size(); i++) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
-                hero.setCurrentWeapon(weapons.get(i));
-                break;
-            }
-        }
-    }
-
     private void removeDeadEnemies() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
             if (enemies.get(i).isDead()) {
@@ -423,6 +334,8 @@ public class TbGame implements Screen {
                 continue;
             }
 
+            boolean bulletRemoved = false;
+
             if (!b.isOpponent()) {
                 for (Enemy e : enemies) {
                     if (b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
@@ -432,16 +345,16 @@ public class TbGame implements Screen {
                                 magicBullet.explode(enemies);
                             }
                         } else {
-                            if(!b.isStrike()){
-                                b.strike(e);
-                            }
+                            e.takeDamage(weapon.getDamage());
+                            bullets.remove(i);
+                            bulletRemoved = true;
                         }
                         break;
                     }
                 }
             }
 
-            if (b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
+            if (!bulletRemoved && b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
                 hero.takeDamage(b.getEnemy().getDamage());
                 bullets.remove(i);
                 break;
