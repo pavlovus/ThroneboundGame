@@ -58,7 +58,7 @@ public class SeventhLevel extends FightLevel {
             case TELEPORTER:
                 return new Teleporter(Assets.teleporterTexture, pos.x, pos.y, gameMap, this.roomArea);
             case GHOST:
-                return new Ghost(Assets.ghostEnemyTexture, pos.x, pos.y, gameMap, this.roomArea);
+                return new Ghost(Assets.ghost_2Texture, pos.x, pos.y, gameMap, this.roomArea);
             case MATRIARCH:
                 return new Matriarch(Assets.mom_2Texture, Assets.short_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd);
             case TURRET_AIMED:

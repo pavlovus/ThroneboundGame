@@ -13,7 +13,7 @@ public class Ghost extends Enemy {
 
     public Ghost(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds) {
         // Збільшимо швидкість в 1.5 рази. Базова швидкість 150f, отже 150 * 1.5 = 225f
-        super(texture, x, y, 32, 32, 225f, 1, 0, new GhostAI(roomBounds), gameMap);
+        super(texture, x, y, 40, 40, 225f, 1, 0, new GhostAI(roomBounds), gameMap);
         this.setAttackCooldown(0.1f);
     }
 
