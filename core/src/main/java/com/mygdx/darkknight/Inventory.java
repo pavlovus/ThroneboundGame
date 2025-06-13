@@ -27,23 +27,16 @@ public class Inventory {
             float chestX = chest.x;
             float chestY = chest.y;
 
-            List<Weapon> weapons = chest.weapons;
+            Weapon weapon = chest.weapon;
 
-            for (int i = 0; i < weapons.size(); i++) {
-                Weapon weapon = weapons.get(i);
+            if (weapon != null) {
+                float drawX = chestX * 32;
+                float drawY = (chestY - 2) * 32;
 
-                float drawX;
-                if (i == 0) {
-                    drawX = (chestX - 1) * 32; // зліва
-                } else {
-                    drawX = (chestX + 1) * 32; // справа
-                }
-
-                float drawY = chestY * 32;
-
+                batch.begin();
                 Texture texture = weapon.getTexture();
                 batch.draw(texture, drawX, drawY, weapon.getWidth(), weapon.getHeight());
-
+                batch.end();
             }
         }
     }
@@ -54,23 +47,25 @@ public class Inventory {
             tiledMap.getLayers().get("Chests").setVisible(true);
     }
 
-    public void openChest(/*Chest chest*/) {
+    public void openChest(Chest chest) {
+        chest.opened = true;
+        if (!openedChests.contains(chest)) {
+            openedChests.add(chest);
+        }
+
         if (tiledMap.getLayers().get("Chests") != null)
             tiledMap.getLayers().get("Chests").setVisible(false);
 
         if (tiledMap.getLayers().get("OpenedChests") != null)
             tiledMap.getLayers().get("OpenedChests").setVisible(true);
-
-//        chest.opened = true;
-//        openedChests.add(chest);
     }
 
-    public void hideChest(/*hest chest*/) {
+    public void hideChest() {
         if (tiledMap.getLayers().get("OpenedChests") != null)
             tiledMap.getLayers().get("OpenedChests").setVisible(false);
         if (tiledMap.getLayers().get("Chests") != null)
             tiledMap.getLayers().get("Chests").setVisible(false);
-//        openedChests.remove(chest);
+
     }
 
 

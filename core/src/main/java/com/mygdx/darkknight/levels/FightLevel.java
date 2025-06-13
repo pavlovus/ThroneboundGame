@@ -3,6 +3,7 @@ package com.mygdx.darkknight.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.*;
@@ -19,7 +20,8 @@ public abstract class FightLevel {
     protected GameMap gameMap;
     protected Hero hero;
     protected Inventory inventory;
-    protected List<Chest> chests;
+    protected List<Chest> chests = new ArrayList<>();
+    protected SpriteBatch batch;
 
     protected int totalWaves;
     protected int currentWave = 0;
@@ -36,8 +38,10 @@ public abstract class FightLevel {
 
     protected final Random random = new Random();
 
-    public FightLevel(Hero hero, float x, float y, float width, float height) {
+    public FightLevel(Hero hero, SpriteBatch batch, GameMap gameMap, float x, float y, float width, float height) {
+        this.batch = batch;
         this.hero = hero;
+        this.gameMap = gameMap;
         this.roomArea = new Rectangle(x, y, width, height);
         this.currentWaveEnemies = new ArrayList<>(); // Ініціалізуємо список ворогів поточної хвилі
 
@@ -46,16 +50,14 @@ public abstract class FightLevel {
 //        Weapon magic = new MagicWeapon("magicWand.png", 3, 32, 32, "fireball.png");
 //        Weapon wizard = new WizardWeapon("magicStaff.png", 3, 32, 32, "spark.png");
 //        Weapon axe = new AxeWeapon("axe.png", 3, 32, 32, 32);
-//        List<Weapon> list1 = new LinkedList<>() {{add(sword); add(bow);}};
-//        List<Weapon> list2 = new LinkedList<>() {{add(sword); add(bow);}};
-//        List<Weapon> list3 = new LinkedList<>() {{add(sword); add(bow);}};
-//        Chest chest1 = new Chest(1,2, list1);
-//        chests.add(chest1);
-//        Chest chest2 = new Chest();
-//        Chest chest3 = new Chest();
-//        Chest chest4 = new Chest();
-//        Chest chest5 = new Chest();
-//        Chest chest6 = new Chest();
+//
+        Chest chest1 = new Chest(114, 544, hero.getCurrentWeapon());
+        Chest chest2 = new Chest(137, 462, hero.getCurrentWeapon());
+        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
+        chests.add(chest1);
+        chests.add(chest2);
+        chests.add(chest3);
+
 
     }
 
@@ -71,6 +73,7 @@ public abstract class FightLevel {
                 iterator.remove();
             }
         }
+        inventory.renderWeapons(batch);
 
         switch (state) {
             case INACTIVE:
@@ -83,9 +86,9 @@ public abstract class FightLevel {
                 break;
 
             case ACTIVE:
-                inventory.hideChest();
                 if (currentWaveEnemies.isEmpty()) { // Перевіряємо, чи всі вороги поточної хвилі мертві
                     if (currentWave >= totalWaves) {
+                        inventory.showChest();
                         state = LevelState.WAITING_FOR_DOOR_OPEN;
                         waveDelayTimer = delayBeforeDoorOpen; // Затримка перед відкриттям дверей
                     } else {
@@ -99,7 +102,6 @@ public abstract class FightLevel {
                 waveDelayTimer -= deltaTime;
                 if (waveDelayTimer <= 0f) {
                     state = LevelState.COMPLETED;
-                    inventory.showChest();
                     gameMap.openDoors();
                 }
                 break;
@@ -114,11 +116,37 @@ public abstract class FightLevel {
                 break;
 
             case COMPLETED:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                    inventory.openChest();
+                for (Chest chest : chests) {
+                    if (!chest.opened && isPlayerNearChest(hero, chest)) {
+                        System.out.println("Near to chest" + chest);
+                        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                            System.out.println("Try to open chest" + chest);
+                            inventory.openChest(chest);
+                            break;
+                        }
+                    }
+
+                    if (chest.opened && chest.weapon != null && isPlayerNearChest(hero, chest)) {
+                        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                            System.out.println("Picked up weapon from chest: " + chest.weapon);
+                            hero.setCurrentWeapon(chest.weapon);
+                            chest.weapon = null;
+                            break;
+                        }
+                    }
                 }
-                break;
         }
+    }
+
+    private boolean isPlayerNearChest(Hero hero, Chest chest) {
+        float chestPixelX = chest.x * 32;
+        float chestPixelY = chest.y * 32;
+
+        float dx = hero.getX() - chestPixelX;
+        float dy = hero.getY() - chestPixelY;
+
+        float distanceSquared = dx * dx + dy * dy;
+        return distanceSquared < 40 * 40; // радіус 40 пікселів
     }
 
     protected void spawnEnemies(List<Enemy> globalEnemies) {

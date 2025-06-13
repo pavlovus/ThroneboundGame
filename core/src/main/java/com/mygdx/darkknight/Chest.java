@@ -7,13 +7,14 @@ import java.util.List;
 
 public class Chest {
     public float x, y;
-    public List<Weapon> weapons;
+    public Weapon weapon;
     public boolean opened;
 
-    public Chest(float x, float y, List<Weapon> contents) {
+    public Chest(float x, float y, Weapon contents) {
         this.x = x;
-        this.y = y;
-        this.weapons = contents;
+        this.y = 600 - y;
+        this.weapon = contents;
+        this.opened = false;
     }
 
 

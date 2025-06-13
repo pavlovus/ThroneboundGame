@@ -109,9 +109,9 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(hero,3120, 70, 650, 380, gameMap, bullets));
-        fightLevels.add(new SecondLevel(hero,3072, 1470, 1128, 576, gameMap, bullets));
-        fightLevels.add(new ThirdLevel(hero,2241, 2592, 1248, 701, gameMap, bullets));
+        fightLevels.add(new FirstLevel(hero, batch,3120, 70, 650, 380, gameMap, bullets));
+        fightLevels.add(new SecondLevel(hero, batch,3072, 1470, 1128, 576, gameMap, bullets));
+        fightLevels.add(new ThirdLevel(hero, batch,2241, 2592, 1248, 701, gameMap, bullets));
     }
 
     @Override

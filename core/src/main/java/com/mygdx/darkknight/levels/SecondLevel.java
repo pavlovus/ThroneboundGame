@@ -1,6 +1,7 @@
 package com.mygdx.darkknight.levels;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
 import com.mygdx.darkknight.Bullet;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class SecondLevel extends FightLevel {
 
-    public SecondLevel(Hero hero, float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
-        super(hero, x, y, width, height);
+    public SecondLevel(Hero hero, SpriteBatch batch, float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
+        super(hero, batch, gameMap, x, y, width, height);
 
         this.maxEnemiesPerWave = 1; // Збільшимо кількість ворогів, оскільки типів більше
         this.totalWaves = 0; // Збільшимо кількість хвиль
