@@ -49,16 +49,16 @@ public class Turret extends Enemy {
         // Встановлюємо значно меншу швидкість перезарядки для більшого спаму кулями
         switch (mode) {
             case AIMED:
-                setAttackCooldown(0.5f); // Було 1.5f
+                setAttackCooldown(0.17f); // Було 1.5f
                 break;
             case ROTATING:
-                setAttackCooldown(0.3f); // Було 0.8f
+                setAttackCooldown(0.25f); // Було 0.8f
                 break;
             case RANDOM:
-                setAttackCooldown(0.4f); // Було 1.0f
+                setAttackCooldown(0.35f); // Було 1.0f
                 break;
             case BURST:
-                setAttackCooldown(1.0f); // Було 2.5f
+                setAttackCooldown(0.6f); // Було 2.5f
                 break;
         }
     }

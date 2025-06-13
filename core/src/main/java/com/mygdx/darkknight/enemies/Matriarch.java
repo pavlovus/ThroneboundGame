@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.enemies;
 
+import com.badlogic.gdx.graphics.Texture; // Імпортуємо Texture
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
@@ -12,8 +13,8 @@ import java.util.Random;
 public class Matriarch extends Enemy {
     private static final float SPAWN_COOLDOWN = 4.0f;
     private static final int MAX_MINIONS_PER_MATRIARCH = 5;
-    private static final int MAX_SPAWN_ATTEMPTS = 10; // Максимальна кількість спроб для пошуку валідної позиції
-    private static final float SPAWN_RADIUS = 20f; // Радіус спавну навколо Matriarch
+    private static final int MAX_SPAWN_ATTEMPTS = 10;
+    private static final float SPAWN_RADIUS = 20f;
 
     private float spawnTimer;
     private List<Enemy> enemies;
@@ -22,8 +23,12 @@ public class Matriarch extends Enemy {
     private GameMap gameMap;
     private Random random;
 
-    public Matriarch(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Enemy> enemiesToAdd) {
-        super(Assets.matriarchTexture, x, y, 32, 32, 60f, 5, 0, new MatriarchAI(roomBounds, new Vector2(x,y)), gameMap);
+    private Texture minionTexture; // Нове поле для текстури міньйонів
+
+    // Конструктор тепер приймає текстури
+    public Matriarch(Texture matriarchTexture, Texture minionTexture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Enemy> enemiesToAdd) {
+        // Передаємо текстуру матки до батьківського конструктора Enemy
+        super(matriarchTexture, x, y, 40, 40, 80f, 5, 0, new MatriarchAI(roomBounds, new Vector2(x,y)), gameMap);
         this.setAttackCooldown(SPAWN_COOLDOWN);
         this.spawnTimer = SPAWN_COOLDOWN;
         this.enemies = enemies;
@@ -31,37 +36,39 @@ public class Matriarch extends Enemy {
         this.roomBounds = roomBounds;
         this.gameMap = gameMap;
         this.random = new Random();
+        this.minionTexture = minionTexture; // Зберігаємо текстуру міньйонів
+    }
+
+    @Override
+    public void attack(Hero hero) {
+        // Матріарх не атакує героя безпосередньо, вона спавнить міньйонів.
+        // Цей метод залишаємо порожнім або реалізуємо логіку атаки, якщо вона буде.
     }
 
     @Override
     public void update(Hero hero, float delta) {
         super.update(hero, delta);
 
-        spawnTimer += delta;
-
-        long minionCount = enemies.stream()
-            .filter(e -> e instanceof ShortAttackEnemy && !(e instanceof Matriarch))
-            .count();
-
-        if (spawnTimer >= SPAWN_COOLDOWN && minionCount < MAX_MINIONS_PER_MATRIARCH) {
+        spawnTimer -= delta;
+        if (spawnTimer <= 0) {
             spawnMinion();
-            spawnTimer = 0;
+            spawnTimer = SPAWN_COOLDOWN;
         }
     }
 
-    @Override
-    public void attack(Hero hero) {
-        // Matriarch не атакує безпосередньо
-    }
-
     private void spawnMinion() {
+        if (getAliveMinionsCount() >= MAX_MINIONS_PER_MATRIARCH) {
+            return; // Не спавнити, якщо досягнуто ліміту
+        }
+
         Vector2 spawnPos = findValidSpawnPosition();
         if (spawnPos == null) {
             return; // Пропускаємо спавн, якщо не знайдено валідної позиції
         }
 
+        // Використовуємо this.minionTexture для створення міньйона
         ShortAttackEnemy minion = new ShortAttackEnemy(
-            Assets.shortEnemyTexture,
+            this.minionTexture, // Передаємо текстуру міньйона, отриману через конструктор
             spawnPos.x, spawnPos.y,
             32, 32,
             180f,
@@ -80,16 +87,28 @@ public class Matriarch extends Enemy {
             float spawnX = getCenterX() + (random.nextFloat() * 2 - 1) * SPAWN_RADIUS;
             float spawnY = getCenterY() + (random.nextFloat() * 2 - 1) * SPAWN_RADIUS;
 
-            // Обмежуємо координати межами кімнати
-            spawnX = Math.max(roomBounds.x, Math.min(spawnX, roomBounds.x + roomBounds.width - Assets.shortEnemyTexture.getWidth()));
-            spawnY = Math.max(roomBounds.y, Math.min(spawnY, roomBounds.y + roomBounds.height - Assets.shortEnemyTexture.getHeight()));
+            // Обмежуємо координати межами кімнати, використовуючи розмір текстури міньйона
+            spawnX = Math.max(roomBounds.x, Math.min(spawnX, roomBounds.x + roomBounds.width - minionTexture.getWidth()));
+            spawnY = Math.max(roomBounds.y, Math.min(spawnY, roomBounds.y + roomBounds.height - minionTexture.getHeight()));
 
             // Перевіряємо, чи позиція валідна
-            Rectangle testArea = new Rectangle(spawnX, spawnY, 32, 32); // Розмір міньйона
+            Rectangle testArea = new Rectangle(spawnX, spawnY, 32, 32); // Розмір міньйона, припускаємо 32х32 як стандарт
             if (!gameMap.isCellBlocked(testArea)) {
                 return new Vector2(spawnX, spawnY);
             }
         }
-        return null; // Не знайдено валідної позиції після всіх спроб
+        return null;
+    }
+
+    private int getAliveMinionsCount() {
+        int count = 0;
+        for (Enemy enemy : enemies) {
+            // Перевіряємо, чи це екземпляр ShortAttackEnemy (або іншого типу міньйона)
+            // і чи він не мертвий, і чи він не сама Матріарх (для уникнення помилок)
+            if (enemy instanceof ShortAttackEnemy && !enemy.isDead()) {
+                count++;
+            }
+        }
+        return count;
     }
 }

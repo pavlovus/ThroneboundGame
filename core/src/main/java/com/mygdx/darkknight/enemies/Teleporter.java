@@ -30,10 +30,9 @@ public class Teleporter extends Enemy {
 
     private List<TeleportAttackEffect> activeExplosions;
 
-
-    public Teleporter(float x, float y, GameMap gameMap, Rectangle roomBounds) {
+    public Teleporter(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds) {
         // Телепортер має 3 HP, високу швидкість і 1 шкоди
-        super(Assets.teleporterTexture, x, y, 32, 32, 200f, 3, 1, new TeleporterAI(roomBounds), gameMap);
+        super(texture, x, y, 32, 32, 200f, 3, 1, new TeleporterAI(roomBounds), gameMap);
 
         this.teleportTimer = MathUtils.random(1.0f, TELEPORT_COOLDOWN);
         this.fadeTimer = 0;
@@ -89,7 +88,7 @@ public class Teleporter extends Enemy {
 
     private void findTeleportTarget(Hero hero) {
         // Спробуємо знайти валідну позицію для телепортації
-        for (int attempts = 0; attempts < 30; attempts++) { // Збільшуємо кількість спроб
+        for (int attempts = 0; attempts < 30; attempts++) {
             // Випадковий кут
             float angle = MathUtils.random(0, 360) * MathUtils.degreesToRadians;
 

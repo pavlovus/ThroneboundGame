@@ -3,6 +3,19 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Assets {
+    public static Texture ghost_2Texture;
+    public static Texture ghost_3Texture;
+    public static Texture healer_2Texture;
+    public static Texture healer_3Texture;
+    public static Texture long_1Texture;
+    public static Texture long_2Texture;
+    public static Texture long_3Texture;
+    public static Texture mom_1Texture;
+    public static Texture mom_2Texture;
+    public static Texture mom_3Texture;
+    public static Texture short_1Texture;
+    public static Texture short_2Texture;
+    public static Texture short_3Texture;
     public static Texture shortEnemyTexture;
     public static Texture longEnemyTexture;
     public static Texture ghostEnemyTexture;
@@ -23,6 +36,19 @@ public class Assets {
     public static Texture poisonEffectTexture;
 
     public static void load() {
+        ghost_2Texture = new Texture("core/assets/ghost_2.png");
+        ghost_3Texture = new Texture("core/assets/ghost_3.png");
+        healer_2Texture = new Texture("core/assets/healer_2.png");
+        healer_3Texture = new Texture("core/assets/healer_3.png");
+        long_1Texture = new Texture("core/assets/long_1.png");
+        long_2Texture = new Texture("core/assets/long_2.png");
+        long_3Texture = new Texture("core/assets/long_3.png");
+        mom_1Texture = new Texture("core/assets/mom_1.png");
+        mom_2Texture = new Texture("core/assets/mom_2.png");
+        mom_3Texture = new Texture("core/assets/mom_3.png");
+        short_1Texture = new Texture("core/assets/short_1.png");
+        short_2Texture = new Texture("core/assets/short_2.png");
+        short_3Texture = new Texture("core/assets/short_3.png");
         shortEnemyTexture = new Texture("core/assets/short1.png");
         longEnemyTexture = new Texture("core/assets/long1.png");
         ghostEnemyTexture = new Texture("core/assets/spec1.png");

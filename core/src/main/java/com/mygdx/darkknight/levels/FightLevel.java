@@ -7,6 +7,7 @@ import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.Enemy;
+import com.mygdx.darkknight.enemies.EnemyType;
 import com.mygdx.darkknight.enemies.MeteorStrike;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,7 +18,6 @@ import java.util.Random;
 
 public abstract class FightLevel {
     protected final Rectangle roomArea;
-    protected int maxEnemiesPerWave; // Змінено з maxEnemies
     protected Texture bulletTexture;
     protected List<Bullet> bullets;
     protected GameMap gameMap;
@@ -37,6 +37,11 @@ public abstract class FightLevel {
     protected Texture meteorWarningTexture;
     protected Texture meteorExplosionTexture;
     protected int meteorStrikeDamage;
+
+    protected EnemyType[][] levelEnemies;
+    protected List<Enemy> enemiesToAdd;
+
+    protected int id = 0;
 
     public void updateMeteorStrikes(float deltaTime, Hero hero) {
         // Оновлюємо таймер спавну метеоритів
@@ -168,9 +173,14 @@ public abstract class FightLevel {
         }
     }
 
+    // FightLevel.java
     protected void spawnEnemies(List<Enemy> globalEnemies) {
         currentWaveEnemies.clear();
-        for (int i = 0; i < maxEnemiesPerWave; i++) { // Змінено з maxEnemies
+        if (levelEnemies == null || currentWave < 1 || currentWave > levelEnemies.length) {
+            System.err.println("levelEnemies is null or currentWave is out of bounds for " + this.getClass().getSimpleName());
+            return;
+        }
+        for (int i = 0; i < levelEnemies[currentWave-1].length; i++) {
             Vector2 pos = findValidSpawnPosition();
             if (pos != null) {
                 Enemy newEnemy = createEnemy(pos);
@@ -208,7 +218,7 @@ public abstract class FightLevel {
     }
 
     protected boolean isPositionValid(Vector2 pos) {
-        Rectangle testArea = new Rectangle(pos.x - 25, pos.y - 25, 50, 50);
+        Rectangle testArea = new Rectangle(pos.x - 50, pos.y - 50, 100, 100);
         return !gameMap.isCellBlocked(testArea);
     }
 
