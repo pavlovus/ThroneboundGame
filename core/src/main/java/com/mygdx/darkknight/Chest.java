@@ -1,21 +1,62 @@
 package com.mygdx.darkknight;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.List;
 
 public class Chest {
-    public float x, y;
-    public Weapon weapon;
-    public boolean opened;
+    private float x, y;
+    private Weapon weapon;
+    private boolean opened = false;
+    private Texture texture;
+    private boolean visible = false;
+
 
     public Chest(float x, float y, Weapon contents) {
         this.x = x;
         this.y = 600 - y;
         this.weapon = contents;
-        this.opened = false;
     }
 
+    public float getX() {
+        return x;
+    }
 
+    public float getY() {
+        return y;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 }

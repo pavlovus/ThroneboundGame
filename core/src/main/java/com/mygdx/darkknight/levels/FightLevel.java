@@ -22,6 +22,7 @@ public abstract class FightLevel {
     protected Inventory inventory;
     protected List<Chest> chests = new ArrayList<>();
     protected SpriteBatch batch;
+    private int pointer = 0;
 
     protected int totalWaves;
     protected int currentWave = 0;
@@ -74,6 +75,7 @@ public abstract class FightLevel {
             }
         }
         inventory.renderWeapons(batch);
+        inventory.showChest(batch, chests.get(pointer));
 
         switch (state) {
             case INACTIVE:
@@ -86,9 +88,10 @@ public abstract class FightLevel {
                 break;
 
             case ACTIVE:
+                pointer++;
                 if (currentWaveEnemies.isEmpty()) { // Перевіряємо, чи всі вороги поточної хвилі мертві
                     if (currentWave >= totalWaves) {
-                        inventory.showChest();
+                        chests.get(pointer).setVisible(true);
                         state = LevelState.WAITING_FOR_DOOR_OPEN;
                         waveDelayTimer = delayBeforeDoorOpen; // Затримка перед відкриттям дверей
                     } else {
@@ -117,7 +120,7 @@ public abstract class FightLevel {
 
             case COMPLETED:
                 for (Chest chest : chests) {
-                    if (!chest.opened && isPlayerNearChest(hero, chest)) {
+                    if (!chest.isOpened() && isPlayerNearChest(hero, chest)) {
                         System.out.println("Near to chest" + chest);
                         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                             System.out.println("Try to open chest" + chest);
@@ -126,11 +129,11 @@ public abstract class FightLevel {
                         }
                     }
 
-                    if (chest.opened && chest.weapon != null && isPlayerNearChest(hero, chest)) {
+                    if (chest.isOpened() && chest.getWeapon() != null && isPlayerNearChest(hero, chest)) {
                         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                            System.out.println("Picked up weapon from chest: " + chest.weapon);
-                            hero.setCurrentWeapon(chest.weapon);
-                            chest.weapon = null;
+                            hero.addWeapon(chest.getWeapon());
+                            hero.setCurrentWeapon(chest.getWeapon());
+                            chest.setWeapon(null);
                             break;
                         }
                     }
@@ -139,8 +142,8 @@ public abstract class FightLevel {
     }
 
     private boolean isPlayerNearChest(Hero hero, Chest chest) {
-        float chestPixelX = chest.x * 32;
-        float chestPixelY = chest.y * 32;
+        float chestPixelX = chest.getX() * 32;
+        float chestPixelY = chest.getY() * 32;
 
         float dx = hero.getX() - chestPixelX;
         float dy = hero.getY() - chestPixelY;

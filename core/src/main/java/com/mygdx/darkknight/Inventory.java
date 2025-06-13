@@ -22,12 +22,12 @@ public class Inventory {
 
     public void renderWeapons(SpriteBatch batch) {
         for (Chest chest : openedChests) {
-            if (!chest.opened) continue;
+            if (!chest.isOpened()) continue;
 
-            float chestX = chest.x;
-            float chestY = chest.y;
+            float chestX = chest.getX();
+            float chestY = chest.getY();
 
-            Weapon weapon = chest.weapon;
+            Weapon weapon = chest.getWeapon();
 
             if (weapon != null) {
                 float drawX = chestX * 32;
@@ -41,31 +41,25 @@ public class Inventory {
         }
     }
 
-    public void showChest() {
-        System.out.println("Showing chest");
-        if (tiledMap.getLayers().get("Chests") != null)
-            tiledMap.getLayers().get("Chests").setVisible(true);
+    public void showChest(SpriteBatch batch, Chest chest) {
+        chest.setTexture(map.getTiledMap().getTileSets().getTile(1).getTextureRegion().getTexture());
+        if (chest.isVisible()) {
+            batch.begin();
+            batch.draw(chest.getTexture(), chest.getX() * 32, (chest.getY() - 1) * 32, 32, 32);
+            batch.end();
+        }
     }
 
     public void openChest(Chest chest) {
-        chest.opened = true;
+        chest.setOpened(true);
         if (!openedChests.contains(chest)) {
             openedChests.add(chest);
         }
-
-        if (tiledMap.getLayers().get("Chests") != null)
-            tiledMap.getLayers().get("Chests").setVisible(false);
-
-        if (tiledMap.getLayers().get("OpenedChests") != null)
-            tiledMap.getLayers().get("OpenedChests").setVisible(true);
+        chest.setTexture(map.getTiledMap().getTileSets().getTile(1).getTextureRegion().getTexture());
     }
 
-    public void hideChest() {
-        if (tiledMap.getLayers().get("OpenedChests") != null)
-            tiledMap.getLayers().get("OpenedChests").setVisible(false);
-        if (tiledMap.getLayers().get("Chests") != null)
-            tiledMap.getLayers().get("Chests").setVisible(false);
-
+    public void hideChest(Chest chest) {
+        chest.setVisible(false);
     }
 
 
