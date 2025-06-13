@@ -8,6 +8,7 @@ import com.mygdx.darkknight.effects.Effect;
 import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hero {
@@ -23,6 +24,7 @@ public class Hero {
     private Rectangle bounds;
     private List<Effect> activeEffects = new ArrayList<>();
     private Weapon currentWeapon;
+    private List<Weapon> weapons = new ArrayList<>();
 
     public Hero(String texturePath, float x, float y, int health, int armor, Weapon weapon) {
         texture = new Texture(texturePath);
@@ -34,6 +36,7 @@ public class Hero {
         maxHealth = health;
         maxArmor = armor;
         this.currentWeapon = weapon;
+        weapons.add(weapon);
     }
 
     public void moveWithCollision(float dx, float dy, GameMap map) {
@@ -86,6 +89,14 @@ public class Hero {
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture, x, y, width, height);
+    }
+
+    public void addWeapon(Weapon... weaponList) {
+        Collections.addAll(weapons, weaponList);
+    }
+
+    public List<Weapon> getWeapons() {
+        return weapons;
     }
 
     public float getCenterX() {

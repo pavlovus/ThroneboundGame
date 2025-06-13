@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
@@ -52,6 +54,8 @@ public class TbGame implements Screen {
     private List<FightLevel> fightLevels = new ArrayList<>();
     private String currentLevelState = "INACTIVE";
 
+    private List<Rectangle> weaponIconBounds = new ArrayList<>();
+
     @Override
     public void show() {
         // Завантажуємо всі текстури
@@ -84,12 +88,13 @@ public class TbGame implements Screen {
         enemies = new ArrayList<>();
         bulletTexture = new Texture("core/assets/arrow.png");
 
-        //weapon = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
+        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
         weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
-        //weapon = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
-        //weapon = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
-        //weapon = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
+        Weapon magic = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
+        Weapon wizard = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
+        Weapon axe = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
+        hero.addWeapon(sword, magic, wizard, axe);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
 //        hero.addEffect(testEffect);
 //        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
@@ -111,6 +116,7 @@ public class TbGame implements Screen {
 
     @Override
     public void render(float delta) {
+        weapon = hero.getCurrentWeapon();
 
         // Перевірка на паузу під час гри (натискання ESC)
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -190,6 +196,7 @@ public class TbGame implements Screen {
 
         // Рендеримо статичний інтерфейс
         renderUI();
+        handleWeaponNumberInput();
 
         updateBullets(delta);
         removeDeadEnemies();
@@ -229,6 +236,9 @@ public class TbGame implements Screen {
         // Координати героя
         drawCoordinates();
         renderHeroEffects();
+
+        // Іконки зброї
+        renderWeaponIcons();
     }
 
     private void renderHeroEffects() {
@@ -304,6 +314,47 @@ public class TbGame implements Screen {
         shapeRenderer.rect(barX, armorY, BAR_WIDTH * armorPercentage, BAR_HEIGHT);
 
         shapeRenderer.end();
+    }
+
+    private void renderWeaponIcons() {
+        List<Weapon> weapons = hero.getWeapons();
+
+        float iconSize = 32f;
+        float padding = 8f;
+        int count = weapons.size();
+        float totalWidth = count * iconSize + (count - 1) * padding;
+
+        float startX = width - totalWidth - 20;
+        float startY = height - iconSize - 20;
+
+        weaponIconBounds.clear(); // очищаємо попередні дані
+        uiBatch.begin();
+        for (int i = 0; i < count; i++) {
+            Weapon w = weapons.get(i);
+            float x = startX + i * (iconSize + padding);
+            float y = startY;
+
+            // Малюємо іконку
+            uiBatch.draw(w.getTexture(), x, y, iconSize, iconSize);
+
+            // Малюємо номер
+            font.getData().setScale(1f);
+            font.setColor(Color.WHITE);
+            font.draw(uiBatch, String.valueOf(i + 1), x + 2, y + iconSize - 4);
+
+            weaponIconBounds.add(new Rectangle(x, y, iconSize, iconSize));
+        }
+        uiBatch.end();
+    }
+
+    private void handleWeaponNumberInput() {
+        List<Weapon> weapons = hero.getWeapons();
+        for (int i = 0; i < weapons.size(); i++) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
+                hero.setCurrentWeapon(weapons.get(i));
+                break;
+            }
+        }
     }
 
     private void removeDeadEnemies() {
