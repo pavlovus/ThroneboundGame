@@ -15,6 +15,8 @@ public class Assets {
     public static Texture enemyBulletTexture;
     public static Texture turretBulletTexture;
     public static Texture meteorExplosionTexture;
+    public static Texture healerEnemyTexture;
+    public static Texture healingEffectTexture; // НОВА ТЕКСТУРА ДЛЯ ЕФЕКТУ ЗЦІЛЕННЯ
 
     public static Texture matriarchTexture;
 
@@ -38,6 +40,9 @@ public class Assets {
         turretBulletTexture = new Texture("core/assets/turret_bullet.png");
 
         poisonEffectTexture = new Texture("assets/poison.png");
+
+        healerEnemyTexture = new Texture("core/assets/healer.png");
+        healingEffectTexture = new Texture("core/assets/healing_effect.png"); // ЗАВАНТАЖЕННЯ НОВОЇ ТЕКСТУРИ
     }
 
     public static void dispose() {
@@ -58,5 +63,7 @@ public class Assets {
         turretBulletTexture.dispose();
 
         poisonEffectTexture.dispose();
+        healerEnemyTexture.dispose();
+        healingEffectTexture.dispose();
     }
 }

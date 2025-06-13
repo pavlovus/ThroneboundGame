@@ -154,6 +154,10 @@ public abstract class Enemy {
         return health;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public int getDamage() {
         return damage;
     }
@@ -168,5 +172,13 @@ public abstract class Enemy {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    public void setX(float x){
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 }

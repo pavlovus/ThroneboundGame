@@ -17,7 +17,7 @@ public class FirstLevel extends FightLevel {
     public FirstLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.maxEnemiesPerWave = 1;
+        this.maxEnemiesPerWave = 2;
         this.totalWaves = 1;
 
         this.bulletTexture = Assets.enemyBulletTexture;
@@ -29,7 +29,10 @@ public class FirstLevel extends FightLevel {
 
     @Override
     protected Enemy createEnemy(Vector2 pos) {
-        return new Matriarch(pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd);
+        if (random.nextBoolean())
+            return new Healer(pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies);
+        else
+            return new Matriarch(pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd);
 //        float randomValue = (float) Math.random();
 //        if (randomValue <= 0.5f) {
 //            return new ShortAttackEnemy(
