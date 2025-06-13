@@ -16,13 +16,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
-import com.mygdx.darkknight.levels.FightLevel;
-import com.mygdx.darkknight.levels.SecondLevel;
-import com.mygdx.darkknight.levels.ThirdLevel;
+import com.mygdx.darkknight.levels.*;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
 import com.mygdx.darkknight.weapons.*;
-import com.mygdx.darkknight.levels.FirstLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +48,9 @@ public class TbGame implements Screen {
     private GlyphLayout layout;
     private int width, height;
     private List<Enemy> enemies;
+
+    private List<Enemy> enemiesToAdd = new ArrayList<>();
+
     private List<FightLevel> fightLevels = new ArrayList<>();
     private List<Chest> chests = new ArrayList<>();
     private Inventory inventory;
@@ -112,10 +112,16 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(hero, batch,3120, 70, 650, 380, gameMap, bullets));
-        fightLevels.add(new SecondLevel(hero, batch,3072, 1470, 1128, 576, gameMap, bullets));
-        fightLevels.add(new ThirdLevel(hero, batch,2241, 2592, 1248, 701, gameMap, bullets));
-
+        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new NinthLevel(4000, 11000, 1200, 800, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new TenthLevel(5500, 12000, 1400, 1000, gameMap, bullets, enemiesToAdd));
         Chest chest1 = new Chest(114, 544, sword);
         Chest chest2 = new Chest(137, 462, magic);
         Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
@@ -123,12 +129,12 @@ public class TbGame implements Screen {
         chests.add(chest2);
         chests.add(chest3);
         inventory = new Inventory(gameMap);
+
     }
 
     @Override
     public void render(float delta) {
         weapon = hero.getCurrentWeapon();
-
         // Перевірка на паузу під час гри (натискання ESC)
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             isPaused = !isPaused;
@@ -151,8 +157,12 @@ public class TbGame implements Screen {
             handleInput();
             hero.updateEffects(delta);
 
+            enemiesToAdd.clear();
+
             // Оновлення ворогів
             for (Enemy e : enemies) e.update(hero, delta);
+
+            enemies.addAll(enemiesToAdd);
 
             updateBullets(delta);
             removeDeadEnemies();
@@ -198,6 +208,10 @@ public class TbGame implements Screen {
 
         for (Bullet b : bullets) {
             b.render(batch);
+        }
+
+        if (fightLevels.get(2).getStateName().equals("ACTIVE")) {
+            fightLevels.get(2).drawMeteorStrikes(batch);
         }
 
         float barX = camera.position.x - (width / 2) + 20;
@@ -423,6 +437,8 @@ public class TbGame implements Screen {
                 continue;
             }
 
+            boolean bulletRemoved = false;
+
             if (!b.isOpponent()) {
                 for (Enemy e : enemies) {
                     if (b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
@@ -432,16 +448,16 @@ public class TbGame implements Screen {
                                 magicBullet.explode(enemies);
                             }
                         } else {
-                            if(!b.isStrike()){
-                                b.strike(e);
-                            }
+                            e.takeDamage(weapon.getDamage());
+                            bullets.remove(i);
+                            bulletRemoved = true;
                         }
                         break;
                     }
                 }
             }
 
-            if (b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
+            if (!bulletRemoved && b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
                 hero.takeDamage(b.getEnemy().getDamage());
                 bullets.remove(i);
                 break;

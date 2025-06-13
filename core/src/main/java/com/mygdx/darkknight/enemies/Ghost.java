@@ -11,9 +11,9 @@ import com.mygdx.darkknight.Hero;
 public class Ghost extends Enemy {
     private float alpha = 0.3f; // Початкова прозорість 30%
 
-    public Ghost(float x, float y, GameMap gameMap, Rectangle roomBounds) {
+    public Ghost(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds) {
         // Збільшимо швидкість в 1.5 рази. Базова швидкість 150f, отже 150 * 1.5 = 225f
-        super(Assets.ghostEnemyTexture, x, y, 32, 32, 225f, 1, 0, new GhostAI(roomBounds), gameMap);
+        super(texture, x, y, 32, 32, 225f, 1, 0, new GhostAI(roomBounds), gameMap);
         this.setAttackCooldown(0.1f);
     }
 

@@ -1,66 +1,57 @@
 package com.mygdx.darkknight.levels;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
-import com.mygdx.darkknight.Hero;
-import com.mygdx.darkknight.enemies.*;
+import com.mygdx.darkknight.enemies.*; // Імпортуємо всі класи ворогів
+import com.mygdx.darkknight.enemies.EnemyType; // Імпортуємо глобальний EnemyType
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SecondLevel extends FightLevel {
 
-    public SecondLevel(Hero hero, SpriteBatch batch, float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets) {
-        super(hero, batch, gameMap, x, y, width, height);
+    private int id = 0; // Для відстеження ворога всередині хвилі
 
-        this.maxEnemiesPerWave = 1; // Збільшимо кількість ворогів, оскільки типів більше
-        this.totalWaves = 0; // Збільшимо кількість хвиль
+    public SecondLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
+        super(x, y, width, height);
+
+        // maxEnemiesPerWave можна ігнорувати, оскільки getMaxEnemiesForCurrentWave буде динамічним
+        this.totalWaves = 1; // TODO: змінити на 3
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
         this.gameMap = gameMap;
+        this.enemiesToAdd = enemiesToAdd; // Цей список потрібен для Matriarch, щоб додавати нових ворогів до глобального списку
+
+        this.levelEnemies = new EnemyType[][]{
+            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}, // Хвиля 1: 4× Пацюк
+//            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}, // Хвиля 2: 3× Пацюк + 2× Скелет
+//            {EnemyType.MATRIARCH, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}  // Хвиля 3: 1× Спавнер + 3× Пацюк
+        };
     }
 
     @Override
     protected Enemy createEnemy(Vector2 pos) {
-        float randomValue = (float) Math.random();
+        if (id >= levelEnemies[currentWave - 1].length) {
+            id = 0;
+        }
 
-        if (randomValue <= 0.33f) {
-            // Привид
-            return new Ghost(
-                pos.x,
-                pos.y,
-                gameMap,
-                this.roomArea
-            );
-        } else if (randomValue <= 0.66f) {
-            // Ворог дальнього бою
-            return new LongAttackEnemy(
-                Assets.longEnemyTexture,
-                pos.x,
-                pos.y,
-                20,
-                30,
-                150f,
-                2,
-                1,
-                1.5f,
-                bulletTexture,
-                bullets,
-                gameMap,
-                new LongAttackAI(this.roomArea)
-            );
-        } else {
-            // Телепортер
-            return new Teleporter(
-                pos.x,
-                pos.y,
-                gameMap,
-                this.roomArea
-            );
+        EnemyType enemyType = levelEnemies[currentWave - 1][id];
+        id++;
+
+        switch (enemyType) {
+            case SHORT_ATTACK:
+                return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, gameMap, new ShortAttackAI(this.roomArea));
+            case LONG_ATTACK:
+                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+            case MATRIARCH:
+                // Передаємо текстуру матки та текстуру міньйонів (пацюків)
+                return new Matriarch(Assets.mom_1Texture, Assets.short_1Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd);
+            default:
+                throw new IllegalArgumentException("Unknown enemy type: " + enemyType);
         }
     }
 }
