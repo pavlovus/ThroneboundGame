@@ -16,12 +16,12 @@ import java.util.List;
 public class NinthLevel extends FightLevel {
 
     private int id = 0; // Для відстеження ворога всередині хвилі
-    private final float[] meteorCooldowns = {8.0f, 7.0f, 6.0f, 5.0f}; // Кулдаун метеоритів для кожної хвилі
+    private final float[] meteorCooldowns = {8.0f, 7.5f, 7.0f, 6.0f, 5.0f}; // Кулдаун метеоритів для кожної хвилі
 
     public NinthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height, 8, 40, Assets.meteorWarningTexture, Assets.meteorExplosionTexture);
 
-        this.totalWaves = 4; // Чотири хвилі
+        this.totalWaves = 1; // TODO: змінити на 5
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -30,14 +30,16 @@ public class NinthLevel extends FightLevel {
 
         // Визначення типів ворогів для кожної хвилі
         this.levelEnemies = new EnemyType[][]{
-            // Хвиля 1: 2× TURRET_RANDOM + 2× TELEPORTER + 3× LONG_ATTACK + 2× SHORT_ATTACK
-            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_RANDOM, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 2: 1× HEALER + 1× TURRET_BURST + 2× GHOST + 2× MATRIARCH + 2× LONG_ATTACK
-//            {EnemyType.HEALER, EnemyType.TURRET_BURST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
-//            // Хвиля 3: 2× TURRET_RANDOM + 2× TELEPORTER + 3× GHOST + 3× SHORT_ATTACK
-//            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_RANDOM, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.GHOST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 4: 1× HEALER + 2× TURRET_BURST + 2× MATRIARCH + 2× TELEPORTER + 2× LONG_ATTACK
-//            {EnemyType.HEALER, EnemyType.TURRET_BURST, EnemyType.TURRET_BURST, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}
+            // Хвиля 1: 2× TURRET_RANDOM + 2× LONG_ATTACK + 2× SHORT_ATTACK
+            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_RANDOM, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
+//            // Хвиля 2: 1× HEALER + 1× TURRET_BURST + 2× TELEPORTER + 2× GHOST
+//            {EnemyType.HEALER, EnemyType.TURRET_BURST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.GHOST, EnemyType.GHOST},
+//            // Хвиля 3: 1× MATRIARCH + 2× TURRET_RANDOM + 2× LONG_ATTACK + 3× SHORT_ATTACK
+//            {EnemyType.MATRIARCH, EnemyType.TURRET_RANDOM, EnemyType.TURRET_RANDOM, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
+//            // Хвиля 4: 1× HEALER + 1× TURRET_BURST + 2× MATRIARCH + 2× TELEPORTER + 2× GHOST
+//            {EnemyType.HEALER, EnemyType.TURRET_BURST, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.GHOST, EnemyType.GHOST},
+//            // Хвиля 5: 2× HEALER + 2× TURRET_BURST + 2× MATRIARCH + 2× TELEPORTER + 2× LONG_ATTACK
+//            {EnemyType.HEALER, EnemyType.HEALER, EnemyType.TURRET_BURST, EnemyType.TURRET_BURST, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}
         };
     }
 

@@ -19,7 +19,7 @@ public class SecondLevel extends FightLevel {
         super(x, y, width, height);
 
         // maxEnemiesPerWave можна ігнорувати, оскільки getMaxEnemiesForCurrentWave буде динамічним
-        this.totalWaves = 3; // Три хвилі
+        this.totalWaves = 1; // TODO: змінити на 3
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;

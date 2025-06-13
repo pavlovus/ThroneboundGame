@@ -107,7 +107,7 @@ public class TbGame implements Screen {
         fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new FifthLevel(322, 5920, 997, 254, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));

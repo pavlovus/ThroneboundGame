@@ -19,7 +19,8 @@ public class FifthLevel extends FightLevel {
     public FifthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 4; // Чотири хвилі
+        this.totalWaves = 1; // TODO: змінити на 4
+
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;

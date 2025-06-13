@@ -19,7 +19,7 @@ public class FourthLevel extends FightLevel {
     public FourthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 3; // Три хвилі
+        this.totalWaves = 1; // TODO: змінити на 3
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
