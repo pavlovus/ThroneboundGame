@@ -49,6 +49,9 @@ public class TbGame implements Screen {
     private GlyphLayout layout;
     private int width, height;
     private List<Enemy> enemies;
+
+    private List<Enemy> enemiesToAdd = new ArrayList<>();
+
     private List<FightLevel> fightLevels = new ArrayList<>();
     private String currentLevelState = "INACTIVE";
 
@@ -103,7 +106,7 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets));
+        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets));
         fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets));
     }
@@ -133,8 +136,12 @@ public class TbGame implements Screen {
             handleInput();
             hero.updateEffects(delta);
 
+            enemiesToAdd.clear();
+
             // Оновлення ворогів
             for (Enemy e : enemies) e.update(hero, delta);
+
+            enemies.addAll(enemiesToAdd);
 
             updateBullets(delta);
             removeDeadEnemies();

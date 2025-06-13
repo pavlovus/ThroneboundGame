@@ -29,6 +29,7 @@ public abstract class FightLevel {
     protected final float delayBeforeDoorOpen = 1f;
 
     protected List<Enemy> currentWaveEnemies;
+    protected List<Enemy> globalEnemies;
 
     protected List<MeteorStrike> activeMeteorStrikes;
     protected float meteorStrikeSpawnCooldown;
@@ -86,6 +87,7 @@ public abstract class FightLevel {
     }
 
     public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
+        this.globalEnemies = globalEnemies;
         Iterator<Enemy> iterator = currentWaveEnemies.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -227,5 +229,9 @@ public abstract class FightLevel {
 
     public String getStateName() {
         return state.name();
+    }
+
+    public List<Enemy> getGlobalEnemies() {
+        return globalEnemies;
     }
 }

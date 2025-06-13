@@ -3,7 +3,6 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Assets {
-    // Enemy Textures
     public static Texture shortEnemyTexture;
     public static Texture longEnemyTexture;
     public static Texture ghostEnemyTexture;
@@ -17,11 +16,11 @@ public class Assets {
     public static Texture turretBulletTexture;
     public static Texture meteorExplosionTexture;
 
-    // Effect Textures
+    public static Texture matriarchTexture;
+
     public static Texture poisonEffectTexture;
 
     public static void load() {
-        // Load enemy textures
         shortEnemyTexture = new Texture("core/assets/short1.png");
         longEnemyTexture = new Texture("core/assets/long1.png");
         ghostEnemyTexture = new Texture("core/assets/spec1.png");
@@ -33,16 +32,15 @@ public class Assets {
         meteorWarningTexture = new Texture("core/assets/warning.png");
         meteorExplosionTexture = new Texture("core/assets/meteor_explosion.png");
 
-        // Load bullet texture
-       enemyBulletTexture = new Texture("core/assets/arrow.png");
-       turretBulletTexture = new Texture("core/assets/turret_bullet.png");
+        matriarchTexture = new Texture("core/assets/matriarch.png");
 
-        // Load effect textures
+        enemyBulletTexture = new Texture("core/assets/arrow.png");
+        turretBulletTexture = new Texture("core/assets/turret_bullet.png");
+
         poisonEffectTexture = new Texture("assets/poison.png");
     }
 
     public static void dispose() {
-        // Dispose of enemy textures
         shortEnemyTexture.dispose();
         longEnemyTexture.dispose();
         ghostEnemyTexture.dispose();
@@ -52,11 +50,13 @@ public class Assets {
         teleportEffectTexture.dispose();
         meteorTexture.dispose();
         meteorWarningTexture.dispose();
+        meteorExplosionTexture.dispose();
 
-        // Dispose of bullet texture
+        if (matriarchTexture != null) matriarchTexture.dispose();
+
         enemyBulletTexture.dispose();
+        turretBulletTexture.dispose();
 
-        // Dispose of effect textures
         poisonEffectTexture.dispose();
     }
 }
