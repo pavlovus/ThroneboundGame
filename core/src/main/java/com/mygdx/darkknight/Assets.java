@@ -35,6 +35,9 @@ public class Assets {
 
     public static Texture poisonEffectTexture;
 
+    public static Texture butcherTexture;
+    public static Texture cleaverTexture;
+
     public static void load() {
         ghost_2Texture = new Texture("core/assets/ghost_2.png");
         ghost_3Texture = new Texture("core/assets/ghost_3.png");
@@ -62,6 +65,10 @@ public class Assets {
 
         matriarchTexture = new Texture("core/assets/matriarch.png");
 
+        butcherTexture = new Texture("core/assets/boss_1.png"); // Ваша текстура м'ясника
+        cleaverTexture = new Texture("core/assets/boss_1_weapon.png"); // Ваша текстура тесака
+
+
         enemyBulletTexture = new Texture("core/assets/arrow.png");
         turretBulletTexture = new Texture("core/assets/turret_bullet.png");
 
@@ -84,6 +91,8 @@ public class Assets {
         meteorExplosionTexture.dispose();
 
         if (matriarchTexture != null) matriarchTexture.dispose();
+        if (butcherTexture != null) butcherTexture.dispose();
+        if (cleaverTexture != null) cleaverTexture.dispose();
 
         enemyBulletTexture.dispose();
         turretBulletTexture.dispose();

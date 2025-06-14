@@ -26,7 +26,7 @@ public abstract class Enemy {
 
     protected EnemyAI ai;
 
-    private GameMap gameMap; // Додаємо поле
+    protected GameMap gameMap; // Додаємо поле
 
     private float attackCooldown = 0;
     private float attackTimer = 0;
@@ -185,5 +185,9 @@ public abstract class Enemy {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }
