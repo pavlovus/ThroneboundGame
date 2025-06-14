@@ -120,8 +120,8 @@ public class TbGame implements Screen {
         fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new NinthLevel(4000, 11000, 1200, 800, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new TenthLevel(5500, 12000, 1400, 1000, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
         Chest chest1 = new Chest(114, 544, sword);
         Chest chest2 = new Chest(137, 462, magic);
         Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
