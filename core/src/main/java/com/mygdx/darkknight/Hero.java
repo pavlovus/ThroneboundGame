@@ -15,7 +15,7 @@ public class Hero {
     private Texture texture;
     private float x, y;
     private final int width = 25, height = 32;
-    private int speed = 1000;
+    private int speed = 1700;
     private int maxHealth;
     private int maxArmor;
     private int health;

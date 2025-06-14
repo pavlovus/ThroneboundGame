@@ -45,7 +45,7 @@ public class Butcher extends Enemy {
     private List<Bullet> pendingBullets = new ArrayList<>();
 
     public Butcher(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
-        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 30, 10, bullets, new ButcherAI(roomBounds), gameMap);
+        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 3, 10, bullets, new ButcherAI(roomBounds), gameMap);
         this.roomBounds = roomBounds;
         this.bullets = bullets;
         this.currentWaveEnemies = currentWaveEnemies;
@@ -122,7 +122,7 @@ public class Butcher extends Enemy {
             spawnY = MathUtils.clamp(spawnY, roomBounds.y, roomBounds.y + roomBounds.height - 32);
 
             ShortAttackEnemy minion = new ShortAttackEnemy(
-                Assets.short_1Texture, spawnX, spawnY, 32, 32, 200f, 15, 10, 0.7f, bullets, gameMap, new ShortAttackAI(roomBounds)
+                Assets.short_1Texture, spawnX, spawnY, 32, 32, 200f, 3, 1, 1, bullets, gameMap, new ShortAttackAI(roomBounds)
             );
             currentWaveEnemies.add(minion);
             enemiesToAdd.add(minion);

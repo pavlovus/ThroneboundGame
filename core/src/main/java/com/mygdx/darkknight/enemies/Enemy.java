@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.List;
 
 public abstract class Enemy {
-    Texture texture;
+    protected Texture texture;
     float x;
     float y;
     private int width, height;
@@ -189,5 +189,9 @@ public abstract class Enemy {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 }

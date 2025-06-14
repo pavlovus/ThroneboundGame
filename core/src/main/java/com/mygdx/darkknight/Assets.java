@@ -37,6 +37,9 @@ public class Assets {
 
     public static Texture butcherTexture;
     public static Texture cleaverTexture;
+    public static Texture jesterTexture; // Текстура для боса-блазня
+    public static Texture jesterTurretTexture; // Текстура для турелі
+
 
     public static void load() {
         ghost_2Texture = new Texture("core/assets/ghost_2.png");
@@ -62,6 +65,9 @@ public class Assets {
         meteorTexture = new Texture("core/assets/meteor.png");
         meteorWarningTexture = new Texture("core/assets/warning.png");
         meteorExplosionTexture = new Texture("core/assets/meteor_explosion.png");
+
+        jesterTexture = new Texture("core/assets/boss_2.png");
+        jesterTurretTexture = new Texture("core/assets/boss_2_turret.png");
 
         matriarchTexture = new Texture("core/assets/matriarch.png");
 
@@ -100,5 +106,8 @@ public class Assets {
         poisonEffectTexture.dispose();
         healerEnemyTexture.dispose();
         healingEffectTexture.dispose();
+
+        jesterTexture.dispose();
+        jesterTurretTexture.dispose();
     }
 }
