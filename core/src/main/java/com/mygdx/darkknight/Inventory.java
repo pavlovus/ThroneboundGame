@@ -43,7 +43,7 @@ public class Inventory {
 
      boolean isPlayerNearChest(Hero hero, Chest chest) {
         float chestPixelX = chest.getX() * 32;
-        float chestPixelY = chest.getY() * 32;
+        float chestPixelY = (chest.getY() - 1) * 32;
 
         float dx = hero.getX() - chestPixelX;
         float dy = hero.getY() - chestPixelY;

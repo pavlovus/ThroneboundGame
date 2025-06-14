@@ -50,6 +50,9 @@ public class TbGame implements Screen {
     private GlyphLayout layout;
     private int width, height;
     private List<Enemy> enemies;
+    private Texture defaultFrameTexture;
+    private Texture selectedFrameTexture;
+    private int selectedWeaponIndex = 0;
 
     private List<Enemy> enemiesToAdd = new ArrayList<>();
 
@@ -89,6 +92,8 @@ public class TbGame implements Screen {
         smallParam.magFilter = Texture.TextureFilter.Nearest;
         smallParam.minFilter = Texture.TextureFilter.Nearest;
 
+        defaultFrameTexture = new Texture(Gdx.files.internal("assets/weaponBar.png"));
+        selectedFrameTexture = new Texture(Gdx.files.internal("assets/weaponBarOver.png"));
 
         shapeRenderer = new ShapeRenderer();
         barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
@@ -368,29 +373,40 @@ public class TbGame implements Screen {
         List<Weapon> weapons = hero.getWeapons();
 
         float iconSize = 32f;
-        float padding = 8f;
+        float frameWidth = iconSize + 30;
+        float frameHeight = iconSize + 65;
+        float padding = 12f;
         int count = weapons.size();
-        float totalWidth = count * iconSize + (count - 1) * padding;
+        float totalWidth = count * frameWidth + (count - 1) * padding;
 
         float startX = width - totalWidth - 20;
-        float startY = height - iconSize - 20;
+        float startY = height - frameHeight - 20;
 
-        weaponIconBounds.clear(); // очищаємо попередні дані
+        weaponIconBounds.clear();
         uiBatch.begin();
         for (int i = 0; i < count; i++) {
             Weapon w = weapons.get(i);
-            float x = startX + i * (iconSize + padding);
+            float x = startX + i * (frameWidth + padding);
             float y = startY;
 
-            // Малюємо іконку
-            uiBatch.draw(w.getTexture(), x, y, iconSize, iconSize);
+            // Вибір текстури рамки
+            Texture frameTexture = (i == selectedWeaponIndex) ? selectedFrameTexture : defaultFrameTexture;
 
-            // Малюємо номер
+            // Малюємо рамку
+            uiBatch.draw(frameTexture, x, y - 5, frameWidth, frameHeight);
+
+            // Центруємо іконку всередині рамки
+            float iconX = x + (frameWidth - iconSize) / 2f;
+            float iconY = y + (frameHeight - iconSize) / 2f - 5f; // -5f трохи зсуває вниз
+
+            uiBatch.draw(w.getTexture(), iconX, iconY, iconSize, iconSize);
+
+            // Малюємо номер зверху рамки
             font.getData().setScale(1f);
             font.setColor(Color.WHITE);
-            font.draw(uiBatch, String.valueOf(i + 1), x + 2, y + iconSize - 4);
+            font.draw(uiBatch, String.valueOf(i + 1), x + 16, y + frameHeight - 40);
 
-            weaponIconBounds.add(new Rectangle(x, y, iconSize, iconSize));
+            weaponIconBounds.add(new Rectangle(x, y, frameWidth, frameHeight));
         }
         uiBatch.end();
     }
@@ -446,9 +462,10 @@ public class TbGame implements Screen {
 
     private void handleWeaponNumberInput() {
         List<Weapon> weapons = hero.getWeapons();
-        for (int i = 0; i < weapons.size(); i++) {
+        for (int i = 0; i < hero.getWeapons().size(); i++) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
-                hero.setCurrentWeapon(weapons.get(i));
+                selectedWeaponIndex = i;
+                hero.setCurrentWeapon(hero.getWeapons().get(i));
                 break;
             }
         }
