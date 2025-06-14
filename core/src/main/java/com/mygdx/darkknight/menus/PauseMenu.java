@@ -38,8 +38,12 @@ public class PauseMenu {
         textButtonStyle.fontColor = Color.BLACK;
 
         Texture textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
+        Texture textureOver = new Texture(Gdx.files.internal("startButtonOver.png"));
+        Texture textureDown = new Texture(Gdx.files.internal("startButtonClicked.png"));
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
+        style.over = new TextureRegionDrawable(new TextureRegion(textureOver));
+        style.down = new TextureRegionDrawable(new TextureRegion(textureDown));
         style.font = font;
         style.fontColor = Color.valueOf("C0C0C0");
 

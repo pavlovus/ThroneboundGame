@@ -38,6 +38,13 @@ public class MagicWeapon extends Weapon {
         if (cooldownTime > 0)  cooldownTime -= deltaTime;
     }
 
+    @Override
+    public void updateAngle(float mouseX, float mouseY, float heroX, float heroY) {
+        float dx = mouseX - heroX - 16;
+        float dy = mouseY - heroY - 16;
+            setAngle((float) Math.toDegrees(Math.atan2(dy, dx)));
+
+    }
     public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies) {
         if (cooldownTime <= 0) {
             float weaponAngle = getAngle();

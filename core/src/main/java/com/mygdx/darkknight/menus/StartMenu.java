@@ -27,6 +27,8 @@ public class StartMenu implements Screen {
     private Texture titleTexture;
     private Texture subtitleTexture;
     private Texture textureUp;
+    private Texture textureOver;
+    private Texture textureDown;
     private TextButton startButton;
     private TextButton exitButton;
     private BitmapFont font;
@@ -76,8 +78,12 @@ public class StartMenu implements Screen {
         font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
+        textureOver = new Texture(Gdx.files.internal("startButtonOver.png"));
+        textureDown = new Texture(Gdx.files.internal("startButtonClicked.png"));
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
+        style.over = new TextureRegionDrawable(new TextureRegion(textureOver));
+        style.down = new TextureRegionDrawable(new TextureRegion(textureDown));
         style.font = font;
         style.fontColor = Color.valueOf("C0C0C0");
 
@@ -168,6 +174,8 @@ public class StartMenu implements Screen {
         font.dispose();
         backgroundMusic.dispose();
         clickSound.dispose();
+        textureOver.dispose();
+        textureDown.dispose();
         Gdx.input.setInputProcessor(null);
     }
 }
