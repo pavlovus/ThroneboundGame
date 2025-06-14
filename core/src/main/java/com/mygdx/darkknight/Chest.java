@@ -1,6 +1,7 @@
 package com.mygdx.darkknight;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.darkknight.weapons.Weapon;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class Chest {
     private float x, y;
+    private int width, height = 32;
     private Weapon weapon;
     private boolean opened = false;
     private Texture texture;
@@ -59,5 +61,17 @@ public class Chest {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public void draw(SpriteBatch batch) {
+        batch.draw(texture, x * 32, (y - 1) * 32, 32, 32);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

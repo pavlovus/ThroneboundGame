@@ -17,6 +17,7 @@ public class MagicWeapon extends Weapon {
     public MagicWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
+        this.setName("Wizard");
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {

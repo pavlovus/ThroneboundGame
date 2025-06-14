@@ -13,6 +13,7 @@ public abstract class Weapon {
     private int damage;
     private float angle = 0;
     private final int width, height;
+    private String name;
 
     public Weapon(String texturePath, int damage, int width, int height) {
         texture = new Texture(texturePath);
@@ -58,5 +59,13 @@ public abstract class Weapon {
     public void setDamage(int damage) {this.damage = damage;}
 
     public Texture getTexture(){ return texture;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 
