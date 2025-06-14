@@ -4,11 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 import com.badlogic.gdx.math.Polygon;
 
 import java.awt.*;
+import java.util.List;
 
 public abstract class Enemy {
     Texture texture;
@@ -20,6 +22,8 @@ public abstract class Enemy {
     private int damage;
     private boolean dead;
 
+    protected List<Bullet> bullets;
+
     protected EnemyAI ai;
 
     private GameMap gameMap; // Додаємо поле
@@ -27,7 +31,7 @@ public abstract class Enemy {
     private float attackCooldown = 0;
     private float attackTimer = 0;
 
-    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, EnemyAI ai, GameMap gameMap) {
+    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, List<Bullet> bullets, EnemyAI ai, GameMap gameMap) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -38,6 +42,7 @@ public abstract class Enemy {
         this.damage = damage;
         this.ai = ai;
         this.gameMap = gameMap;
+        this.bullets = bullets;
     }
 
     public abstract void attack(Hero hero);

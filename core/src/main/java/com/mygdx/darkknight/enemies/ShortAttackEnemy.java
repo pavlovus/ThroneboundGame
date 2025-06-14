@@ -2,8 +2,11 @@ package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
+
+import java.util.List;
 
 public class ShortAttackEnemy extends Enemy {
     private static final float MAX_ATTACK_BACK_DISTANCE = 8f; // Наскільки далеко відступає
@@ -20,8 +23,8 @@ public class ShortAttackEnemy extends Enemy {
     private int damage = 1;
     private Hero hero;
 
-    public ShortAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, GameMap gameMap, ShortAttackAI ai) {
-        super(texture, x, y, width, height, speed, health, damage, ai, gameMap);
+    public ShortAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, List<Bullet> bullets, GameMap gameMap, ShortAttackAI ai) {
+        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap);
         setAttackCooldown(attackCooldown);
     }
 
@@ -55,6 +58,30 @@ public class ShortAttackEnemy extends Enemy {
         isMovingBack = true;
         attackTimer = 0f;
         originalPosition.set(getX(), getY());
+        float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
+        String animationPath;
+        switch(getDamage()){
+            case 1:
+                animationPath = "core/assets/-1.png";
+                break;
+            case 2:
+                animationPath = "core/assets/-2.png";
+                break;
+            case 3:
+                animationPath = "core/assets/-3.png";
+                break;
+            case 4:
+                animationPath = "core/assets/-4.png";
+                break;
+            case 5:
+                animationPath = "core/assets/-5.png";
+                break;
+            default:
+                animationPath = "core/assets/sparkle.png";
+        }
+        Bullet b = new Bullet(hero.getCenterX(), hero.getCenterY(), angle, null, animationPath, true, this, 30, 10,450f);
+        bullets.add(b);
+        b.strike();
         resetAttackCooldown();
 
         this.hero = hero;

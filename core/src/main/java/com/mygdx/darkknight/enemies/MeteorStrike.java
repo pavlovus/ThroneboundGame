@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 import com.badlogic.gdx.graphics.Color;
 import com.mygdx.darkknight.Assets;
+
+import java.util.List;
 
 public class MeteorStrike {
     private static final float WARNING_DURATION = 1.5f; // Час попередження перед падінням
@@ -34,9 +37,10 @@ public class MeteorStrike {
     private Vector2 startFallingPosition; // Початкова позиція метеорита для падіння
     private float initialMeteorScale = 0.5f; // Початковий розмір метеорита
     private float finalMeteorScale = 0.25f;  // Кінцевий розмір метеорита (можна налаштувати)
+    private List<Bullet> bullets;
 
 
-    public MeteorStrike(float x, float y, Hero hero, GameMap gameMap, Texture warningTexture, Texture explosionTexture, int damage) {
+    public MeteorStrike(float x, float y, Hero hero, GameMap gameMap, Texture warningTexture, Texture explosionTexture, int damage, List<Bullet> bullets) {
         this.targetPosition = new Vector2(x, y);
         // Задаємо область ураження навколо цільової позиції
         this.hitArea = new Rectangle(x - 75, y - 75, 150, 150); // Можна налаштувати розмір зони ураження
@@ -54,6 +58,7 @@ public class MeteorStrike {
         this.isExplosionPhase = false;
         this.finished = false;
         this.damageDealt = false;
+        this.bullets = bullets;
 
         // Встановлюємо початкову позицію для падіння вище цільової
         // Можна налаштувати висоту падіння (наприклад, 100-200 пікселів вище)
@@ -91,6 +96,29 @@ public class MeteorStrike {
             // Перевіряємо, чи герой знаходиться в зоні ураження
             if (hero.getBoundingRectangle().overlaps(hitArea)) {
                 hero.takeDamage(damage);
+                String animationPath;
+                switch(getDamage()){
+                    case 1:
+                        animationPath = "core/assets/-1.png";
+                        break;
+                    case 2:
+                        animationPath = "core/assets/-2.png";
+                        break;
+                    case 3:
+                        animationPath = "core/assets/-3.png";
+                        break;
+                    case 4:
+                        animationPath = "core/assets/-4.png";
+                        break;
+                    case 5:
+                        animationPath = "core/assets/-5.png";
+                        break;
+                    default:
+                        animationPath = "core/assets/sparkle.png";
+                }
+                Bullet b = new Bullet(hero.getCenterX(), hero.getCenterY(), 1f, null, animationPath, true, null, 30, 10,450f);
+                bullets.add(b);
+                b.strike();
                 damageDealt = true; // Переконаємося, що шкода нанесена лише один раз
             }
         }
@@ -144,4 +172,6 @@ public class MeteorStrike {
     public boolean isFinished() {
         return finished;
     }
+
+    private int getDamage(){return damage;}
 }

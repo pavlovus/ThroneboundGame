@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.Texture; // Імпортуємо Texture
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 
+import java.nio.Buffer;
 import java.util.List;
 import java.util.Random;
 
@@ -26,9 +28,9 @@ public class Matriarch extends Enemy {
     private Texture minionTexture; // Нове поле для текстури міньйонів
 
     // Конструктор тепер приймає текстури
-    public Matriarch(Texture matriarchTexture, Texture minionTexture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Enemy> enemiesToAdd) {
+    public Matriarch(Texture matriarchTexture, Texture minionTexture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Enemy> enemiesToAdd, List<Bullet> bullets) {
         // Передаємо текстуру матки до батьківського конструктора Enemy
-        super(matriarchTexture, x, y, 40, 40, 80f, 5, 0, new MatriarchAI(roomBounds, new Vector2(x,y)), gameMap);
+        super(matriarchTexture, x, y, 40, 40, 80f, 5, 0, bullets, new MatriarchAI(roomBounds, new Vector2(x,y)), gameMap);
         this.setAttackCooldown(SPAWN_COOLDOWN);
         this.spawnTimer = SPAWN_COOLDOWN;
         this.enemies = enemies;
@@ -75,6 +77,7 @@ public class Matriarch extends Enemy {
             3,
             1,
             0.8f,
+            bullets,
             gameMap,
             new ShortAttackAI(roomBounds)
         );

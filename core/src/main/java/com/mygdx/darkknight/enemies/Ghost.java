@@ -5,15 +5,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.darkknight.Assets;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
+
+import java.util.List;
 
 public class Ghost extends Enemy {
     private float alpha = 0.3f; // Початкова прозорість 30%
 
-    public Ghost(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds) {
+    public Ghost(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets) {
         // Збільшимо швидкість в 1.5 рази. Базова швидкість 150f, отже 150 * 1.5 = 225f
-        super(texture, x, y, 32, 32, 225f, 1, 0, new GhostAI(roomBounds), gameMap);
+        super(texture, x, y, 32, 32, 225f, 1, 0, bullets, new GhostAI(roomBounds, bullets), gameMap);
         this.setAttackCooldown(0.1f);
     }
 

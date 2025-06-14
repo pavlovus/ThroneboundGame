@@ -12,7 +12,7 @@ public class LongAttackEnemy extends Enemy {
     private List<Bullet> bullets;
 
     public LongAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, Texture bulletTexture, List<Bullet> bullets, GameMap gameMap, LongAttackAI ai) {
-        super(texture, x, y, width, height, speed, health, damage, ai, gameMap);
+        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap);
         setAttackCooldown(attackCooldown);
         this.bulletTexture = bulletTexture;
         this.bullets = bullets;
@@ -21,7 +21,27 @@ public class LongAttackEnemy extends Enemy {
     @Override
     public void attack(Hero hero) {
         float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, "core/assets/sparkle.png", true, this, 30, 10,450f));
+        String animationPath;
+        switch(getDamage()){
+            case 1:
+                animationPath = "core/assets/-1.png";
+                break;
+            case 2:
+                animationPath = "core/assets/-2.png";
+                break;
+            case 3:
+                animationPath = "core/assets/-3.png";
+                break;
+            case 4:
+                animationPath = "core/assets/-4.png";
+                break;
+            case 5:
+                animationPath = "core/assets/-5.png";
+                break;
+            default:
+                animationPath = "core/assets/sparkle.png";
+        }
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, animationPath, true, this, 30, 10,450f));
         resetAttackCooldown();
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.Enemy;
+import com.mygdx.darkknight.enemies.ShortAttackEnemy;
 import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.List;
@@ -104,6 +105,28 @@ public class Bullet {
         strikePosition = new Vector2(centerX, centerY);
 
         e.takeDamage(weapon.getDamage());
+    }
+
+    public void strike() {
+        strike = true;
+        strikeTime = 0f;
+
+        float centerX = position.x + width / 2f;
+        float centerY = position.y + height / 2f;
+
+        strikePosition = new Vector2(centerX, centerY);
+    }
+
+    public void strike(Enemy e, Hero hero) {
+        strike = true;
+        strikeTime = 0f;
+
+        float centerX = position.x + width / 2f;
+        float centerY = position.y + height / 2f;
+
+        strikePosition = new Vector2(centerX, centerY);
+
+        hero.takeDamage(e.getDamage());
     }
 
     private void initStrikeAnimation() {

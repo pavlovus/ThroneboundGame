@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 
@@ -30,9 +31,9 @@ public class Teleporter extends Enemy {
 
     private List<TeleportAttackEffect> activeExplosions;
 
-    public Teleporter(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds) {
+    public Teleporter(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets) {
         // Телепортер має 3 HP, високу швидкість і 1 шкоди
-        super(texture, x, y, 32, 32, 200f, 3, 1, new TeleporterAI(roomBounds), gameMap);
+        super(texture, x, y, 32, 32, 200f, 3, 1, bullets, new TeleporterAI(roomBounds), gameMap);
 
         this.teleportTimer = MathUtils.random(1.0f, TELEPORT_COOLDOWN);
         this.fadeTimer = 0;
@@ -203,6 +204,30 @@ public class Teleporter extends Enemy {
     public void attack(Hero hero) {
         // Атакуємо гравця
         hero.takeDamage(getDamage());
+        float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
+        String animationPath;
+        switch(getDamage()){
+            case 1:
+                animationPath = "core/assets/-1.png";
+                break;
+            case 2:
+                animationPath = "core/assets/-2.png";
+                break;
+            case 3:
+                animationPath = "core/assets/-3.png";
+                break;
+            case 4:
+                animationPath = "core/assets/-4.png";
+                break;
+            case 5:
+                animationPath = "core/assets/-5.png";
+                break;
+            default:
+                animationPath = "core/assets/sparkle.png";
+        }
+        Bullet b = new Bullet(hero.getCenterX(), hero.getCenterY(), angle, null, animationPath, true, this, 30, 10,450f);
+        bullets.add(b);
+        b.strike();
         resetAttackCooldown();
 
         // Створюємо ефект атаки на позиції героя з більшим розміром

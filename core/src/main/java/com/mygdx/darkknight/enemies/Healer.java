@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.effects.HealingEffect;
@@ -31,8 +32,8 @@ public class Healer extends Enemy {
     private static final float EFFECT_WIDTH = 32f; // Бажана ширина ефекту
     private static final float EFFECT_HEIGHT = 32f; // Бажана висота ефекту
 
-    public Healer(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies) {
-        super(texture, x, y, 40, 40, 100f, 4, 0, new HealerAI(roomBounds), gameMap);
+    public Healer(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Bullet> bullets) {
+        super(texture, x, y, 40, 40, 100f, 4, 0, bullets, new HealerAI(roomBounds), gameMap);
         this.healTimer = 0f;
         this.enemies = enemies;
         this.roomBounds = roomBounds;

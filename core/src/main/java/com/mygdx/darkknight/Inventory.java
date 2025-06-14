@@ -60,7 +60,6 @@ public class Inventory {
                 chest.setTexture("core/assets/chestClosed.png");
             }
             if (chest.isVisible()) {
-                System.out.println("Chest is visible");
                 batch.begin();
                 batch.draw(chest.getTexture(), chest.getX() * 32, (chest.getY() - 1) * 32, 32, 32);
                 batch.end();

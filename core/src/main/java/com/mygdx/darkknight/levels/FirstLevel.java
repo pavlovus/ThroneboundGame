@@ -37,7 +37,7 @@ public class FirstLevel extends FightLevel {
             id = 0;
         switch (levelEnemies[currentWave - 1][current]) {
             case EnemyType.SHORT_ATTACK:
-                return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, gameMap, new ShortAttackAI(this.roomArea));
+                return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case EnemyType.LONG_ATTACK:
                 return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             default:

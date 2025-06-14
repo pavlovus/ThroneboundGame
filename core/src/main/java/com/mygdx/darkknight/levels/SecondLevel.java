@@ -44,12 +44,12 @@ public class SecondLevel extends FightLevel {
 
         switch (enemyType) {
             case SHORT_ATTACK:
-                return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, gameMap, new ShortAttackAI(this.roomArea));
+                return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
                 return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case MATRIARCH:
                 // Передаємо текстуру матки та текстуру міньйонів (пацюків)
-                return new Matriarch(Assets.mom_1Texture, Assets.short_1Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd);
+                return new Matriarch(Assets.mom_1Texture, Assets.short_1Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd, bullets);
             default:
                 throw new IllegalArgumentException("Unknown enemy type: " + enemyType);
         }

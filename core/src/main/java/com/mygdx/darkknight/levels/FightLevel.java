@@ -203,7 +203,7 @@ public abstract class FightLevel {
                 hero.getY()
             );
 
-            activeMeteorStrikes.add(new MeteorStrike(targetPos.x, targetPos.y, hero, gameMap, meteorWarningTexture, meteorExplosionTexture, meteorStrikeDamage));
+            activeMeteorStrikes.add(new MeteorStrike(targetPos.x, targetPos.y, hero, gameMap, meteorWarningTexture, meteorExplosionTexture, meteorStrikeDamage, bullets));
         }
     }
 

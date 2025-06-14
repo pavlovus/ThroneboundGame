@@ -64,17 +64,17 @@ public class TenthLevel extends FightLevel {
 
         switch (enemyType) {
             case SHORT_ATTACK:
-                return new ShortAttackEnemy(Assets.short_3Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, gameMap, new ShortAttackAI(this.roomArea));
+                return new ShortAttackEnemy(Assets.short_3Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
                 return new LongAttackEnemy(Assets.long_3Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
-                return new Healer(Assets.healer_3Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies);
+                return new Healer(Assets.healer_3Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TELEPORTER:
-                return new Teleporter(Assets.teleporterTexture, pos.x, pos.y, gameMap, this.roomArea);
+                return new Teleporter(Assets.teleporterTexture, pos.x, pos.y, gameMap, this.roomArea, bullets);
             case GHOST:
-                return new Ghost(Assets.ghost_3Texture, pos.x, pos.y, gameMap, this.roomArea);
+                return new Ghost(Assets.ghost_3Texture, pos.x, pos.y, gameMap, this.roomArea, bullets);
             case MATRIARCH:
-                return new Matriarch(Assets.mom_3Texture, Assets.short_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd);
+                return new Matriarch(Assets.mom_3Texture, Assets.short_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd, bullets);
             case TURRET_RANDOM:
                 return new Turret(pos.x, pos.y, gameMap, this.roomArea, bullets, Turret.TurretMode.RANDOM);
             case TURRET_BURST:

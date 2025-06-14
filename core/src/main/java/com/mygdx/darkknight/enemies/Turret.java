@@ -18,7 +18,6 @@ public class Turret extends Enemy {
     private static final int BULLET_COUNT = 8; // Кількість куль за один постріл (для розширеного режиму)
 
     private Texture bulletTexture;
-    private List<Bullet> bullets;
     private float currentAngle;
     private float targetAngle;
     private float rotationTimer;
@@ -35,10 +34,9 @@ public class Turret extends Enemy {
 
     public Turret(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, TurretMode mode) {
         // Турель має 5 HP, не рухається (швидкість 0) і завдає 1 шкоди
-        super(Assets.turretTopTexture, x, y, 64, 64, 0f, 5, 1, new TurretAI(roomBounds), gameMap);
+        super(Assets.turretTopTexture, x, y, 64, 64, 0f, 5, 1, bullets, new TurretAI(roomBounds), gameMap);
 
         this.bulletTexture = Assets.turretBulletTexture;
-        this.bullets = bullets;
         this.currentAngle = 0;
         this.targetAngle = 0;
         this.rotationTimer = 0;
@@ -169,7 +167,27 @@ public class Turret extends Enemy {
     }
 
     private void shootBullet(float angle) {
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, "core/assets/sparkle.png", true, this, 30, 10, 600));
+        String animationPath;
+        switch(getDamage()){
+            case 1:
+                animationPath = "core/assets/-1.png";
+                break;
+            case 2:
+                animationPath = "core/assets/-2.png";
+                break;
+            case 3:
+                animationPath = "core/assets/-3.png";
+                break;
+            case 4:
+                animationPath = "core/assets/-4.png";
+                break;
+            case 5:
+                animationPath = "core/assets/-5.png";
+                break;
+            default:
+                animationPath = "core/assets/sparkle.png";
+        }
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, animationPath, true, this, 30, 10, 600));
     }
 
     @Override

@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.effects.Effect;
 import com.mygdx.darkknight.effects.Poison;
 import com.mygdx.darkknight.effects.Slowness;
 import com.mygdx.darkknight.effects.Weakness;
+
+import java.util.List;
 
 public class GhostAI implements EnemyAI {
     private static final float EFFECT_DURATION = 5f; // Тривалість ефектів
@@ -18,10 +21,12 @@ public class GhostAI implements EnemyAI {
     private static final float ALPHA_CHANGE_SPEED = 0.5f; // Швидкість зміни прозорості
 
     private Rectangle roomBounds;
+    private List<Bullet> bullets;
     private boolean increasingAlpha = true; // Чи збільшується прозорість
 
-    public GhostAI(Rectangle roomBounds) {
+    public GhostAI(Rectangle roomBounds, List<Bullet> bullets) {
         this.roomBounds = roomBounds;
+        this.bullets = bullets;
     }
 
     @Override
@@ -78,7 +83,7 @@ public class GhostAI implements EnemyAI {
 
         switch (effectType) {
             case 0:
-                effect = new Poison(EFFECT_DURATION, 1, 1f, new Texture(Gdx.files.internal("poison.png")));
+                effect = new Poison(EFFECT_DURATION, 1, 1f, new Texture(Gdx.files.internal("poison.png")), bullets);
                 break;
             case 1:
                 effect = new Slowness(EFFECT_DURATION, 200, new Texture(Gdx.files.internal("slowness.png")));

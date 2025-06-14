@@ -437,8 +437,6 @@ public class TbGame implements Screen {
                 continue;
             }
 
-            boolean bulletRemoved = false;
-
             if (!b.isOpponent()) {
                 for (Enemy e : enemies) {
                     if (b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
@@ -448,18 +446,19 @@ public class TbGame implements Screen {
                                 magicBullet.explode(enemies);
                             }
                         } else {
-                            e.takeDamage(weapon.getDamage());
-                            bullets.remove(i);
-                            bulletRemoved = true;
+                            if(!b.isStrike()){
+                                b.strike(e);
+                            }
                         }
                         break;
                     }
                 }
             }
 
-            if (!bulletRemoved && b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
-                hero.takeDamage(b.getEnemy().getDamage());
-                bullets.remove(i);
+            if (b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
+                if(!b.isStrike()){
+                    b.strike(b.getEnemy(), hero);
+                }
                 break;
             }
         }
