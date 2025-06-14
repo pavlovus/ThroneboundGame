@@ -191,7 +191,7 @@ public class TbGame implements Screen {
         weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
 
         // Оновлюємо камеру, щоб слідувала за героєм
-        float lerp = 3f * Gdx.graphics.getDeltaTime(); // коефіцієнт згладжування (можна 2–5)
+        float lerp = 2.3f * Gdx.graphics.getDeltaTime(); // коефіцієнт згладжування (можна 2–5)
         Vector3 position = camera.position;
 
         position.x += (hero.getCenterX() - position.x) * lerp;

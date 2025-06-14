@@ -27,9 +27,9 @@ public abstract class Weapon {
     public abstract void update(float deltaTime, Hero hero);
 
     public void updateAngle(float mouseX, float mouseY, float heroX, float heroY) {
-        if(!(this instanceof AxeWeapon)){
-            float dx = mouseX - (heroX + width / 2f);
-            float dy = mouseY - (heroY - height / 2f);
+        if (!(this instanceof AxeWeapon)) {
+            float dx = mouseX - heroX;
+            float dy = mouseY - heroY;
             angle = (float) Math.toDegrees(Math.atan2(dy, dx));
         }
     }

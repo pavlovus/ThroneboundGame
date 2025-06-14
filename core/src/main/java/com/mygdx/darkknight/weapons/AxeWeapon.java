@@ -29,7 +29,7 @@ public class AxeWeapon extends Weapon {
         super(texturePath, damage, width, height);
         this.radius = radius;
         setAngle(fixedStartAngle);
-        this.setName("Wizard");
+        this.setName("Axe of Divine Wrath");
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {

@@ -14,7 +14,7 @@ public class BowWeapon extends Weapon {
     public BowWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
-        this.setName("Wizard");
+        this.setName("Starbeam Bow");
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
