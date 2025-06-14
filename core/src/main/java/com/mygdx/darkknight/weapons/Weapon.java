@@ -13,6 +13,7 @@ public abstract class Weapon {
     private int damage;
     private float angle = 0;
     private final int width, height;
+    private String name;
 
     public Weapon(String texturePath, int damage, int width, int height) {
         texture = new Texture(texturePath);
@@ -26,9 +27,9 @@ public abstract class Weapon {
     public abstract void update(float deltaTime, Hero hero);
 
     public void updateAngle(float mouseX, float mouseY, float heroX, float heroY) {
-        if(!(this instanceof AxeWeapon)){
-            float dx = mouseX - (heroX + width / 2f);
-            float dy = mouseY - (heroY - height / 2f);
+        if (!(this instanceof AxeWeapon)) {
+            float dx = mouseX - heroX;
+            float dy = mouseY - heroY;
             angle = (float) Math.toDegrees(Math.atan2(dy, dx));
         }
     }
@@ -58,5 +59,13 @@ public abstract class Weapon {
     public void setDamage(int damage) {this.damage = damage;}
 
     public Texture getTexture(){ return texture;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 

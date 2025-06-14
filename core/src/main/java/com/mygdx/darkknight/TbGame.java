@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -48,9 +49,13 @@ public class TbGame implements Screen {
     private Texture shieldTexture;
     private List<Bullet> bullets;
     private BitmapFont font;
+    private BitmapFont smallFont;
     private GlyphLayout layout;
     private int width, height;
     private List<Enemy> enemies;
+    private Texture defaultFrameTexture;
+    private Texture selectedFrameTexture;
+    private int selectedWeaponIndex = 0;
 
     private List<Enemy> enemiesToAdd = new ArrayList<>();
 
@@ -83,6 +88,15 @@ public class TbGame implements Screen {
         font.setColor(Color.WHITE);
         layout = new GlyphLayout();
 
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/pixelText.otf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter smallParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        smallParam.size = 8;
+        smallFont = generator.generateFont(smallParam);
+        smallParam.magFilter = Texture.TextureFilter.Nearest;
+        smallParam.minFilter = Texture.TextureFilter.Nearest;
+
+        defaultFrameTexture = new Texture(Gdx.files.internal("assets/weaponBar.png"));
+        selectedFrameTexture = new Texture(Gdx.files.internal("assets/weaponBarOver.png"));
 
         shapeRenderer = new ShapeRenderer();
         barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
@@ -94,8 +108,9 @@ public class TbGame implements Screen {
         enemies = new ArrayList<>();
         bulletTexture = new Texture("core/assets/arrow.png");
 
-        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
+
         weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
+        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
         Weapon magic = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
         Weapon wizard = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
         Weapon axe = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
@@ -126,7 +141,10 @@ public class TbGame implements Screen {
         fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
-        Chest chest1 = new Chest(114, 544, sword);
+//        Chest chest1 = new Chest(114, 544, sword);
+//        Chest chest2 = new Chest(137, 462, magic);
+//        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
+        Chest chest1 = new Chest(11, 593, sword);
         Chest chest2 = new Chest(137, 462, magic);
         Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
         chests.add(chest1);
@@ -182,7 +200,7 @@ public class TbGame implements Screen {
         weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
 
         // Оновлюємо камеру, щоб слідувала за героєм
-        float lerp = 3f * Gdx.graphics.getDeltaTime(); // коефіцієнт згладжування (можна 2–5)
+        float lerp = 2.3f * Gdx.graphics.getDeltaTime(); // коефіцієнт згладжування (можна 2–5)
         Vector3 position = camera.position;
 
         position.x += (hero.getCenterX() - position.x) * lerp;
@@ -202,6 +220,12 @@ public class TbGame implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        // Render chests
+        for (Chest chest : chests) {
+            if (chest.isVisible()) {
+                chest.draw(batch);
+            }
+        }
         hero.draw(batch);
         for (Enemy e : enemies) e.draw(batch);
         weapon.update(delta, hero);
@@ -233,14 +257,15 @@ public class TbGame implements Screen {
         updateBullets(delta);
         removeDeadEnemies();
 
-        // Рендеримо сундуки
+        // Update chests state
+        uiBatch.begin();
         updateChests();
+        uiBatch.end();
 
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
             currentLevelState = level.getStateName();
-            if (pointer >= 0)
-                chests.get(pointer).setVisible(true);
+            chests.get(pointer).setVisible(true);
         }
         if (isPaused) {
             pauseMenu.render();
@@ -260,7 +285,6 @@ public class TbGame implements Screen {
         uiBatch.draw(heartTexture, barX + 25, barY + 74, 32, 32);
         uiBatch.draw(shieldTexture, barX + 25, barY + 34, 32, 32);
         uiBatch.end();
-
         // Малюємо бари здоров’я / броні через ShapeRenderer
         drawHeroBars();
 
@@ -356,29 +380,40 @@ public class TbGame implements Screen {
         List<Weapon> weapons = hero.getWeapons();
 
         float iconSize = 32f;
-        float padding = 8f;
+        float frameWidth = iconSize + 30;
+        float frameHeight = iconSize + 65;
+        float padding = 12f;
         int count = weapons.size();
-        float totalWidth = count * iconSize + (count - 1) * padding;
+        float totalWidth = count * frameWidth + (count - 1) * padding;
 
         float startX = width - totalWidth - 20;
-        float startY = height - iconSize - 20;
+        float startY = height - frameHeight - 20;
 
-        weaponIconBounds.clear(); // очищаємо попередні дані
+        weaponIconBounds.clear();
         uiBatch.begin();
         for (int i = 0; i < count; i++) {
             Weapon w = weapons.get(i);
-            float x = startX + i * (iconSize + padding);
+            float x = startX + i * (frameWidth + padding);
             float y = startY;
 
-            // Малюємо іконку
-            uiBatch.draw(w.getTexture(), x, y, iconSize, iconSize);
+            // Вибір текстури рамки
+            Texture frameTexture = (i == selectedWeaponIndex) ? selectedFrameTexture : defaultFrameTexture;
 
-            // Малюємо номер
+            // Малюємо рамку
+            uiBatch.draw(frameTexture, x, y - 5, frameWidth, frameHeight);
+
+            // Центруємо іконку всередині рамки
+            float iconX = x + (frameWidth - iconSize) / 2f;
+            float iconY = y + (frameHeight - iconSize) / 2f - 5f; // -5f трохи зсуває вниз
+
+            uiBatch.draw(w.getTexture(), iconX, iconY, iconSize, iconSize);
+
+            // Малюємо номер зверху рамки
             font.getData().setScale(1f);
             font.setColor(Color.WHITE);
-            font.draw(uiBatch, String.valueOf(i + 1), x + 2, y + iconSize - 4);
+            font.draw(uiBatch, String.valueOf(i + 1), x + 16, y + frameHeight - 40);
 
-            weaponIconBounds.add(new Rectangle(x, y, iconSize, iconSize));
+            weaponIconBounds.add(new Rectangle(x, y, frameWidth, frameHeight));
         }
         uiBatch.end();
     }
@@ -391,6 +426,14 @@ public class TbGame implements Screen {
 
         for (Chest chest : chests) {
             if (!chest.isOpened() && inventory.isPlayerNearChest(hero, chest)) {
+                float textX = chest.getX() * 32 + chest.getWidth() / 2f + 9;
+                float textY = chest.getY() * 32 + chest.getHeight() + 10 - 32;
+                String label = "Enter to open";
+                layout.setText(smallFont, label);
+                batch.begin();
+                smallFont.draw(batch, layout, textX - layout.width / 2f, textY);
+                batch.end();
+
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     inventory.openChest(chest);
                     justOpenedChest = true;
@@ -401,7 +444,15 @@ public class TbGame implements Screen {
 
         if (!justOpenedChest) {
             for (Chest chest : chests) {
-                if (chest.isOpened() && chest.getWeapon() != null && inventory.isPlayerNearChest(hero, chest)) {
+                if (chest.isOpened() && chest.getWeapon() != null && inventory.isPlayerNearWeapon(hero, chest)) {
+                    String message = chest.getWeapon().getName();
+                    layout.setText(smallFont, message);
+                    float textWidth = layout.width;
+                    float centeredX = chest.getX() * 32 + 32 / 2f - textWidth / 2f;
+                    batch.begin();
+                    smallFont.draw(batch, layout, centeredX, chest.getY() * 32 - 96 + 9 + 20);
+                    batch.end();
+
                     if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                         hero.addWeapon(chest.getWeapon());
                         chest.setWeapon(null);
@@ -411,16 +462,17 @@ public class TbGame implements Screen {
             }
         }
 
-        if (justOpenedChest && pointer < chests.size()) {
+        if (justOpenedChest && pointer < chests.size() - 1) {
             pointer++;
         }
     }
 
     private void handleWeaponNumberInput() {
         List<Weapon> weapons = hero.getWeapons();
-        for (int i = 0; i < weapons.size(); i++) {
+        for (int i = 0; i < hero.getWeapons().size(); i++) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
-                hero.setCurrentWeapon(weapons.get(i));
+                selectedWeaponIndex = i;
+                hero.setCurrentWeapon(hero.getWeapons().get(i));
                 break;
             }
         }

@@ -17,6 +17,7 @@ public class WizardWeapon extends Weapon {
     public WizardWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
+        this.setName("Staff of wisdom");
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {

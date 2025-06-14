@@ -43,7 +43,18 @@ public class Inventory {
 
      boolean isPlayerNearChest(Hero hero, Chest chest) {
         float chestPixelX = chest.getX() * 32;
-        float chestPixelY = chest.getY() * 32;
+        float chestPixelY = (chest.getY() - 1) * 32;
+
+        float dx = hero.getX() - chestPixelX;
+        float dy = hero.getY() - chestPixelY;
+
+        float distanceSquared = dx * dx + dy * dy;
+        return distanceSquared < 40 * 40;
+    }
+
+    boolean isPlayerNearWeapon(Hero hero, Chest chest) {
+        float chestPixelX = chest.getX() * 32;
+        float chestPixelY = (chest.getY() - 2) * 32;
 
         float dx = hero.getX() - chestPixelX;
         float dy = hero.getY() - chestPixelY;
@@ -59,11 +70,6 @@ public class Inventory {
             } else {
                 chest.setTexture("core/assets/chestClosed.png");
             }
-            if (chest.isVisible()) {
-                batch.begin();
-                batch.draw(chest.getTexture(), chest.getX() * 32, (chest.getY() - 1) * 32, 32, 32);
-                batch.end();
-            }
         }
     }
 
@@ -73,11 +79,6 @@ public class Inventory {
             openedChests.add(chest);
         }
     }
-
-    public void hideChest(Chest chest) {
-        chest.setVisible(false);
-    }
-
 
 
 }

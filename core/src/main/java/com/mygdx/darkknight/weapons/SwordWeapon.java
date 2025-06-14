@@ -23,6 +23,7 @@ public class SwordWeapon extends Weapon {
     public SwordWeapon(String texturePath, int damage, int width, int height, float radius) {
         super(texturePath, damage, width, height);
         this.radius = radius;
+        this.setName("Sword of Insight");
     }
 
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {

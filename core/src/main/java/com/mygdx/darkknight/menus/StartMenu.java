@@ -27,11 +27,14 @@ public class StartMenu implements Screen {
     private Texture titleTexture;
     private Texture subtitleTexture;
     private Texture textureUp;
+    private Texture textureOver;
+    private Texture textureDown;
     private TextButton startButton;
     private TextButton exitButton;
     private BitmapFont font;
     private Music backgroundMusic;
     private Sound clickSound;
+    private float alpha = 0;
 
     public StartMenu() {
         stage = new Stage(new ScreenViewport());
@@ -75,8 +78,12 @@ public class StartMenu implements Screen {
         font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
+        textureOver = new Texture(Gdx.files.internal("startButtonOver.png"));
+        textureDown = new Texture(Gdx.files.internal("startButtonClicked.png"));
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
+        style.over = new TextureRegionDrawable(new TextureRegion(textureOver));
+        style.down = new TextureRegionDrawable(new TextureRegion(textureDown));
         style.font = font;
         style.fontColor = Color.valueOf("C0C0C0");
 
@@ -87,11 +94,8 @@ public class StartMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 clickSound.play();
                 Game game = (Game) Gdx.app.getApplicationListener();
-                Screen oldScreen = game.getScreen();
-                game.setScreen(new TbGame());
-                if (oldScreen != null) {
-                    oldScreen.dispose();  // Звільняємо ресурси старого екрану
-                }
+                Gdx.input.setInputProcessor(null);
+                game.setScreen(new LoadingScreen(game));
             }
         });
 
@@ -118,10 +122,26 @@ public class StartMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if (alpha < 1f) {
+            alpha += delta; // або alpha += delta * 0.5f; для повільнішого ефекту
+            if (alpha > 1f) alpha = 1f;
+        }
+
+        stage.getBatch().setColor(1, 1, 1, alpha);
         stage.act(delta);
         stage.draw();
+        stage.getBatch().setColor(1, 1, 1, 1); // reset
+
+        // М’яке затемнення поверх
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        stage.getBatch().begin();
+        stage.getBatch().setColor(0, 0, 0, 1f - alpha); // Чорне перекриття, що зникає
+        stage.getBatch().draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
     @Override
@@ -141,6 +161,7 @@ public class StartMenu implements Screen {
     @Override public void pause() {}
     @Override public void hide() {
         backgroundMusic.stop();
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
@@ -153,6 +174,8 @@ public class StartMenu implements Screen {
         font.dispose();
         backgroundMusic.dispose();
         clickSound.dispose();
+        textureOver.dispose();
+        textureDown.dispose();
         Gdx.input.setInputProcessor(null);
     }
 }
