@@ -39,6 +39,8 @@ public class Assets {
     public static Texture cleaverTexture;
     public static Texture jesterTexture; // Текстура для боса-блазня
     public static Texture jesterTurretTexture; // Текстура для турелі
+    public static Texture queenTexture;
+    public static Texture queenBulletTexture;
 
 
     public static void load() {
@@ -74,6 +76,8 @@ public class Assets {
         butcherTexture = new Texture("core/assets/boss_1.png"); // Ваша текстура м'ясника
         cleaverTexture = new Texture("core/assets/boss_1_weapon.png"); // Ваша текстура тесака
 
+        queenTexture = new Texture("core/assets/queen.png");
+        queenBulletTexture = new Texture("core/assets/bullet_3.png");
 
         enemyBulletTexture = new Texture("core/assets/arrow.png");
         turretBulletTexture = new Texture("core/assets/turret_bullet.png");
@@ -109,5 +113,7 @@ public class Assets {
 
         jesterTexture.dispose();
         jesterTurretTexture.dispose();
+
+        queenTexture.dispose();
     }
 }
