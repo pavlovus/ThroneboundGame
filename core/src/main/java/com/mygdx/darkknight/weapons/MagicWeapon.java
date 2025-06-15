@@ -50,7 +50,7 @@ public class MagicWeapon extends Weapon {
             float weaponAngle = getAngle();
             float gunX = hero.getCenterX() + getWidth()/2;
             float gunY = hero.getCenterY() + getHeight() /2;
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle, bulletTexture, "core/assets/explosion.png", false, 24, 24, 300f, 2f, 32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle, bulletTexture, "core/assets/explosion.png", false, 24, 24, 500f, 0.8f, 32f, this));
             cooldownTime = cooldownDuration;
         }
     }
