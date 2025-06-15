@@ -56,6 +56,8 @@ public class TbGame implements Screen {
     private Texture defaultFrameTexture;
     private Texture selectedFrameTexture;
     private int selectedWeaponIndex = 0;
+    private float animationTimer = 0f;
+    private final float ANIMATION_DURATION = 0.2f;
 
     private List<Enemy> enemiesToAdd = new ArrayList<>();
 
@@ -251,7 +253,7 @@ public class TbGame implements Screen {
         batch.end();
 
         // Рендеримо статичний інтерфейс
-        renderUI();
+        renderUI(delta);
         handleWeaponNumberInput();
 
         updateBullets(delta);
@@ -275,7 +277,7 @@ public class TbGame implements Screen {
         }
     }
 
-    private void renderUI() {
+    private void renderUI(float delta) {
         float barX = 20;
         float barY = height - 140;
 
@@ -298,7 +300,7 @@ public class TbGame implements Screen {
         renderHeroEffects();
 
         // Іконки зброї
-        renderWeaponIcons();
+        renderWeaponIcons(delta);
     }
 
     private void renderHeroEffects() {
@@ -376,7 +378,7 @@ public class TbGame implements Screen {
         shapeRenderer.end();
     }
 
-    private void renderWeaponIcons() {
+    private void renderWeaponIcons(float delta) {
         List<Weapon> weapons = hero.getWeapons();
 
         float iconSize = 32f;
@@ -389,6 +391,12 @@ public class TbGame implements Screen {
         float startX = width - totalWidth - 20;
         float startY = height - frameHeight - 20;
 
+        // Оновлюємо таймер
+        if (animationTimer > 0f) {
+            animationTimer -= delta;
+            if (animationTimer < 0f) animationTimer = 0f;
+        }
+
         weaponIconBounds.clear();
         uiBatch.begin();
         for (int i = 0; i < count; i++) {
@@ -396,19 +404,30 @@ public class TbGame implements Screen {
             float x = startX + i * (frameWidth + padding);
             float y = startY;
 
-            // Вибір текстури рамки
-            Texture frameTexture = (i == selectedWeaponIndex) ? selectedFrameTexture : defaultFrameTexture;
+            boolean isSelected = (i == selectedWeaponIndex);
+            Texture frameTexture = isSelected ? selectedFrameTexture : defaultFrameTexture;
+
+            // Анімація лише для вибраного
+            float scale = 1f;
+            if (isSelected && animationTimer > 0f) {
+                float progress = 1f - (animationTimer / ANIMATION_DURATION);
+                scale = 1f + 0.25f * (float) Math.sin(progress * Math.PI); // пульс
+            }
+
+            float scaledWidth = frameWidth * scale;
+            float scaledHeight = frameHeight * scale;
+            float offsetX = (scaledWidth - frameWidth) / 2f;
+            float offsetY = (scaledHeight - frameHeight) / 2f;
 
             // Малюємо рамку
-            uiBatch.draw(frameTexture, x, y - 5, frameWidth, frameHeight);
+            uiBatch.draw(frameTexture, x - offsetX, y - offsetY - 5, scaledWidth, scaledHeight);
 
-            // Центруємо іконку всередині рамки
+            // Іконка — всередині рамки
             float iconX = x + (frameWidth - iconSize) / 2f;
-            float iconY = y + (frameHeight - iconSize) / 2f - 5f; // -5f трохи зсуває вниз
-
+            float iconY = y + (frameHeight - iconSize) / 2f - 5f;
             uiBatch.draw(w.getTexture(), iconX, iconY, iconSize, iconSize);
 
-            // Малюємо номер зверху рамки
+            // Цифра
             font.getData().setScale(1f);
             font.setColor(Color.WHITE);
             font.draw(uiBatch, String.valueOf(i + 1), x + 16, y + frameHeight - 40);
@@ -469,10 +488,13 @@ public class TbGame implements Screen {
 
     private void handleWeaponNumberInput() {
         List<Weapon> weapons = hero.getWeapons();
-        for (int i = 0; i < hero.getWeapons().size(); i++) {
+        for (int i = 0; i < weapons.size(); i++) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
-                selectedWeaponIndex = i;
-                hero.setCurrentWeapon(hero.getWeapons().get(i));
+                if (selectedWeaponIndex != i) {
+                    selectedWeaponIndex = i;
+                    hero.setCurrentWeapon(weapons.get(i));
+                    animationTimer = ANIMATION_DURATION; // запускаємо анімацію
+                }
                 break;
             }
         }
