@@ -42,10 +42,10 @@ public class WizardWeapon extends Weapon {
             float weaponAngle = getAngle();
             float gunX = hero.getCenterX() + getWidth()/2;
             float gunY = hero.getCenterY() + getHeight() /2;
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle + 7.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f, this));
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle - 7.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f,this));
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle + 22.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f, this));
-            bullets.add(new MagicBullet(gunX, gunY, weaponAngle - 22.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 300f, 1f,32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle + 7.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 600f, 0.5f,32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle - 7.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 600f, 0.5f,32f,this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle + 22.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 600f, 0.5f,32f, this));
+            bullets.add(new MagicBullet(gunX, gunY, weaponAngle - 22.5f, bulletTexture, "core/assets/sparkle.png", false, 8, 8, 600f, 0.5f,32f, this));
             cooldownTime = cooldownDuration;
         }
     }

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -20,6 +19,10 @@ import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.levels.*;
 import com.mygdx.darkknight.menus.PauseMenu;
 import com.mygdx.darkknight.menus.RestartMenu;
+import com.mygdx.darkknight.plot.MultiStoryManager;
+import com.mygdx.darkknight.plot.PlotCharacter;
+import com.mygdx.darkknight.plot.StoryManager;
+import com.mygdx.darkknight.plot.StoryScreen;
 import com.mygdx.darkknight.weapons.*;
 
 import java.util.ArrayList;
@@ -29,12 +32,16 @@ public class TbGame implements Screen {
     private static final float BAR_WIDTH = 110;
     private static final float BAR_HEIGHT = 16;
     private static final float BAR_MARGIN = 22;
+    private float mouseX;
+    private float mouseY;
     private GameMap gameMap;
     private OrthographicCamera camera;
     private PauseMenu pauseMenu;
     private RestartMenu restartMenu;
+    private StoryScreen storyScreen;
     private boolean isPaused = false;
     private boolean gameOver = false;
+    private boolean plotActive = false;
     private SpriteBatch batch;
     private SpriteBatch uiBatch; // окремий шар для рендеру графічних ефектів, того, що лишатиметься нерухомим
     private ShapeRenderer shapeRenderer;
@@ -54,6 +61,7 @@ public class TbGame implements Screen {
 
     private List<FightLevel> fightLevels = new ArrayList<>();
     private List<Chest> chests = new ArrayList<>();
+    private List<PlotCharacter> characters = new ArrayList<>();
     private Inventory inventory;
     private int pointer = 0;
     private String currentLevelState = "INACTIVE";
@@ -76,8 +84,7 @@ public class TbGame implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        font = new BitmapFont();
-        // TODO: Підібрати шрифт потім
+        font = new BitmapFont(Gdx.files.internal("medievalLightFontSmaller.fnt"));
         font.setColor(Color.WHITE);
         layout = new GlyphLayout();
 
@@ -131,14 +138,18 @@ public class TbGame implements Screen {
         chests.add(chest2);
         chests.add(chest3);
         inventory = new Inventory(gameMap);
+        MultiStoryManager multiManager = new MultiStoryManager("core/assets/story.json");
 
+        StoryManager intro = multiManager.getManager("intro");
+        PlotCharacter character = new PlotCharacter(10, 596, intro, "core/assets/hero1.png");
+        characters.add(character);
     }
 
     @Override
     public void render(float delta) {
         weapon = hero.getCurrentWeapon();
         // Перевірка на паузу під час гри (натискання ESC)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !gameOver && !plotActive) {
             isPaused = !isPaused;
             if (isPaused) {
                 pauseMenu.show();
@@ -154,9 +165,16 @@ public class TbGame implements Screen {
         }
 
 
-        if (!isPaused && !gameOver) {
+        if (!isPaused && !gameOver && !plotActive) {
             // Обробка вводу, оновлення логіки лише коли гра не на паузі
             handleInput();
+            Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(mousePos); // Конвертуємо координати в систему камери
+
+            mouseX = mousePos.x;
+            mouseY = mousePos.y;
+
+            weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
             hero.updateEffects(delta);
 
             enemiesToAdd.clear();
@@ -168,16 +186,8 @@ public class TbGame implements Screen {
 
             updateBullets(delta);
             removeDeadEnemies();
+            handleWeaponNumberInput();
         }
-
-        // Отримуємо позицію миші незалежно від паузи для правильного виведення зброї
-        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.unproject(mousePos); // Конвертуємо координати в систему камери
-
-        float mouseX = mousePos.x;
-        float mouseY = mousePos.y;
-
-        weapon.updateAngle(mouseX, mouseY, hero.getCenterX(), hero.getCenterY());
 
         // Оновлюємо камеру, щоб слідувала за героєм
         float lerp = 3f * Gdx.graphics.getDeltaTime(); // коефіцієнт згладжування (можна 2–5)
@@ -223,13 +233,10 @@ public class TbGame implements Screen {
 
         // Рендеримо статичний інтерфейс
         renderUI();
-        handleWeaponNumberInput();
-
-        updateBullets(delta);
-        removeDeadEnemies();
 
         // Рендеримо сундуки
         updateChests();
+        updateCharacters();
 
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
@@ -242,6 +249,9 @@ public class TbGame implements Screen {
         }
         if (gameOver) {
             restartMenu.render();
+        }
+        if (plotActive){
+            storyScreen.render();
         }
     }
 
@@ -295,7 +305,6 @@ public class TbGame implements Screen {
     private void drawCoordinates() {
         uiBatch.begin();
         String posText = String.format("Hero: X=%.1f Y=%.1f", hero.getX(), hero.getY());
-        font.getData().setScale(1.5f);
         font.draw(uiBatch, posText, 20, 30);
         font.draw(uiBatch, "Level: " + currentLevelState, 20, 55);
         uiBatch.end();
@@ -304,8 +313,6 @@ public class TbGame implements Screen {
     private void drawHeroBarText() {
         float barX = 80;
         float barY = height - 58;
-
-        font.getData().setScale(2f);
 
         String hpText = hero.getHealth() + " / " + hero.getMaxHealth();
         layout.setText(font, hpText);
@@ -368,8 +375,6 @@ public class TbGame implements Screen {
             // Малюємо іконку
             uiBatch.draw(w.getTexture(), x, y, iconSize, iconSize);
 
-            // Малюємо номер
-            font.getData().setScale(1f);
             font.setColor(Color.WHITE);
             font.draw(uiBatch, String.valueOf(i + 1), x + 2, y + iconSize - 4);
 
@@ -408,6 +413,28 @@ public class TbGame implements Screen {
 
         if (justOpenedChest && pointer < chests.size()) {
             pointer++;
+        }
+    }
+
+    private void updateCharacters() {
+        for (PlotCharacter character : characters) {
+            batch.begin();
+            batch.draw(character.getTexture(), character.getX() * 32, (character.getY() - 1) * 32, 32, 32);
+            batch.end();
+        }
+
+        for (PlotCharacter character : characters) {
+            if (!character.isTalked() && character.isPlayerNearCharacter(hero)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    plotActive = !plotActive;
+                    if (plotActive) {
+                        storyScreen = new StoryScreen(this, character.getScene());
+                        storyScreen.show();
+                    }
+                    character.setTalked(true);
+                    break;
+                }
+            }
         }
     }
 
@@ -467,7 +494,7 @@ public class TbGame implements Screen {
     }
 
     private void handleInput() {
-        if (isPaused) return;
+        if (isPaused || plotActive) return;
         float delta = Gdx.graphics.getDeltaTime();
         float move = hero.getSpeed() * delta;
         boolean w = Gdx.input.isKeyPressed(Input.Keys.W);
@@ -528,5 +555,9 @@ public class TbGame implements Screen {
 
     public void setPaused(boolean paused) {
         isPaused = paused;
+    }
+
+    public void setPlotActive(boolean plotActive) {
+        this.plotActive = plotActive;
     }
 }
