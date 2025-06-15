@@ -33,7 +33,7 @@ public class Teleporter extends Enemy {
 
     public Teleporter(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets) {
         // Телепортер має 3 HP, високу швидкість і 1 шкоди
-        super(texture, x, y, 40, 40, 200f, 3, 1, bullets, new TeleporterAI(roomBounds), gameMap);
+        super(texture, x, y, 40, 40, 200f, 3, 1, bullets, new TeleporterAI(roomBounds), gameMap, true);
 
         this.teleportTimer = MathUtils.random(1.0f, TELEPORT_COOLDOWN);
         this.fadeTimer = 0;
@@ -203,7 +203,7 @@ public class Teleporter extends Enemy {
     @Override
     public void attack(Hero hero) {
         // Атакуємо гравця
-        hero.takeDamage(getDamage());
+        hero.takeDamage(getDamage(), armorIgnore);
         float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
         String animationPath;
         switch(getDamage()){

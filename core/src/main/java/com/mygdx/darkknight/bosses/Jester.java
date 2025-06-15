@@ -18,7 +18,7 @@ public class Jester extends Enemy {
     private boolean isTurretActive;
 
     public Jester(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd, List<Enemy> globalEnemies) {
-        super(Assets.jesterTexture, x, y, 50, 60, 0f, MAX_HEALTH, 0, bullets, new JesterAI(roomBounds), gameMap);
+        super(Assets.jesterTexture, x, y, 50, 60, 0f, MAX_HEALTH, 0, bullets, new JesterAI(roomBounds), gameMap, false);
         this.isTurretActive = true;
         // Спавнимо турель у тій же позиції (центрована на босі)
         this.turret = new JesterTurret(x - 67, y - 72, gameMap, roomBounds, bullets, this); // Центруємо турель відносно боса

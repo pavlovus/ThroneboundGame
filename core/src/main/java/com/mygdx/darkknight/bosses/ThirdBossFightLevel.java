@@ -62,7 +62,7 @@ public class ThirdBossFightLevel extends FightLevel {
             if (bullet.isOpponent() && bullet.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
                 Enemy owner = bullet.getEnemy();
                 int damage = owner != null ? owner.getDamage() : 10;
-                hero.takeDamage(damage);
+                hero.takeDamage(damage, owner.getArmorIgnore());
                 bullet.strike(owner, hero);
                 Gdx.app.log("ThirdBossFightLevel", "Hero hit by bullet, damage: " + damage + ", hero health: " + hero.getHealth());
             }

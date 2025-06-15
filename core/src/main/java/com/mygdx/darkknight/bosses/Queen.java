@@ -34,7 +34,7 @@ public class Queen extends Enemy {
     }
 
     public Queen(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
-        super(Assets.queenTexture, x, y, 96, 96, 0f, MAX_HEALTH, 1, bullets, new QueenAI(roomBounds), gameMap);
+        super(Assets.queenTexture, x, y, 96, 96, 0f, MAX_HEALTH, 1, bullets, new QueenAI(roomBounds), gameMap, true);
         this.roomBounds = roomBounds;
         this.bulletTimer = BULLET_COOLDOWN;
         this.minionTimer = MINION_SPAWN_COOLDOWN;

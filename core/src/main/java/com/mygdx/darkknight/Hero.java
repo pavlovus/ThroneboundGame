@@ -60,11 +60,23 @@ public class Hero {
         }
     }
 
-    public void takeDamage(int dmg) {
-        health -= dmg;
-        if (health <= 0){
-            dead = true;
-            health = 0;
+    public void takeDamage(int dmg, boolean shieldIgnore) {
+        if(shieldIgnore){
+            health -= dmg;
+            if (health <= 0){
+                dead = true;
+                health = 0;
+            }
+        } else {
+            if(armor>0){
+                armor -= dmg;
+            } else {
+                health -= dmg;
+                if (health <= 0){
+                    dead = true;
+                    health = 0;
+                }
+            }
         }
     }
 

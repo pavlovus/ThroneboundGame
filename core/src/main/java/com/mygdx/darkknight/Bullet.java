@@ -126,7 +126,7 @@ public class Bullet {
 
         strikePosition = new Vector2(centerX, centerY);
 
-        hero.takeDamage(e.getDamage());
+        hero.takeDamage(e.getDamage(), e.getArmorIgnore());
     }
 
     private void initStrikeAnimation() {
@@ -136,7 +136,7 @@ public class Bullet {
         for (int i = 0; i < tmp.length; i++) {
             frames[i] = tmp[i][0];
         }
-        strikeAnimation = new Animation<>(0.1f, frames);
+        strikeAnimation = new Animation<>(10f, frames);
     }
 
     public Rectangle getBoundingRectangle() {

@@ -33,7 +33,7 @@ public class Healer extends Enemy {
     private static final float EFFECT_HEIGHT = 32f; // Бажана висота ефекту
 
     public Healer(Texture texture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Bullet> bullets) {
-        super(texture, x, y, 40, 40, 100f, 4, 0, bullets, new HealerAI(roomBounds), gameMap);
+        super(texture, x, y, 40, 40, 100f, 4, 0, bullets, new HealerAI(roomBounds), gameMap, false);
         this.healTimer = 0f;
         this.enemies = enemies;
         this.roomBounds = roomBounds;

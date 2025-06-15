@@ -24,6 +24,7 @@ public class MeteorStrike {
     private boolean isExplosionPhase; // Нова фаза для короткочасного відображення вибуху
     private boolean finished; // Чи завершився метеоритний удар і його можна видалити
     private boolean damageDealt; // Чи була вже нанесена шкода
+    public boolean armorIgnore = true;
 
     private Texture warningTexture; // Текстура попереджувального кола
     private Texture explosionTexture;    // Текстура вибуху (замість fireTexture)
@@ -95,7 +96,7 @@ public class MeteorStrike {
         if (!damageDealt && hero != null) {
             // Перевіряємо, чи герой знаходиться в зоні ураження
             if (hero.getBoundingRectangle().overlaps(hitArea)) {
-                hero.takeDamage(damage);
+                hero.takeDamage(damage, armorIgnore);
                 String animationPath;
                 switch(getDamage()){
                     case 1:

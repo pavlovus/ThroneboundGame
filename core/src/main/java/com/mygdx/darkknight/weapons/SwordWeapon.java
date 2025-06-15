@@ -7,6 +7,7 @@ import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.Enemy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SwordWeapon extends Weapon {
@@ -21,6 +22,7 @@ public class SwordWeapon extends Weapon {
     private enum AttackPhase { FORWARD, RETURN }
     private AttackPhase attackPhase = null;
     private Polygon bounds;
+    private final List<Enemy> damagedEnemies = new ArrayList<>();
 
     public SwordWeapon(String texturePath, int damage, int width, int height) {
         super(texturePath, damage, width, height);
@@ -65,7 +67,10 @@ public class SwordWeapon extends Weapon {
         if (attackPhase == AttackPhase.FORWARD) {
             for (Enemy e : enemies) {
                 if (bounds != null && Intersector.overlapConvexPolygons(bounds, e.getBoundingPolygon())) {
-                    e.takeDamage(getDamage());
+                    if (!damagedEnemies.contains(e)) {
+                        e.takeDamage(getDamage());
+                        damagedEnemies.add(e);
+                    }
                 }
             }
 
@@ -99,6 +104,7 @@ public class SwordWeapon extends Weapon {
             attackTime = 0;
             this.enemies = enemies;
             this.hero = hero;
+            damagedEnemies.clear();
 
             float direction = flip ? 1 : -1;
             startAngle = getAngle();

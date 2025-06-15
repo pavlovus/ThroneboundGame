@@ -24,7 +24,7 @@ public class ShortAttackEnemy extends Enemy {
     private Hero hero;
 
     public ShortAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, List<Bullet> bullets, GameMap gameMap, ShortAttackAI ai) {
-        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap);
+        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap, false);
         setAttackCooldown(attackCooldown);
     }
 
@@ -109,7 +109,7 @@ public class ShortAttackEnemy extends Enemy {
 
             if (attackTimer >= ATTACK_TIME) {
                 isAttacking = false;
-                hero.takeDamage(damage);
+                hero.takeDamage(damage, armorIgnore);
             }
         }
     }

@@ -21,6 +21,7 @@ public abstract class Enemy {
     private int health;
     private int damage;
     private boolean dead;
+    protected boolean armorIgnore;
 
     protected List<Bullet> bullets;
 
@@ -31,7 +32,7 @@ public abstract class Enemy {
     private float attackCooldown = 0;
     private float attackTimer = 0;
 
-    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, List<Bullet> bullets, EnemyAI ai, GameMap gameMap) {
+    public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, List<Bullet> bullets, EnemyAI ai, GameMap gameMap, boolean armorIgnore) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -43,6 +44,7 @@ public abstract class Enemy {
         this.ai = ai;
         this.gameMap = gameMap;
         this.bullets = bullets;
+        this.armorIgnore = armorIgnore;
     }
 
     public abstract void attack(Hero hero);
@@ -194,4 +196,6 @@ public abstract class Enemy {
     public void setDead(boolean dead) {
         this.dead = dead;
     }
+
+    public boolean getArmorIgnore(){ return armorIgnore;}
 }

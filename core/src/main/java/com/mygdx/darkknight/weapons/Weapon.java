@@ -32,7 +32,6 @@ public abstract class Weapon {
             float dy = mouseY - heroY;
             angle = (float) Math.toDegrees(Math.atan2(dy, dx));
         }
-        System.out.println(angle);
     }
 
     public float getAngle() {

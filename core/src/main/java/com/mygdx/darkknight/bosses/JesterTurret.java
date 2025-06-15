@@ -38,7 +38,7 @@ public class JesterTurret extends Enemy {
     }
 
     public JesterTurret(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, Jester boss) {
-        super(Assets.jesterTurretTexture, x, y, 180, 180, 0f, 1, 1, bullets, new TurretAI(roomBounds), gameMap);
+        super(Assets.jesterTurretTexture, x, y, 180, 180, 0f, 1, 1, bullets, new TurretAI(roomBounds), gameMap, false);
         this.boss = boss;
         this.currentAngle = 0;
         this.aimedShotTimer = AIMED_SHOT_COOLDOWN;

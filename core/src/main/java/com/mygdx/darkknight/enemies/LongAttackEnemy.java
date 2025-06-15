@@ -12,7 +12,7 @@ public class LongAttackEnemy extends Enemy {
     private List<Bullet> bullets;
 
     public LongAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, Texture bulletTexture, List<Bullet> bullets, GameMap gameMap, LongAttackAI ai) {
-        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap);
+        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap, false);
         setAttackCooldown(attackCooldown);
         this.bulletTexture = bulletTexture;
         this.bullets = bullets;

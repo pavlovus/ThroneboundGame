@@ -8,6 +8,7 @@ import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.Enemy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AxeWeapon extends Weapon {
@@ -21,6 +22,7 @@ public class AxeWeapon extends Weapon {
     private Polygon bounds;
     private float cooldownTime = 0;
     private final float cooldownDuration = 2f;
+    private final List<Enemy> damagedEnemies = new ArrayList<>();
 
     private final float fixedStartAngle = 45f;
 
@@ -70,7 +72,10 @@ public class AxeWeapon extends Weapon {
 
         for (Enemy e : enemies) {
             if (bounds != null && Intersector.overlapConvexPolygons(bounds, e.getBoundingPolygon())) {
-                e.takeDamage(getDamage());
+                if (!damagedEnemies.contains(e)) {
+                    e.takeDamage(getDamage());
+                    damagedEnemies.add(e);
+                }
             }
         }
 
@@ -92,6 +97,7 @@ public class AxeWeapon extends Weapon {
         this.attackTime = 0;
         this.enemies = enemies;
         this.hero = hero;
+        damagedEnemies.clear();
         this.startAngle = fixedStartAngle;
         this.targetAngle = fixedStartAngle - 360f;
         setAngle(fixedStartAngle);

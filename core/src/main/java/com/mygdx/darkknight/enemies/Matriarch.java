@@ -30,7 +30,7 @@ public class Matriarch extends Enemy {
     // Конструктор тепер приймає текстури
     public Matriarch(Texture matriarchTexture, Texture minionTexture, float x, float y, GameMap gameMap, Rectangle roomBounds, List<Enemy> enemies, List<Enemy> enemiesToAdd, List<Bullet> bullets) {
         // Передаємо текстуру матки до батьківського конструктора Enemy
-        super(matriarchTexture, x, y, 40, 40, 80f, 5, 0, bullets, new MatriarchAI(roomBounds, new Vector2(x,y)), gameMap);
+        super(matriarchTexture, x, y, 40, 40, 80f, 5, 0, bullets, new MatriarchAI(roomBounds, new Vector2(x,y)), gameMap, false);
         this.setAttackCooldown(SPAWN_COOLDOWN);
         this.spawnTimer = SPAWN_COOLDOWN;
         this.enemies = enemies;

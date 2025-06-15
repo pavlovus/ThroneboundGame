@@ -34,7 +34,7 @@ public class Turret extends Enemy {
 
     public Turret(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, TurretMode mode) {
         // Турель має 5 HP, не рухається (швидкість 0) і завдає 1 шкоди
-        super(Assets.turretTopTexture, x, y, 64, 64, 0f, 5, 1, bullets, new TurretAI(roomBounds), gameMap);
+        super(Assets.turretTopTexture, x, y, 64, 64, 0f, 5, 1, bullets, new TurretAI(roomBounds), gameMap, false);
 
         this.bulletTexture = Assets.turretBulletTexture;
         this.currentAngle = 0;

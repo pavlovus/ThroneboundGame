@@ -45,7 +45,7 @@ public class Butcher extends Enemy {
     private List<Bullet> pendingBullets = new ArrayList<>();
 
     public Butcher(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
-        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 3, 10, bullets, new ButcherAI(roomBounds), gameMap);
+        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 3, 10, bullets, new ButcherAI(roomBounds), gameMap, true);
         this.roomBounds = roomBounds;
         this.bullets = bullets;
         this.currentWaveEnemies = currentWaveEnemies;
@@ -78,7 +78,7 @@ public class Butcher extends Enemy {
             }
         } else if (isCharging) {
             if (getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
-                hero.takeDamage(CHARGE_DAMAGE);
+                hero.takeDamage(CHARGE_DAMAGE, armorIgnore);
             }
             // Зупиняємо ривок при зіткненні зі стіною
             if (getX() <= roomBounds.x || getX() + getWidth() >= roomBounds.x + roomBounds.width ||

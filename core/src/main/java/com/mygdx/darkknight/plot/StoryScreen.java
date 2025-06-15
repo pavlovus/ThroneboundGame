@@ -96,12 +96,12 @@ public class StoryScreen {
         Cutscene scene = storyManager.getCurrentScene();
         if (scene != null) {
             // Ім’я персонажа (вгорі зліва)
-            speakerFont.draw(batch, scene.getSpeaker(), 195, panelHeight);
+            speakerFont.draw(batch, scene.getSpeaker(), screenWidth*14/100, panelHeight);
 
             // Основний текст (у панелі, з відступами)
-            float textX = 160;
-            float textY = panelHeight - 110;
-            float textWidth = screenWidth - 60;
+            float textX = screenWidth*12/100;
+            float textY = panelHeight - screenHeight*14/100;
+            float textWidth = screenWidth*96/100;
 
             layout.setText(font, scene.getText(), font.getColor(), textWidth, Align.left, true);
             font.draw(batch, layout, textX, textY);

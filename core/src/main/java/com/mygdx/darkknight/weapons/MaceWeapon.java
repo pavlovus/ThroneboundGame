@@ -12,6 +12,7 @@ import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.Enemy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MaceWeapon extends Weapon {
@@ -36,6 +37,7 @@ public class MaceWeapon extends Weapon {
     private float hitSize;
     private boolean hit = false;
     private Vector2 position;
+    private final List<Enemy> damagedEnemies = new ArrayList<>();
 
     public MaceWeapon(String texturePath, int damage, int width, int height, String animationPath, float hitSize) {
         super(texturePath, damage, width, height);
@@ -102,7 +104,10 @@ public class MaceWeapon extends Weapon {
         if (attackPhase == AttackPhase.FORWARD) {
             for (Enemy e : enemies) {
                 if (bounds != null && Intersector.overlapConvexPolygons(bounds, e.getBoundingPolygon())) {
-                    e.takeDamage(getDamage());
+                    if (!damagedEnemies.contains(e)) {
+                        e.takeDamage(getDamage());
+                        damagedEnemies.add(e);
+                    }
                 }
             }
 
@@ -137,6 +142,7 @@ public class MaceWeapon extends Weapon {
             attackTime = 0;
             this.enemies = enemies;
             this.hero = hero;
+            damagedEnemies.clear();
 
             float direction = flip ? 1 : -1;
             startAngle = getAngle();

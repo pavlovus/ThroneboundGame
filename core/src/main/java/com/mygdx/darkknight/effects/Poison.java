@@ -15,6 +15,7 @@ public class Poison extends Effect {
     private float timeSinceLastDamage = 0f;
     private float timePerDamage;
     private List<Bullet> bullets;
+    private boolean armorIgnore = true;
 
     public Poison(float duration, int healthDamagePerSecond, float timePerDamage, Texture texture, List<Bullet> bullets) {
         super(duration, texture);
@@ -38,7 +39,7 @@ public class Poison extends Effect {
     @Override
     protected void apply(Hero hero, float deltaTime) {
         if (!applied) {
-            hero.takeDamage(healthDamagePerSecond);
+            hero.takeDamage(healthDamagePerSecond, armorIgnore);
             applied = true;
         }
     }
@@ -52,7 +53,7 @@ public class Poison extends Effect {
         timeSinceLastDamage += deltaTime;
 
         if (timeSinceLastDamage >= timePerDamage) {
-            hero.takeDamage(healthDamagePerSecond);
+            hero.takeDamage(healthDamagePerSecond, armorIgnore);
             String animationPath;
             switch(getDamage()){
                 case 1:
