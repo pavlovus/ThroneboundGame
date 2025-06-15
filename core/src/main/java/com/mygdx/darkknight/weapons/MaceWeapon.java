@@ -19,7 +19,7 @@ public class MaceWeapon extends Weapon {
     private boolean damageApplied = false;
     private boolean flip;
     private float attackTime = 0;
-    private final float attackDuration = 0.1f;
+    private final float attackDuration = 0.2f;
     private float startAngle, targetAngle;
     private List<Enemy> enemies;
     private Hero hero;
@@ -201,7 +201,7 @@ public class MaceWeapon extends Weapon {
         for (int i = 0; i < tmp.length; i++) {
             frames[i] = tmp[i][0];
         }
-        hitAnimation = new Animation<>(0.1f, frames);
+        hitAnimation = new Animation<>(0.05f, frames);
     }
 
     public boolean isAttacking() {
