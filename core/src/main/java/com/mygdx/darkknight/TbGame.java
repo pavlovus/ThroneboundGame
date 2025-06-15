@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -118,12 +119,13 @@ public class TbGame implements Screen {
 
 
         weapon = new BowWeapon("core/assets/bow.png", 1, 20, 64, "core/assets/arrow.png");
-        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32, 64);
+        Weapon sword = new SwordWeapon("core/assets/sword.png", 3, 32, 32);
         Weapon magic = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
         Weapon wizard = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
-        Weapon axe = new AxeWeapon("core/assets/axe.png", 3, 32, 32, 32);
+        Weapon axe = new AxeWeapon("core/assets/axe.png", 3, 32, 32);
+        Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 5, weapon);
-        hero.addWeapon(sword, magic, wizard, axe);
+        hero.addWeapon(sword, magic, wizard, axe, mace);
 //        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
 //        hero.addEffect(testEffect);
 //        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
@@ -138,9 +140,9 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-//        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
-//        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
-//        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
@@ -237,17 +239,18 @@ public class TbGame implements Screen {
                 chest.draw(batch);
             }
         }
-        hero.draw(batch);
-        for (Enemy e : enemies) e.draw(batch);
-        weapon.update(delta, hero);
-        if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
-            weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
-        else
-            weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
-
-        for (Bullet b : bullets) {
-            b.render(batch);
+        if(!gameOver){
+            hero.draw(batch);
+            weapon.update(delta, hero);
+            if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
+                weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
+            else
+                weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
+            for (Bullet b : bullets) {
+                b.render(batch);
+            }
         }
+        for (Enemy e : enemies) e.draw(batch);
 
         for (FightLevel level : fightLevels) {
             if (level.getStateName().equals("ACTIVE")) {
@@ -262,7 +265,7 @@ public class TbGame implements Screen {
         batch.end();
 
         // Рендеримо статичний інтерфейс
-        renderUI();
+        renderUI(delta);
 
         // Update chests state
         uiBatch.begin();

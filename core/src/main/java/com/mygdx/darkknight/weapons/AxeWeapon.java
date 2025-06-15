@@ -11,7 +11,6 @@ import com.mygdx.darkknight.enemies.Enemy;
 import java.util.List;
 
 public class AxeWeapon extends Weapon {
-    private float radius;
     private boolean attacking = false;
     private float attackTime = 0;
     private final float attackDuration = 0.5f; // у секундах
@@ -25,9 +24,8 @@ public class AxeWeapon extends Weapon {
 
     private final float fixedStartAngle = 45f;
 
-    public AxeWeapon(String texturePath, int damage, int width, int height, float radius) {
+    public AxeWeapon(String texturePath, int damage, int width, int height) {
         super(texturePath, damage, width, height);
-        this.radius = radius;
         setAngle(fixedStartAngle);
         this.setName("Axe of Divine Wrath");
     }
@@ -101,10 +99,6 @@ public class AxeWeapon extends Weapon {
 
     public boolean isAttacking() {
         return attacking;
-    }
-
-    public float getRadius() {
-        return radius;
     }
 
     public Polygon getBounds() {

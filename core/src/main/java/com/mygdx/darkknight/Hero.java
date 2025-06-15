@@ -62,7 +62,10 @@ public class Hero {
 
     public void takeDamage(int dmg) {
         health -= dmg;
-        if (health <= 0){dead = true;}
+        if (health <= 0){
+            dead = true;
+            health = 0;
+        }
     }
 
     public void heal(int heal) {

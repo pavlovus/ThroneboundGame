@@ -104,7 +104,6 @@ public class StoryScreen {
             float textWidth = screenWidth - 60;
 
             layout.setText(font, scene.getText(), font.getColor(), textWidth, Align.left, true);
-            System.out.println(scene.getText());
             font.draw(batch, layout, textX, textY);
         }
 

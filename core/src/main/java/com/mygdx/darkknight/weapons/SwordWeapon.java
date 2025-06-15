@@ -1,6 +1,8 @@
 package com.mygdx.darkknight.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
 import com.mygdx.darkknight.enemies.Enemy;
@@ -8,7 +10,6 @@ import com.mygdx.darkknight.enemies.Enemy;
 import java.util.List;
 
 public class SwordWeapon extends Weapon {
-    private float radius;
     private boolean attacking = false;
     private boolean damageApplied = false;
     private boolean flip;
@@ -19,10 +20,10 @@ public class SwordWeapon extends Weapon {
     private Hero hero;
     private enum AttackPhase { FORWARD, RETURN }
     private AttackPhase attackPhase = null;
+    private Polygon bounds;
 
-    public SwordWeapon(String texturePath, int damage, int width, int height, float radius) {
+    public SwordWeapon(String texturePath, int damage, int width, int height) {
         super(texturePath, damage, width, height);
-        this.radius = radius;
         this.setName("Sword of Insight");
     }
 
@@ -39,6 +40,17 @@ public class SwordWeapon extends Weapon {
             false, flip
         );
         this.flip = flip;
+
+        float[] vertices = new float[]{
+            0, 0,
+            getWidth(), 0,
+            getWidth(), getHeight(),
+            0, getHeight()
+        };
+        bounds = new Polygon(vertices);
+        bounds.setPosition(centerX, centerY - getHeight() / 3f);
+        bounds.setOrigin(0, 0);
+        bounds.setRotation(getAngle());
     }
 
     @Override
@@ -51,9 +63,10 @@ public class SwordWeapon extends Weapon {
         setAngle(newAngle);
 
         if (attackPhase == AttackPhase.FORWARD) {
-            if (!damageApplied && progress >= 0.5f) {
-                applyDamage();
-                damageApplied = true;
+            for (Enemy e : enemies) {
+                if (bounds != null && Intersector.overlapConvexPolygons(bounds, e.getBoundingPolygon())) {
+                    e.takeDamage(getDamage());
+                }
             }
 
             if (progress >= 1f) {
@@ -93,46 +106,5 @@ public class SwordWeapon extends Weapon {
         }
     }
 
-    private void applyDamage() {
-        float attackStartAngle;
-        float attackEndAngle;
-        if (flip){
-            attackStartAngle = startAngle;
-            attackEndAngle = targetAngle;
-        } else {
-            attackStartAngle = startAngle + 180;
-            attackEndAngle = targetAngle + 180;
-        }
-        for (Enemy enemy : enemies) {
-            float ex = enemy.getX() - hero.getCenterX();
-            float ey = enemy.getY() - hero.getCenterY();
-            float distance = (float) Math.sqrt(ex * ex + ey * ey);
-            float enemyAngle = (float) Math.toDegrees(Math.atan2(ey, ex));
-            if (distance <= radius && withinSector(enemyAngle, attackStartAngle, attackEndAngle)) {
-                enemy.takeDamage(getDamage());
-            }
-        }
-    }
-
-    private boolean withinSector(float angle, float startAngle, float endAngle) {
-        angle = normalizeAngle(angle);
-        startAngle = normalizeAngle(startAngle);
-        endAngle = normalizeAngle(endAngle);
-
-        if (startAngle < endAngle) {
-            return angle >= startAngle && angle <= endAngle;
-        } else {
-            return angle >= startAngle || angle <= endAngle;
-        }
-    }
-
-    private float normalizeAngle(float angle) {
-        angle = angle % 360;
-        if (angle < 0) angle += 360;
-        return angle;
-    }
-
     public boolean isAttacking(){return attacking;}
-
-    public float getRadius(){return radius;}
 }
