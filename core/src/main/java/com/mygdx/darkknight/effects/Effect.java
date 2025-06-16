@@ -7,11 +7,20 @@ public abstract class Effect {
     protected float duration;
     protected float timeElapsed;
     protected Texture icon;
+    protected Texture texture;
+    protected String name;
 
     public Effect(float duration, Texture icon) {
         this.duration = duration;
         this.icon = icon;
         this.timeElapsed = 0;
+    }
+
+    public Effect(float duration, Texture icon, String name) {
+        this.duration = duration;
+        this.icon = icon;
+        this.timeElapsed = 0;
+        this.name = name;
     }
 
     public void update(Hero hero, float deltaTime) {
@@ -30,6 +39,14 @@ public abstract class Effect {
 
     public Texture getIcon() {
         return icon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 
     protected abstract void apply(Hero hero, float deltaTime);

@@ -2,7 +2,10 @@ package com.mygdx.darkknight;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.mygdx.darkknight.effects.Effect;
 import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.ArrayList;
@@ -31,10 +34,27 @@ public class Inventory {
                 float drawX = chestX * 32;
                 float drawY = (chestY - 2) * 32;
 
-                batch.begin();
                 Texture texture = weapon.getTexture();
                 batch.draw(texture, drawX, drawY, weapon.getWidth(), weapon.getHeight());
-                batch.end();
+            }
+        }
+    }
+
+    public void renderEffects(SpriteBatch batch) {
+        for (Chest chest : openedChests) {
+            if (!chest.isOpened()) continue;
+
+            float chestX = chest.getX();
+            float chestY = chest.getY();
+
+            Effect effect = chest.getEffect();
+
+            if (effect != null) {
+                float drawX = chestX * 32;
+                float drawY = (chestY - 2) * 32;
+
+                Texture texture = effect.getTexture();
+                batch.draw(texture, drawX, drawY, 32, 32);
             }
         }
     }
@@ -50,7 +70,7 @@ public class Inventory {
         return distanceSquared < 40 * 40;
     }
 
-    boolean isPlayerNearWeapon(Hero hero, Chest chest) {
+    boolean isPlayerNearContent(Hero hero, Chest chest) {
         float chestPixelX = chest.getX() * 32;
         float chestPixelY = (chest.getY() - 2) * 32;
 
@@ -61,7 +81,7 @@ public class Inventory {
         return distanceSquared < 40 * 40;
     }
 
-    public void showChest(SpriteBatch batch, List<Chest> chests) {
+    public void showChest(List<Chest> chests) {
         for (Chest chest : chests) {
             if (chest.isOpened()) {
                 chest.setTexture("core/assets/chestOpened.png");

@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.effects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.darkknight.Hero;
 
@@ -8,7 +9,8 @@ public class Power extends Effect {
     private boolean applied = false;
 
     public Power(float duration, int damageBoost, Texture texture) {
-        super(duration, texture);
+        super(duration, texture, "Power");
+        super.texture = new Texture(Gdx.files.internal("core/assets/power.png"));
         this.damageBoost = damageBoost;
     }
 

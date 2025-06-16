@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.darkknight.bosses.FirstBossFightLevel;
+import com.mygdx.darkknight.bosses.SecondBossFightLevel;
+import com.mygdx.darkknight.bosses.ThirdBossFightLevel;
 import com.mygdx.darkknight.effects.*;
 import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.levels.*;
@@ -26,12 +29,18 @@ import com.mygdx.darkknight.plot.StoryScreen;
 import com.mygdx.darkknight.weapons.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TbGame implements Screen {
     private static final float BAR_WIDTH = 110;
     private static final float BAR_HEIGHT = 16;
     private static final float BAR_MARGIN = 22;
+    private final float EFFECT_ICON_WIDTH = 32f;
+    private final float EFFECT_ICON_HEIGHT = 32f;
+    private final float EFFECT_PADDING = 12f;
+    private final float EFFECT_ANIM_DURATION = 0.3f;
     private float mouseX;
     private float mouseY;
     private GameMap gameMap;
@@ -51,9 +60,12 @@ public class TbGame implements Screen {
     private Texture barBackgroundTexture;
     private Texture heartTexture;
     private Texture shieldTexture;
+    private Texture effectBackgroundTexture;
     private List<Bullet> bullets;
     private BitmapFont font;
     private BitmapFont smallFont;
+    private final Map<Character, Float> effectAnimationTimers = new HashMap<>();
+    private BitmapFont countFont;
     private GlyphLayout layout;
     private int width, height;
     private List<Enemy> enemies;
@@ -69,7 +81,6 @@ public class TbGame implements Screen {
     private List<Chest> chests = new ArrayList<>();
     private List<PlotCharacter> characters = new ArrayList<>();
     private Inventory inventory;
-    private int pointer = 0;
     private String currentLevelState = "INACTIVE";
 
     private List<Rectangle> weaponIconBounds = new ArrayList<>();
@@ -92,6 +103,7 @@ public class TbGame implements Screen {
 
         font = new BitmapFont(Gdx.files.internal("medievalLightFontSmaller.fnt"));
         font.setColor(Color.WHITE);
+        countFont = new BitmapFont(Gdx.files.internal("medievalLightFontSmaller.fnt"));
         layout = new GlyphLayout();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/pixelText.otf"));
@@ -103,6 +115,7 @@ public class TbGame implements Screen {
 
         defaultFrameTexture = new Texture(Gdx.files.internal("assets/weaponBar.png"));
         selectedFrameTexture = new Texture(Gdx.files.internal("assets/weaponBarOver.png"));
+        effectBackgroundTexture = new Texture("assets/spellsBar.png");
 
         shapeRenderer = new ShapeRenderer();
         barBackgroundTexture = new Texture(Gdx.files.internal("barBackground.png"));
@@ -122,40 +135,55 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 10, weapon);
-//        Swiftness testEffect = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
+        hero.addWeapon(sword, magic, wizard, axe, mace);
 //        hero.addEffect(testEffect);
 //        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
 //        hero.addEffect(testEffect1);
 //        Weakness testEffect = new Weakness(100f, 1, new Texture(Gdx.files.internal("weakness.png")));
 //        hero.addEffect(testEffect);
-//        Power testEffect = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
 //        hero.addEffect(testEffect);
 //        Poison testEffect = new Poison(20f, 1, 4f, new Texture(Gdx.files.internal("poison.png")));
 //        hero.addEffect(testEffect);
-//        Regeneration testEffect = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
 //        hero.addEffect(testEffect);
 
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
-        //fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
-//        Chest chest1 = new Chest(114, 544, sword);
+        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
+
+        Swiftness swiftness = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
+        Power power = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
+        Regeneration regeneration = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
+
+        //        Chest chest1 = new Chest(114, 544, sword);
 //        Chest chest2 = new Chest(137, 462, magic);
 //        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
         Chest chest1 = new Chest(11, 593, sword);
         Chest chest2 = new Chest(137, 462, magic);
         Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
+        Chest chest4 = new Chest(12, 593, swiftness);
+        Chest chest5 = new Chest(13, 593, power);
+        Chest chest6 = new Chest(14, 593, regeneration);
+        Chest chest7 = new Chest(15, 593, swiftness);
+        Chest chest8 = new Chest(16, 593, swiftness);
+        Chest chest9 = new Chest(17, 593, swiftness);
         chests.add(chest1);
         chests.add(chest2);
         chests.add(chest3);
+        chests.add(chest4);
+        chests.add(chest5);
+        chests.add(chest6);
+        chests.add(chest7);
+        chests.add(chest8);
+        chests.add(chest9);
         inventory = new Inventory(gameMap);
         MultiStoryManager multiManager = new MultiStoryManager("core/assets/story.json");
 
@@ -257,6 +285,8 @@ public class TbGame implements Screen {
         }
         if(!gameOver){
             weapon.update(delta, hero);
+            inventory.renderWeapons(batch);
+            inventory.renderEffects(batch);
             if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX) {
                 hero.draw(batch, false);
                 weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
@@ -294,7 +324,6 @@ public class TbGame implements Screen {
         for (FightLevel level : fightLevels) {
             level.update(delta, hero, enemies);
             currentLevelState = level.getStateName();
-            chests.get(pointer).setVisible(true);
         }
         if (isPaused) {
             pauseMenu.render();
@@ -331,6 +360,7 @@ public class TbGame implements Screen {
 
         // Іконки зброї
         renderWeaponIcons(delta);
+        renderEffectIcons(delta);
     }
 
     private void renderHeroEffects() {
@@ -464,9 +494,107 @@ public class TbGame implements Screen {
         uiBatch.end();
     }
 
+    private void renderEffectIcons(float delta) {
+        List<Effect> allEffects = hero.getSpells();
+        Map<Character, List<Effect>> categorized = new HashMap<>();
+        categorized.put('F', new ArrayList<>());
+        categorized.put('G', new ArrayList<>());
+        categorized.put('H', new ArrayList<>());
+
+        for (Effect e : allEffects) {
+            char key = categorizeEffect(e);
+            if (categorized.containsKey(key)) {
+                categorized.get(key).add(e);
+            }
+        }
+
+        float startX = 20f;
+        float barY = height - 58 - 2 * BAR_HEIGHT - BAR_MARGIN;
+        float startY = barY - 40f - EFFECT_ICON_HEIGHT;
+
+        uiBatch.begin();
+        int index = 0;
+        for (char key : new char[]{'F', 'G', 'H'}) {
+            List<Effect> effects = categorized.get(key);
+            if (effects.isEmpty()) {
+                index++;
+                continue;
+            }
+
+            float x = startX + index * (EFFECT_ICON_WIDTH + EFFECT_PADDING + 10f) + 25f;
+            float y = startY;
+
+            // Анімація
+            float scale = 1f;
+            if (effectAnimationTimers.containsKey(key)) {
+                float timer = effectAnimationTimers.get(key);
+                timer -= delta;
+                if (timer <= 0f) {
+                    timer = 0f;
+                    effectAnimationTimers.remove(key);
+                } else {
+                    scale = 1f + 0.25f * (float) Math.sin((1 - timer / EFFECT_ANIM_DURATION) * Math.PI);
+                    effectAnimationTimers.put(key, timer);
+                }
+            }
+
+            float scaledWidth = EFFECT_ICON_WIDTH * scale;
+            float scaledHeight = EFFECT_ICON_HEIGHT * scale;
+            float offsetX = (scaledWidth - EFFECT_ICON_WIDTH) / 2f;
+            float offsetY = (scaledHeight - EFFECT_ICON_HEIGHT) / 2f;
+
+            // Фон
+            if (effectBackgroundTexture != null)
+                uiBatch.draw(effectBackgroundTexture, x - offsetX - 10f, y - offsetY - 15f, scaledWidth * 1.8f, scaledHeight * 1.8f);
+
+            // Іконка ефекту
+            Texture iconTexture = effects.get(0).getTexture();
+            uiBatch.draw(iconTexture, x - offsetX, y - offsetY, scaledWidth, scaledHeight);
+
+            // Літера клавіші
+            font.setColor(Color.WHITE);
+            font.getData().setScale(1f);
+            font.draw(uiBatch, String.valueOf(key), x + 10f, y - 10f);
+
+            // Кількість ефектів
+            countFont.setColor(Color.YELLOW);
+            countFont.getData().setScale(1f);
+            countFont.draw(uiBatch, String.valueOf(effects.size()), x + EFFECT_ICON_WIDTH - 6f, y + 14f);
+
+            index++;
+        }
+        uiBatch.end();
+
+        // Обробка натискання
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            activateEffect(categorized.get('F'), hero);
+            effectAnimationTimers.put('F', EFFECT_ANIM_DURATION);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            activateEffect(categorized.get('G'), hero);
+            effectAnimationTimers.put('G', EFFECT_ANIM_DURATION);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+            activateEffect(categorized.get('H'), hero);
+            effectAnimationTimers.put('H', EFFECT_ANIM_DURATION);
+        }
+    }
+
+    private char categorizeEffect(Effect effect) {
+        String name = effect.getName().toLowerCase();
+        if (name.contains("regeneration")) return 'F';
+        if (name.contains("power")) return 'G';
+        return 'H';
+    }
+
+    private void activateEffect(List<Effect> effects, Hero hero) {
+        if (effects != null && !effects.isEmpty()) {
+            Effect toApply = effects.get(0);
+            hero.addEffect(toApply);     // Додаємо у список активних
+            hero.consumeEffect(toApply); // Видаляємо з запасу
+        }
+    }
+
     public void updateChests() {
-        inventory.showChest(batch, chests);
-        inventory.renderWeapons(batch);
+        inventory.showChest(chests);
 
         boolean justOpenedChest = false;
 
@@ -490,7 +618,7 @@ public class TbGame implements Screen {
 
         if (!justOpenedChest) {
             for (Chest chest : chests) {
-                if (chest.isOpened() && chest.getWeapon() != null && inventory.isPlayerNearWeapon(hero, chest)) {
+                if (chest.isOpened() && chest.getWeapon() != null && inventory.isPlayerNearContent(hero, chest)) {
                     String message = chest.getWeapon().getName();
                     layout.setText(smallFont, message);
                     float textWidth = layout.width;
@@ -505,11 +633,23 @@ public class TbGame implements Screen {
                         break;
                     }
                 }
-            }
-        }
 
-        if (justOpenedChest && pointer < chests.size() - 1) {
-            pointer++;
+                if (chest.isOpened() && chest.getEffect() != null && inventory.isPlayerNearContent(hero, chest)) {
+                    String message = chest.getEffect().getName();
+                    layout.setText(smallFont, message);
+                    float textWidth = layout.width;
+                    float centeredX = chest.getX() * 32 + 32 / 2f - textWidth / 2f;
+                    batch.begin();
+                    smallFont.draw(batch, layout, centeredX, chest.getY() * 32 - 96 + 9 + 20);
+                    batch.end();
+
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                        hero.addSpell(chest.getEffect());
+                        chest.setEffect(null);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -605,10 +745,10 @@ public class TbGame implements Screen {
         if (isPaused || plotActive) return;
         float delta = Gdx.graphics.getDeltaTime();
         float move = hero.getSpeed() * delta;
-        boolean w = Gdx.input.isKeyPressed(Input.Keys.W);
-        boolean a = Gdx.input.isKeyPressed(Input.Keys.A);
-        boolean s = Gdx.input.isKeyPressed(Input.Keys.S);
-        boolean d = Gdx.input.isKeyPressed(Input.Keys.D);
+        boolean w = Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.DPAD_UP);
+        boolean a = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT);
+        boolean s = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN);
+        boolean d = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT);
 
         float dx = 0, dy = 0;
         if (w) dy += move;

@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.effects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.darkknight.Hero;
 
@@ -8,7 +9,8 @@ public class Swiftness extends Effect{
     private boolean applied = false;
 
     public Swiftness(float duration, int speedBoost, Texture texture) {
-        super(duration, texture);
+        super(duration, texture, "Swiftness");
+        super.texture = new Texture(Gdx.files.internal("core/assets/swiftness.png"));
         this.speedBoost = speedBoost;
     }
 

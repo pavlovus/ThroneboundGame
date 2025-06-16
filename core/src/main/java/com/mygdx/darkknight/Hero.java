@@ -28,6 +28,7 @@ public class Hero {
     private List<Effect> activeEffects = new ArrayList<>();
     private Weapon currentWeapon;
     private List<Weapon> weapons = new ArrayList<>();
+    private List<Effect> spells = new ArrayList<>();
     private BitmapFont damageFont;
     private List<DamageIndicator> damageIndicators = new ArrayList<>();
     private boolean nextIsRight = true;
@@ -108,6 +109,18 @@ public class Hero {
 
     public void heal(int heal) {
         health += heal;
+    }
+
+    public void addSpell(Effect effect) {
+        spells.add(effect);
+    }
+
+    public List<Effect> getSpells() {
+        return spells;
+    }
+
+    public void consumeEffect(Effect effect) {
+        spells.remove(effect); // видаляє лише перший екземпляр
     }
 
     public void addEffect(Effect effect) {

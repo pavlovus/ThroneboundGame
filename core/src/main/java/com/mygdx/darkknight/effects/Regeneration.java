@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.effects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.darkknight.Hero;
 
@@ -10,7 +11,8 @@ public class Regeneration extends Effect {
     private float timePerHeal;
 
     public Regeneration(float duration, int healthHealPerSecond, float timePerHeal, Texture texture) {
-        super(duration, texture);
+        super(duration, texture, "Regeneration");
+        super.texture = new Texture(Gdx.files.internal("core/assets/regeneration.png"));
         this.healthHealPerSecond = healthHealPerSecond;
         this.timePerHeal = timePerHeal;
     }

@@ -27,6 +27,7 @@ public class RestartMenu {
     private ShapeRenderer shapeRenderer;
     private Texture titleTexture;
     private boolean visible;
+    private boolean disposed = false;
 
     public RestartMenu(TbGame game) {
         this.game = game;
@@ -40,8 +41,12 @@ public class RestartMenu {
         textButtonStyle.fontColor = Color.BLACK;
 
         Texture textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
+        Texture textureOver = new Texture(Gdx.files.internal("startButtonOver.png"));
+        Texture textureDown = new Texture(Gdx.files.internal("startButtonClicked.png"));
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(textureUp));
+        style.over = new TextureRegionDrawable(new TextureRegion(textureOver));
+        style.down = new TextureRegionDrawable(new TextureRegion(textureDown));
         style.font = font;
         style.fontColor = Color.valueOf("C0C0C0");
 
@@ -82,7 +87,14 @@ public class RestartMenu {
             public void clicked(InputEvent event, float x, float y) {
                 clickSound.play();
                 hide();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new TbGame());
+                dispose();
+                Gdx.input.setInputProcessor(null);
+
+                Game gameApp = (Game) Gdx.app.getApplicationListener();
+                Screen oldScreen = gameApp.getScreen();
+                TbGame newGame = new TbGame();
+                gameApp.setScreen(newGame);
+                if (oldScreen != null) oldScreen.dispose();  // дуже важливо
             }
         });
 
@@ -102,7 +114,10 @@ public class RestartMenu {
                 game.setPaused(false);
                 Game game = (Game) Gdx.app.getApplicationListener();
                 Screen oldScreen = game.getScreen();
+                Gdx.input.setInputProcessor(null);
                 game.setScreen(new StartMenu());
+                if (oldScreen != null) oldScreen.dispose();
+                dispose();
                 if (oldScreen != null) {
                     oldScreen.dispose();  // Звільняємо ресурси старого екрану
                 }
@@ -113,7 +128,6 @@ public class RestartMenu {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         visible = true;
-        System.out.println(1);
     }
 
     public void hide() {
@@ -140,6 +154,8 @@ public class RestartMenu {
     }
 
     public void dispose() {
+        if (disposed) return;
+        disposed = true;
         stage.dispose();
         shapeRenderer.dispose();
         clickSound.dispose();
