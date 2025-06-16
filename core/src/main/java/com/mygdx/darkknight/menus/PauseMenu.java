@@ -54,13 +54,10 @@ public class PauseMenu {
         table.center();
 
         TextButton resumeButton = new TextButton("Resume", style);
-        TextButton inventoryButton = new TextButton("Inventory", style);
         TextButton exitButton = new TextButton("Exit game", style);
         TextButton mainMenuButton = new TextButton("Main menu", style);
 
         table.add(resumeButton).width(300).height(90).pad(20);
-        table.row();
-        table.add(inventoryButton).width(300).height(90).pad(20);
         table.row();
         table.add(mainMenuButton).width(300).height(90).pad(20);
         table.row();
@@ -76,14 +73,6 @@ public class PauseMenu {
                 clickSound.play();
                 hide();
                 game.setPaused(false);
-            }
-        });
-
-        inventoryButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                clickSound.play();
-                System.out.println("Відкриваємо інвентар (реалізуй сам)");
             }
         });
 
