@@ -3,9 +3,7 @@ package com.mygdx.darkknight.menus;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -118,6 +116,7 @@ public class StartMenu implements Screen {
         table.row();
         table.add(exitButton).width(300).height(90).padBottom(20);
         stage.addActor(table);
+
     }
 
     @Override
@@ -154,6 +153,21 @@ public class StartMenu implements Screen {
         if (!backgroundMusic.isPlaying()) {
             backgroundMusic.play();
         }
+        Pixmap original = new Pixmap(Gdx.files.internal("cursorThronebound.png"));
+        Pixmap scaled = new Pixmap(32, 32, original.getFormat()); // новий розмір
+
+        // Масштабування вручну
+        scaled.drawPixmap(original,
+            0, 0, original.getWidth(), original.getHeight(),  // джерело
+            0, 0, 32, 32                                       // призначення
+        );
+
+        Cursor cursor = Gdx.graphics.newCursor(scaled, 0, 0);
+        Gdx.graphics.setCursor(cursor);
+
+        // Обов'язково очистити ресурси
+        original.dispose();
+        scaled.dispose();
     }
 
 
