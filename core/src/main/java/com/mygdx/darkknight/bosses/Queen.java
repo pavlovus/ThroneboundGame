@@ -42,7 +42,6 @@ public class Queen extends Enemy {
         this.currentPhase = Phase.PHASE_1;
         this.currentWaveEnemies = currentWaveEnemies;
         this.enemiesToAdd = enemiesToAdd;
-        Gdx.app.log("Queen", "Initialized at (" + x + ", " + y + ")");
     }
 
     @Override
@@ -77,31 +76,35 @@ public class Queen extends Enemy {
         if (bulletTimer <= 0) {
             shootPattern(hero);
             bulletTimer = getBulletCooldown();
-            Gdx.app.log("Queen", "Fired bullet pattern, cooldown: " + bulletTimer);
         }
 
         // Спавнимо міньйонів
         if (minionTimer <= 0) {
             spawnMinions();
             minionTimer = getMinionCooldown();
-            Gdx.app.log("Queen", "Spawned minions, cooldown: " + minionTimer);
         }
     }
 
     private float getBulletCooldown() {
         switch (currentPhase) {
-            case PHASE_1: return BULLET_COOLDOWN; // 1.0 с
-            case PHASE_2: return BULLET_COOLDOWN * 0.8f; // 0.8 с
-            case PHASE_3: return BULLET_COOLDOWN * 0.6f; // 0.6 с
+            case PHASE_1:
+                return BULLET_COOLDOWN; // 1.0 с
+            case PHASE_2:
+                return BULLET_COOLDOWN * 0.8f; // 0.8 с
+            case PHASE_3:
+                return BULLET_COOLDOWN * 0.6f; // 0.6 с
         }
         return BULLET_COOLDOWN;
     }
 
     private float getMinionCooldown() {
         switch (currentPhase) {
-            case PHASE_1: return MINION_SPAWN_COOLDOWN; // 10.0 с
-            case PHASE_2: return MINION_SPAWN_COOLDOWN * 0.8f; // 8.0 с
-            case PHASE_3: return MINION_SPAWN_COOLDOWN * 0.6f; // 6.0 с
+            case PHASE_1:
+                return MINION_SPAWN_COOLDOWN; // 10.0 с
+            case PHASE_2:
+                return MINION_SPAWN_COOLDOWN * 0.8f; // 8.0 с
+            case PHASE_3:
+                return MINION_SPAWN_COOLDOWN * 0.6f; // 6.0 с
         }
         return MINION_SPAWN_COOLDOWN;
     }
@@ -141,7 +144,6 @@ public class Queen extends Enemy {
     private void shootBullet(float x, float y, float angle, float speed) {
         String animationPath = "core/assets/sparkle.png";
         bullets.add(new Bullet(x, y, angle, Assets.queenBulletTexture, animationPath, true, this, BULLET_WIDTH, BULLET_HEIGHT, speed));
-        Gdx.app.log("Queen", "Bullet spawned at (" + x + ", " + y + "), angle: " + angle);
     }
 
     private void spawnMinions() {
@@ -153,7 +155,6 @@ public class Queen extends Enemy {
                 Assets.long_3Texture, spawnX, spawnY, 32, 32, 70f, 3, 1, 1f, Assets.queenBulletTexture, bullets, gameMap, new LongAttackAI(roomBounds)
             );
             enemiesToAdd.add(minion);
-            Gdx.app.log("Queen", "Minion spawned at (" + spawnX + ", " + spawnY + ")");
         }
     }
 

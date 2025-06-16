@@ -1,7 +1,9 @@
 package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Bullet;
@@ -9,7 +11,7 @@ import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
 import com.badlogic.gdx.math.Polygon;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Enemy {
@@ -22,15 +24,32 @@ public abstract class Enemy {
     private int damage;
     private boolean dead;
     protected boolean armorIgnore;
-
     protected List<Bullet> bullets;
-
     protected EnemyAI ai;
-
-    protected GameMap gameMap; // Додаємо поле
-
+    protected GameMap gameMap;
     private float attackCooldown = 0;
     private float attackTimer = 0;
+    private BitmapFont damageFont;
+    private List<DamageIndicator> damageIndicators = new ArrayList<>();
+    private boolean nextIsRight = true;
+
+    private static class DamageIndicator {
+        String text;
+        float timer;
+        float yOffset;
+        float alpha;
+        boolean isRight;
+        int damage;
+
+        DamageIndicator(String text, boolean isRight, int dmg) {
+            this.text = text;
+            this.timer = 1.0f;
+            this.yOffset = 0;
+            this.alpha = 1.0f;
+            this.isRight = isRight;
+            this.damage = dmg;
+        }
+    }
 
     public Enemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, List<Bullet> bullets, EnemyAI ai, GameMap gameMap, boolean armorIgnore) {
         this.texture = texture;
@@ -45,6 +64,8 @@ public abstract class Enemy {
         this.gameMap = gameMap;
         this.bullets = bullets;
         this.armorIgnore = armorIgnore;
+        damageFont = new BitmapFont();
+        damageFont.getData().setScale(1.0f);
     }
 
     public abstract void attack(Hero hero);
@@ -52,10 +73,30 @@ public abstract class Enemy {
     public void update(Hero hero, float delta) {
         if (ai != null) ai.update(this, hero, delta);
         attackTimer -= delta;
+        for (int i = damageIndicators.size() - 1; i >= 0; i--) {
+            DamageIndicator indicator = damageIndicators.get(i);
+            indicator.timer -= delta;
+            indicator.yOffset += 30 * delta;
+            indicator.alpha = Math.max(0, indicator.timer / 1.0f);
+            if (indicator.timer <= 0) {
+                damageIndicators.remove(i);
+            }
+        }
     }
 
     public void draw(SpriteBatch batch) {
+        GlyphLayout layout = new GlyphLayout();
+
         batch.draw(texture, x, y, width, height);
+        for (DamageIndicator indicator : damageIndicators) {
+            layout.setText(damageFont, indicator.text);
+            damageFont.setColor(1.0f, 1, 1, indicator.alpha);
+            float textX = indicator.isRight ? x + width : x - layout.width * 2;
+            textX += 13;
+            float textY = y + height + indicator.yOffset;
+            damageFont.draw(batch, indicator.text, textX, textY);
+        }
+        damageFont.setColor(1f, 1f, 1f, 1f);
     }
 
     public void move(float dx, float dy) {
@@ -66,13 +107,6 @@ public abstract class Enemy {
         }
     }
 
-    /**
-     * Встановлює позицію ворога, враховуючи колізії зі стінами.
-     * Якщо нова позиція заблокована, ворог не переміщується.
-     *
-     * @param x Нова координата X
-     * @param y Нова координата Y
-     */
     public void setPosition(float x, float y) {
         Rectangle futureRect = new Rectangle(x, y, width, height);
         if (!gameMap.isCellBlocked(futureRect)) {
@@ -102,6 +136,8 @@ public abstract class Enemy {
         if (health <= 0) {
             dead = true;
         }
+        damageIndicators.add(new DamageIndicator("-" + dmg, nextIsRight, dmg));
+        nextIsRight = !nextIsRight;
     }
 
     public boolean canAttack() {
@@ -113,10 +149,8 @@ public abstract class Enemy {
     }
 
     public void shootAt(float targetX, float targetY) {
-        // TODO: spawn bullet toward target
     }
 
-    // --- Getters and Setters ---
     public Rectangle getBoundingRectangle() {
         return new Rectangle(x, y, width, height);
     }
@@ -179,6 +213,7 @@ public abstract class Enemy {
 
     public void dispose() {
         texture.dispose();
+        damageFont.dispose();
     }
 
     public void setX(float x){

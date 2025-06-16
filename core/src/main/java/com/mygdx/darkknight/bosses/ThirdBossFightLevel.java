@@ -35,7 +35,6 @@ public class ThirdBossFightLevel extends FightLevel {
         if (!enemiesToAdd.isEmpty()) {
             globalEnemies.addAll(enemiesToAdd);
             currentWaveEnemies.addAll(enemiesToAdd);
-            Gdx.app.log("ThirdBossFightLevel", "Added " + enemiesToAdd.size() + " enemies to globalEnemies and currentWaveEnemies");
             enemiesToAdd.clear();
         }
 
@@ -53,7 +52,6 @@ public class ThirdBossFightLevel extends FightLevel {
             bullet.update(deltaTime, gameMap, globalEnemies);
             if (bullet.shouldRemove() || bullet.isStrike()) {
                 bullets.remove(i);
-                Gdx.app.log("ThirdBossFightLevel", "Removed bullet at (" + bullet.getBoundingRectangle().x + ", " + bullet.getBoundingRectangle().y + ")");
             }
         }
 
@@ -64,28 +62,22 @@ public class ThirdBossFightLevel extends FightLevel {
                 int damage = owner != null ? owner.getDamage() : 10;
                 hero.takeDamage(damage, owner.getArmorIgnore());
                 bullet.strike(owner, hero);
-                Gdx.app.log("ThirdBossFightLevel", "Hero hit by bullet, damage: " + damage + ", hero health: " + hero.getHealth());
             }
         }
 
         if (bossSpawned && queenBoss != null && queenBoss.isDead() && currentWaveEnemies.isEmpty()) {
             state = LevelState.COMPLETED;
             gameMap.openDoors();
-            Gdx.app.log("ThirdBossFightLevel", "Boss defeated, level complete");
         }
     }
 
     @Override
     protected void spawnEnemies(List<Enemy> globalEnemies) {
-        Gdx.app.log("ThirdBossFightLevel", "spawnEnemies called, bossSpawned: " + bossSpawned);
-
         if (!bossSpawned) {
             // Спавн у центрі верхньої половини кімнати
             float halfHeight = roomArea.height / 2;
             float bossX = roomArea.x + roomArea.width / 2 - 48; // Центр по X
             float bossY = roomArea.y + roomArea.height - halfHeight / 2 - 48; // Центр верхньої половини по Y
-
-            Gdx.app.log("ThirdBossFightLevel", "Creating boss at position: (" + bossX + ", " + bossY + ")");
 
             queenBoss = new Queen(bossX, bossY, gameMap, roomArea, bullets, currentWaveEnemies, enemiesToAdd);
 
@@ -95,30 +87,16 @@ public class ThirdBossFightLevel extends FightLevel {
             enemiesToAdd.add(queenBoss);
 
             bossSpawned = true;
-
-            Gdx.app.log("ThirdBossFightLevel", "Boss spawned successfully. " +
-                "Current wave enemies: " + currentWaveEnemies.size() +
-                ", Global enemies: " + globalEnemies.size() +
-                ", Boss health: " + queenBoss.getHealth());
         }
     }
 
     @Override
     protected Enemy createEnemy(Vector2 pos) {
-        // Не використовується для боса
         return null;
     }
 
-    // Видаляємо метод draw() - рендеринг метеоритів буде здійснюватися через TbGame
-    // public void draw(SpriteBatch batch) { ... }
-
     public boolean isLevelComplete() {
         boolean complete = bossSpawned && queenBoss != null && queenBoss.isDead() && currentWaveEnemies.isEmpty();
-        Gdx.app.log("ThirdBossFightLevel", "isLevelComplete check: bossSpawned=" + bossSpawned +
-            ", boss null=" + (queenBoss == null) +
-            ", boss dead=" + (queenBoss != null ? queenBoss.isDead() : "N/A") +
-            ", enemies empty=" + currentWaveEnemies.isEmpty() +
-            ", result=" + complete);
         return complete;
     }
 
