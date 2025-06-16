@@ -28,7 +28,7 @@ public class PlotCharacter {
         float dy = hero.getY() - characterPixelY;
 
         float distanceSquared = dx * dx + dy * dy;
-        return distanceSquared < 50 * 50;
+        return distanceSquared < 65 * 65;
     }
 
     public float getX() {

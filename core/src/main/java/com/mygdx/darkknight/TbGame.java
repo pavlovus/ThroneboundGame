@@ -140,17 +140,17 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
+        //fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
 //        Chest chest1 = new Chest(114, 544, sword);
 //        Chest chest2 = new Chest(137, 462, magic);
 //        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
@@ -164,8 +164,28 @@ public class TbGame implements Screen {
         MultiStoryManager multiManager = new MultiStoryManager("core/assets/story.json");
 
         StoryManager intro = multiManager.getManager("intro");
-        PlotCharacter character = new PlotCharacter(10, 596, intro, "core/assets/hero1.png");
-        characters.add(character);
+        PlotCharacter introductionCharacter = new PlotCharacter(68, 594, intro, "core/assets/hero1.png");
+        characters.add(introductionCharacter);
+        PlotCharacter afterFirstFightCharacter = new PlotCharacter(160, 590, intro, "core/assets/hero1.png");
+        characters.add(afterFirstFightCharacter);
+        PlotCharacter elfCharacter = new PlotCharacter(189, 549, intro, "core/assets/hero1.png");
+        characters.add(elfCharacter);
+        PlotCharacter wizardCharacter = new PlotCharacter(192, 515, intro, "core/assets/hero1.png");
+        characters.add(wizardCharacter);
+        PlotCharacter knightCharacter = new PlotCharacter(77, 406, intro, "core/assets/hero1.png");
+        characters.add(knightCharacter);
+        PlotCharacter ghostCharacter = new PlotCharacter(132, 386, intro, "core/assets/hero1.png");
+        characters.add(ghostCharacter);
+        PlotCharacter priestCharacter = new PlotCharacter(44, 359, intro, "core/assets/hero1.png");
+        characters.add(priestCharacter);
+        PlotCharacter dwarfCharacter = new PlotCharacter(54, 286, intro, "core/assets/hero1.png");
+        characters.add(dwarfCharacter);
+        PlotCharacter fighterCharacter = new PlotCharacter(141, 285, intro, "core/assets/hero1.png");
+        characters.add(fighterCharacter);
+        PlotCharacter angelCharacter = new PlotCharacter(164, 179, intro, "core/assets/hero1.png");
+        characters.add(angelCharacter);
+        PlotCharacter finalCharacter = new PlotCharacter(125, 146, intro, "core/assets/hero1.png");
+        characters.add(finalCharacter);
     }
 
     @Override
@@ -498,12 +518,20 @@ public class TbGame implements Screen {
     private void updateCharacters() {
         for (PlotCharacter character : characters) {
             batch.begin();
-            batch.draw(character.getTexture(), character.getX() * 32, (character.getY() - 1) * 32, 32, 32);
+            batch.draw(character.getTexture(), character.getX() * 32, (character.getY() - 1) * 32, 0, 0);
             batch.end();
         }
 
         for (PlotCharacter character : characters) {
             if (!character.isTalked() && character.isPlayerNearCharacter(hero)) {
+                float textX = character.getX() * 32 + 32/ 2f;
+                float textY = character.getY() * 32 + 15;
+                String label = "Enter to talk";
+                layout.setText(smallFont, label);
+                batch.begin();
+                System.out.println(textX + ", " + textY);
+                smallFont.draw(batch, layout, textX - layout.width / 2f, textY);
+                batch.end();
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     plotActive = !plotActive;
                     if (plotActive) {
