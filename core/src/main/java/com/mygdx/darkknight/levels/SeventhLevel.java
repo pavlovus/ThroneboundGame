@@ -54,7 +54,7 @@ public class SeventhLevel extends FightLevel {
             case LONG_ATTACK:
                 return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
-                return new Healer(Assets.healerEnemyTexture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
+                return new Healer(Assets.healer_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TELEPORTER:
                 return new Teleporter(Assets.teleporterTexture, pos.x, pos.y, gameMap, this.roomArea, bullets);
             case GHOST:
