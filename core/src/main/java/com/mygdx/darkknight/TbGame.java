@@ -71,6 +71,7 @@ public class TbGame implements Screen {
     private int selectedWeaponIndex = 0;
     private float animationTimer = 0f;
     private final float ANIMATION_DURATION = 0.2f;
+    private ScreenFader fader = new ScreenFader();
 
     private List<Enemy> enemiesToAdd = new ArrayList<>();
 
@@ -354,6 +355,26 @@ public class TbGame implements Screen {
         if (plotActive){
             storyScreen.render();
         }
+
+        float x = hero.getX();
+        float y = hero.getY();
+        if (x < 4440 && 4340 < x && y < 4600 && 4539 < y) {
+//            x = 2378;
+//            y = 4921;
+            if (fader != null) fader.startFadeOut(5f);
+            hero.setLocation(2378, 4921);
+            if (fader != null) fader.startFadeIn(5f);
+        }
+
+        if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
+//            x = 566;
+//            y = 10015;
+            if (fader != null) fader.startFadeOut(5f);
+            hero.setLocation(566, 10015);
+            if (fader != null) fader.startFadeIn(5f);
+        }
+        fader.update(delta);
+        fader.render(shapeRenderer);
     }
 
     private void renderUI(float delta) {

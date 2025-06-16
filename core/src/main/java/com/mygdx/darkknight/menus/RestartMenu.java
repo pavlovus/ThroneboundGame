@@ -92,7 +92,7 @@ public class RestartMenu {
                 Screen oldScreen = gameApp.getScreen();
                 TbGame newGame = new TbGame();
                 gameApp.setScreen(newGame);
-                if (oldScreen != null) oldScreen.dispose();  // дуже важливо
+                if (oldScreen != null) oldScreen.dispose();
             }
         });
 
