@@ -40,9 +40,9 @@ public class StoryScreen {
         batch = new SpriteBatch();
 
         panelTexture = new Texture(Gdx.files.internal("assets/plotPanel.png"));
-        font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("medievalLightFontBigger.fnt"));
         font.setColor(Color.valueOf("#C0C0C0"));
-        speakerFont = new BitmapFont(Gdx.files.internal("medievalLightFontBigger.fnt"));
+        speakerFont = new BitmapFont(Gdx.files.internal("medievalLightFontBiggest.fnt"));
         speakerFont.setColor(Color.valueOf("#C0C0C0"));
         layout = new GlyphLayout();
     }
@@ -96,12 +96,12 @@ public class StoryScreen {
         Cutscene scene = storyManager.getCurrentScene();
         if (scene != null) {
             // Ім’я персонажа (вгорі зліва)
-            speakerFont.draw(batch, scene.getSpeaker(), screenWidth*14/100, panelHeight);
+            speakerFont.draw(batch, scene.getSpeaker(), screenWidth*16/100, panelHeight + 5);
 
             // Основний текст (у панелі, з відступами)
             float textX = screenWidth*12/100;
             float textY = panelHeight - screenHeight*14/100;
-            float textWidth = screenWidth*96/100;
+            float textWidth = screenWidth*4/5;
 
             layout.setText(font, scene.getText(), font.getColor(), textWidth, Align.left, true);
             font.draw(batch, layout, textX, textY);
