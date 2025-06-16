@@ -136,7 +136,7 @@ public class Bullet {
         for (int i = 0; i < tmp.length; i++) {
             frames[i] = tmp[i][0];
         }
-        strikeAnimation = new Animation<>(10f, frames);
+        strikeAnimation = new Animation<>(0.1f, frames);
     }
 
     public Rectangle getBoundingRectangle() {
