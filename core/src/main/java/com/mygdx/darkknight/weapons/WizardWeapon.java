@@ -12,7 +12,7 @@ import java.util.List;
 public class WizardWeapon extends Weapon {
     private Texture bulletTexture;
     private float cooldownTime = 0;
-    private final float cooldownDuration = 1f;
+    private final float cooldownDuration = 0.7f;
 
     public WizardWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);

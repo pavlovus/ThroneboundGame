@@ -16,10 +16,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Butcher extends Enemy {
-    private static final float CLEAVER_THROW_COOLDOWN = 1.5f;
-    private static final float CHARGE_ATTACK_COOLDOWN = 10.0f;
+    private static final float CLEAVER_THROW_COOLDOWN = 2f;
+    private static final float CHARGE_ATTACK_COOLDOWN = 20.0f;
     private static final float CHARGE_PREP_TIME = 1.5f;
-    private static final float MINION_SPAWN_COOLDOWN = 6.0f;
+    private static final float POST_CHARGE_DELAY = 2.0f; // Затримка після ривка
+    private static final float MINION_SPAWN_COOLDOWN = 12.0f;
     private static final float NORMAL_SPEED = 20f;
     private static final float CHARGE_SPEED = 150f;
     private static final int MINIONS_PER_SPAWN = 2;
@@ -29,9 +30,11 @@ public class Butcher extends Enemy {
     private float chargeAttackTimer = CHARGE_ATTACK_COOLDOWN;
     private float chargePrepTimer = 0f;
     private float minionSpawnTimer = MINION_SPAWN_COOLDOWN;
+    private float postChargeDelayTimer = 0f; // Таймер затримки після ривка
 
     private boolean isPreparingCharge = false;
     private boolean isCharging = false;
+    private boolean attackedByCharge = false;
     private Vector2 chargeTarget;
     private Vector2 chargeDirection;
 
@@ -45,7 +48,7 @@ public class Butcher extends Enemy {
     private List<Bullet> pendingBullets = new ArrayList<>();
 
     public Butcher(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
-        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 30, 10, bullets, new ButcherAI(roomBounds), gameMap, true);
+        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 30, 1, bullets, new ButcherAI(roomBounds), gameMap, true);
         this.roomBounds = roomBounds;
         this.bullets = bullets;
         this.currentWaveEnemies = currentWaveEnemies;
@@ -66,26 +69,31 @@ public class Butcher extends Enemy {
         cleaverThrowTimer -= delta;
         chargeAttackTimer -= delta;
         minionSpawnTimer -= delta;
+        postChargeDelayTimer -= delta; // Зменшуємо таймер затримки після ривка
 
         if (isPreparingCharge) {
             chargePrepTimer -= delta;
             if (chargePrepTimer <= 0) {
                 isPreparingCharge = false;
                 isCharging = true;
+                attackedByCharge = false;
                 setSpeed(CHARGE_SPEED);
                 chargeTarget = hero.getCenter().cpy(); // Фіксуємо позицію героя на початку ривка
                 chargeDirection = chargeTarget.cpy().sub(getCenter()).nor();
             }
         } else if (isCharging) {
-            if (getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
+            if (getBoundingRectangle().overlaps(hero.getBoundingRectangle()) && !attackedByCharge) {
                 hero.takeDamage(CHARGE_DAMAGE, armorIgnore);
+                attackedByCharge = true;
             }
             // Зупиняємо ривок при зіткненні зі стіною
-            if (getX() <= roomBounds.x || getX() + getWidth() >= roomBounds.x + roomBounds.width ||
-                getY() <= roomBounds.y || getY() + getHeight() >= roomBounds.y + roomBounds.height) {
+            if (getX() <= roomBounds.x + 20 || getX() + getWidth() >= roomBounds.x + roomBounds.width - 20 ||
+                getY() <= roomBounds.y + 20 || getY() + getHeight() >= roomBounds.y + roomBounds.height - 20) {
                 isCharging = false;
                 setSpeed(NORMAL_SPEED);
                 chargeAttackTimer = CHARGE_ATTACK_COOLDOWN;
+                attackedByCharge = false;
+                postChargeDelayTimer = POST_CHARGE_DELAY; // Починаємо затримку після ривка
             }
         } else {
             if (chargeAttackTimer <= 0) {
@@ -95,7 +103,8 @@ public class Butcher extends Enemy {
             }
         }
 
-        if (cleaverThrowTimer <= 0) {
+        // Кидання тесаків тільки якщо бос не в ривку, не готується до нього і затримка після ривка закінчилася
+        if (cleaverThrowTimer <= 0 && !isPreparingCharge && !isCharging && postChargeDelayTimer <= 0) {
             throwCleaver(hero);
             cleaverThrowTimer = CLEAVER_THROW_COOLDOWN;
         }

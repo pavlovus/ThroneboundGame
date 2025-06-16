@@ -12,7 +12,7 @@ import java.util.List;
 public class MagicWeapon extends Weapon {
     private Texture bulletTexture;
     private float cooldownTime = 0;
-    private final float cooldownDuration = 1.5f;
+    private final float cooldownDuration = 0.7f;
 
     public MagicWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);

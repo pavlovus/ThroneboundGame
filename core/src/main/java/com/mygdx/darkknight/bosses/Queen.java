@@ -15,8 +15,8 @@ public class Queen extends Enemy {
     private static final int MAX_HEALTH = 30; // Повернуто до 2000 для балансу
     private static final float PHASE_2_THRESHOLD = 0.66f; // 66% HP
     private static final float PHASE_3_THRESHOLD = 0.33f; // 33% HP
-    private static final float BULLET_COOLDOWN = 1.0f;
-    private static final float MINION_SPAWN_COOLDOWN = 10.0f;
+    private static final float BULLET_COOLDOWN = 1.5f;
+    private static final float MINION_SPAWN_COOLDOWN = 15.0f;
     private static final float ROTATION_SPEED = 60f; // Градуси/секунду для патернів
     private static final int BULLET_WIDTH = 20;
     private static final int BULLET_HEIGHT = 20;
@@ -115,26 +115,26 @@ public class Queen extends Enemy {
             case PHASE_1:
                 // Віяловий залп: 5 куль, 20° між ними, центрований на героя
                 for (int i = -2; i <= 2; i++) {
-                    shootBullet(getCenterX(), getCenterY(), angleToHero + i * 20, 200f);
+                    shootBullet(getCenterX(), getCenterY(), angleToHero + i * 20, 80f);
                 }
                 break;
             case PHASE_2:
                 // Спіральний патерн: 6 куль, обертаються навколо кута до героя
                 for (int i = 0; i < 6; i++) {
-                    shootBullet(getCenterX(), getCenterY(), angleToHero + currentAngle + i * 60, 250f);
+                    shootBullet(getCenterX(), getCenterY(), angleToHero + currentAngle + i * 60, 100f);
                 }
                 break;
             case PHASE_3:
                 // Комбінація: віяло + спіраль + кільце
                 for (int i = -3; i <= 3; i++) {
-                    shootBullet(getCenterX(), getCenterY(), angleToHero + i * 15, 200f);
+                    shootBullet(getCenterX(), getCenterY(), angleToHero + i * 15, 80f);
                 }
                 for (int i = 0; i < 8; i++) {
-                    shootBullet(getCenterX(), getCenterY(), angleToHero + currentAngle + i * 45, 300f);
+                    shootBullet(getCenterX(), getCenterY(), angleToHero + currentAngle + i * 45, 150f);
                 }
                 if (MathUtils.randomBoolean(0.3f)) { // 30% шанс на кільце
                     for (int i = 0; i < 12; i++) {
-                        shootBullet(getCenterX(), getCenterY(), angleToHero + i * 30, 250f);
+                        shootBullet(getCenterX(), getCenterY(), angleToHero + i * 30, 120f);
                     }
                 }
                 break;

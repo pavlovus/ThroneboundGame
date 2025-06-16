@@ -133,7 +133,7 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",200, 120, 100, 10, weapon);
+        hero = new Hero("core/assets/hero1.png",200, 120, 100, 20, weapon);
 
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
@@ -289,6 +289,11 @@ public class TbGame implements Screen {
             updateBullets(delta);
             removeDeadEnemies();
             handleWeaponNumberInput();
+
+            for (FightLevel level : fightLevels) {
+                level.update(delta, hero, enemies);
+                currentLevelState = level.getStateName();
+            }
         }
 
         // Оновлюємо камеру, щоб слідувала за героєм
@@ -353,10 +358,6 @@ public class TbGame implements Screen {
         updateCharacters();
         uiBatch.end();
 
-        for (FightLevel level : fightLevels) {
-            level.update(delta, hero, enemies);
-            currentLevelState = level.getStateName();
-        }
         if (isPaused) {
             pauseMenu.render();
         }
@@ -375,6 +376,7 @@ public class TbGame implements Screen {
             if (fader != null) fader.startFadeOut(5f);
             hero.setLocation(2378, 4921);
             if (fader != null) fader.startFadeIn(5f);
+            hero.setArmor(20);
         }
 
         if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
@@ -386,6 +388,7 @@ public class TbGame implements Screen {
         }
         fader.update(delta);
         fader.render(shapeRenderer);
+        hero.setArmor(20);
     }
 
     private void renderUI(float delta) {

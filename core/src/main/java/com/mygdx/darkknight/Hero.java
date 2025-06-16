@@ -217,4 +217,8 @@ public class Hero {
     public List<Effect> getActiveEffects() {
         return activeEffects;
     }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
 }
