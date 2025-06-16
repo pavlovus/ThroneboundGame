@@ -50,9 +50,9 @@ public class SeventhLevel extends FightLevel {
 
         switch (enemyType) {
             case SHORT_ATTACK:
-                return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
+                return new ShortAttackEnemy(Assets.short_2Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
                 return new Healer(Assets.healer_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TELEPORTER:

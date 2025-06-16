@@ -385,10 +385,10 @@ public class TbGame implements Screen {
             if (fader != null) fader.startFadeOut(5f);
             hero.setLocation(566, 10015);
             if (fader != null) fader.startFadeIn(5f);
+            hero.setArmor(20);
         }
         fader.update(delta);
         fader.render(shapeRenderer);
-        hero.setArmor(20);
     }
 
     private void renderUI(float delta) {

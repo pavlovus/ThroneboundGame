@@ -12,10 +12,10 @@ import com.mygdx.darkknight.enemies.*;
 import java.util.List;
 
 public class Queen extends Enemy {
-    private static final int MAX_HEALTH = 30; // Повернуто до 2000 для балансу
+    private static final int MAX_HEALTH = 40; // Повернуто до 2000 для балансу
     private static final float PHASE_2_THRESHOLD = 0.66f; // 66% HP
     private static final float PHASE_3_THRESHOLD = 0.33f; // 33% HP
-    private static final float BULLET_COOLDOWN = 1.5f;
+    private static final float BULLET_COOLDOWN = 1f;
     private static final float MINION_SPAWN_COOLDOWN = 15.0f;
     private static final float ROTATION_SPEED = 60f; // Градуси/секунду для патернів
     private static final int BULLET_WIDTH = 20;
