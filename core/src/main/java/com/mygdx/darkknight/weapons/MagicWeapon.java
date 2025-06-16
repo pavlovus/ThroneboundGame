@@ -23,7 +23,7 @@ public class MagicWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            centerX - getWidth()/8, centerY - getHeight() /2,
+            flip ? centerX - getWidth()*7/8f  : centerX - getWidth()/8f, centerY - getHeight() /2f,
             getWidth() / 2f, getHeight() / 2f,
             getWidth(), getHeight(),
             1, 1,

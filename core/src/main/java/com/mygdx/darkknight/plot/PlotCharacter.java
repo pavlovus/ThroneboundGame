@@ -1,9 +1,7 @@
 package com.mygdx.darkknight.plot;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.darkknight.Chest;
 import com.mygdx.darkknight.Hero;
-import com.mygdx.darkknight.weapons.Weapon;
 
 public class PlotCharacter {
     private float x, y;

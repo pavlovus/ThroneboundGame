@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.Enemy;
-import com.mygdx.darkknight.enemies.ShortAttackEnemy;
 import com.mygdx.darkknight.weapons.Weapon;
 
 import java.util.List;

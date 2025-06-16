@@ -20,7 +20,7 @@ public class BowWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            centerX, centerY - getHeight() /2,
+            flip ? centerX - getWidth() : centerX, centerY - getHeight() /2f,
             getWidth() / 2f, getHeight() / 2f,
             getWidth(), getHeight(),
             1, 1,

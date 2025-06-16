@@ -32,7 +32,7 @@ public class SwordWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            flip ? centerX - getWidth()/4 : centerX + getWidth()/4, flip ? centerY - getHeight() - getHeight()/3 : centerY - getHeight()/3,
+            flip ? centerX - getWidth()/4f : centerX + getWidth()/4f, flip ? centerY - getHeight() - getHeight()/3f : centerY - getHeight()/3f,
             0, flip ? getWidth() : 0,
             getWidth(), getHeight(),
             1, 1,

@@ -1,6 +1,5 @@
 package com.mygdx.darkknight.weapons;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -35,7 +34,7 @@ public class AxeWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            centerX + getWidth()/3, centerY - getHeight() / 3f,
+            flip ? centerX - getWidth()/3f : centerX + getWidth()/3f, centerY - getHeight() / 3f,
             0, 0,
             getWidth(), getHeight(),
             1, 1,

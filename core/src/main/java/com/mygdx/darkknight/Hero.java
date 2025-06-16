@@ -2,9 +2,9 @@ package com.mygdx.darkknight;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.effects.Effect;
@@ -18,7 +18,7 @@ public class Hero {
     private Texture texture;
     private float x, y;
     private final int width = 25, height = 32;
-    private int speed = 1500;
+    private int speed = 400;
     private int maxHealth;
     private int maxArmor;
     private int health;
@@ -87,25 +87,23 @@ public class Hero {
     }
 
     public void takeDamage(int dmg, boolean shieldIgnore) {
-        if (shieldIgnore) {
+        if(shieldIgnore){
             health -= dmg;
-            if (health <= 0) {
+            if (health <= 0){
                 dead = true;
                 health = 0;
             }
         } else {
-            if (armor > 0) {
+            if(armor>0){
                 armor -= dmg;
             } else {
                 health -= dmg;
-                if (health <= 0) {
+                if (health <= 0){
                     dead = true;
                     health = 0;
                 }
             }
         }
-        damageIndicators.add(new DamageIndicator("-" + dmg, nextIsRight, dmg));
-        nextIsRight = !nextIsRight;
     }
 
     public void heal(int heal) {
@@ -135,10 +133,10 @@ public class Hero {
         }
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, boolean flip) {
         GlyphLayout layout = new GlyphLayout();
 
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, x, y, width/2f, height/2f, (float) width, (float) height, 1, 1, 0f, 0, 0, texture.getWidth(), texture.getHeight(), flip, false);
         for (DamageIndicator indicator : damageIndicators) {
             layout.setText(damageFont, indicator.text);
             float saturation = 0.5f - Math.min(indicator.damage / 30.0f, 0.5f);
@@ -169,7 +167,6 @@ public class Hero {
 
     public void dispose() {
         texture.dispose();
-        damageFont.dispose();
     }
 
     public float getX() { return x; }

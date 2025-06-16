@@ -1,9 +1,6 @@
 package com.mygdx.darkknight.plot;
 
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class StoryManager {
     private ArrayList<Cutscene> scenes;

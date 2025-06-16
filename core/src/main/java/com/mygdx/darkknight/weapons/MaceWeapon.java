@@ -51,8 +51,8 @@ public class MaceWeapon extends Weapon {
     public void draw(SpriteBatch batch, float centerX, float centerY, boolean flip) {
         batch.draw(
             getTexture(),
-            flip ? centerX - getWidth()/4 : centerX + getWidth()/4,
-            flip ? centerY - getHeight() - getHeight()/3 : centerY - getHeight()/3,
+            flip ? centerX - getWidth()/4f : centerX + getWidth()/4f,
+            flip ? centerY - getHeight() - getHeight()/3f : centerY - getHeight()/3f,
             0, flip ? getWidth() : 0,
             getWidth(), getHeight(),
             1, 1,
@@ -62,8 +62,8 @@ public class MaceWeapon extends Weapon {
             false, flip
         );
         this.flip = flip;
-        position.x = flip ? centerX - getWidth()/4 : centerX + getWidth()/4;
-        position.y = flip ? centerY - getHeight() - getHeight()/3 : centerY - getHeight()/3;
+        position.x = flip ? centerX - getWidth()/4f : centerX + getWidth()/4f;
+        position.y = flip ? centerY - getHeight() - getHeight()/3f : centerY - getHeight()/3f;
 
         float[] vertices = new float[]{
             0, 0,
@@ -169,7 +169,7 @@ public class MaceWeapon extends Weapon {
 
         for (int i = 0; i < anglesDeg.length; i++) {
             float angleRad = (float) Math.toRadians(anglesDeg[i]);
-            float x = position.x + (flip ? -getWidth()*3/2 : getWidth()/2) + radius * (float) Math.cos(angleRad);
+            float x = position.x + (flip ? -getWidth()*3/2f : getWidth()/2f) + radius * (float) Math.cos(angleRad);
             float y = position.y + (flip ? getHeight() : 0) - radius * (float) Math.sin(angleRad);
             hitPositionsArray[i] = new Vector2(x, y);
         }

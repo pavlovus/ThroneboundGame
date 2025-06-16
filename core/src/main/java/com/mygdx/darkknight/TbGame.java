@@ -136,7 +136,7 @@ public class TbGame implements Screen {
 //        hero.addEffect(testEffect);
 
 
-        //fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
         //fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
         //fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
         //fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
@@ -256,12 +256,14 @@ public class TbGame implements Screen {
             }
         }
         if(!gameOver){
-            hero.draw(batch);
             weapon.update(delta, hero);
-            if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX)
+            if (hero.getCenterX() + weapon.getWidth() / 2f < mouseX) {
+                hero.draw(batch, false);
                 weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), false);
-            else
+            } else {
+                hero.draw(batch, true);
                 weapon.draw(batch, hero.getCenterX(), hero.getCenterY(), true);
+            }
             for (Bullet b : bullets) {
                 b.render(batch);
             }
@@ -525,7 +527,6 @@ public class TbGame implements Screen {
                 String label = "Enter to talk";
                 layout.setText(smallFont, label);
                 batch.begin();
-                System.out.println(textX + ", " + textY);
                 smallFont.draw(batch, layout, textX - layout.width / 2f, textY);
                 batch.end();
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
