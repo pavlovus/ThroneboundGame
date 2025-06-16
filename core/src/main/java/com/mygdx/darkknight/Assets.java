@@ -30,6 +30,8 @@ public class Assets {
     public static Texture meteorExplosionTexture;
     public static Texture healerEnemyTexture;
     public static Texture healingEffectTexture; // НОВА ТЕКСТУРА ДЛЯ ЕФЕКТУ ЗЦІЛЕННЯ
+    public static Texture long1AttackTexture;
+    public static Texture long2AttackTexture;
 
     public static Texture matriarchTexture;
 
@@ -86,6 +88,9 @@ public class Assets {
 
         healerEnemyTexture = new Texture("core/assets/healer.png");
         healingEffectTexture = new Texture("core/assets/healing_effect.png"); // ЗАВАНТАЖЕННЯ НОВОЇ ТЕКСТУРИ
+
+        long1AttackTexture = new Texture("core/assets/long1_attack.png");
+        long2AttackTexture = new Texture("core/assets/long2_attack.png");
     }
 
     public static void dispose() {
@@ -115,5 +120,8 @@ public class Assets {
         jesterTurretTexture.dispose();
 
         queenTexture.dispose();
+
+        if (long1AttackTexture != null) long1AttackTexture.dispose();
+        if (long2AttackTexture != null) long2AttackTexture.dispose();
     }
 }

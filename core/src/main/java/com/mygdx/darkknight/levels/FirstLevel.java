@@ -17,7 +17,7 @@ public class FirstLevel extends FightLevel {
     public FirstLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 1; // TODO: змінити на 2
+        this.totalWaves = 2;
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -25,7 +25,7 @@ public class FirstLevel extends FightLevel {
 
         this.levelEnemies = new EnemyType[][]{
             {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.LONG_ATTACK}
+            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.LONG_ATTACK}
         };
     }
 
@@ -39,7 +39,7 @@ public class FirstLevel extends FightLevel {
             case EnemyType.SHORT_ATTACK:
                 return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case EnemyType.LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long1AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             default:
                 throw new IllegalArgumentException("Unknown enemy type");
         }

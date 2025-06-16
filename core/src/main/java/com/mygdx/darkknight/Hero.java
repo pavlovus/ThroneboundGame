@@ -105,6 +105,8 @@ public class Hero {
                 }
             }
         }
+        damageIndicators.add(new DamageIndicator("-" + dmg, nextIsRight, dmg));
+        nextIsRight = !nextIsRight;
     }
 
     public void heal(int heal) {

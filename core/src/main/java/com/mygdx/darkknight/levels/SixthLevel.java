@@ -19,7 +19,7 @@ public class SixthLevel extends FightLevel {
     public SixthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 1; // TODO: змінити на 4
+        this.totalWaves = 4; // TODO: змінити на 4
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -30,12 +30,12 @@ public class SixthLevel extends FightLevel {
         this.levelEnemies = new EnemyType[][]{
             // Хвиля 1: 1× GHOST + 2× LONG_ATTACK + 3× SHORT_ATTACK
             {EnemyType.GHOST, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 2: 1× TURRET_AIMED + 1× GHOST + 2× TELEPORTER + 2× LONG_ATTACK
-//            {EnemyType.TURRET_AIMED, EnemyType.GHOST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
-//            // Хвиля 3: 1× HEALER + 1× TURRET_ROTATING + 1× GHOST + 2× SHORT_ATTACK
-//            {EnemyType.HEALER, EnemyType.TURRET_ROTATING, EnemyType.GHOST, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 4: 1× TURRET_RANDOM + 1× TURRET_BURST + 2× GHOST + 1× HEALER + 2× LONG_ATTACK
-//            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.HEALER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}
+            // Хвиля 2: 1× TURRET_AIMED + 1× GHOST + 2× TELEPORTER + 2× LONG_ATTACK
+            {EnemyType.TURRET_AIMED, EnemyType.GHOST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
+            // Хвиля 3: 1× HEALER + 1× TURRET_ROTATING + 1× GHOST + 2× SHORT_ATTACK
+            {EnemyType.HEALER, EnemyType.TURRET_ROTATING, EnemyType.GHOST, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
+            // Хвиля 4: 1× TURRET_RANDOM + 1× TURRET_BURST + 2× GHOST + 1× HEALER + 2× LONG_ATTACK
+            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.HEALER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}
         };
     }
 
@@ -52,7 +52,7 @@ public class SixthLevel extends FightLevel {
             case SHORT_ATTACK:
                 return new ShortAttackEnemy(Assets.short_2Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
                 return new Healer(Assets.healer_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TELEPORTER:

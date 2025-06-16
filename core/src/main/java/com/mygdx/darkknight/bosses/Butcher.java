@@ -20,8 +20,8 @@ public class Butcher extends Enemy {
     private static final float CHARGE_ATTACK_COOLDOWN = 10.0f;
     private static final float CHARGE_PREP_TIME = 1.5f;
     private static final float MINION_SPAWN_COOLDOWN = 6.0f;
-    private static final float NORMAL_SPEED = 100f;
-    private static final float CHARGE_SPEED = 700f;
+    private static final float NORMAL_SPEED = 20f;
+    private static final float CHARGE_SPEED = 150f;
     private static final int MINIONS_PER_SPAWN = 2;
     private static final int CHARGE_DAMAGE = 30;
 
@@ -45,7 +45,7 @@ public class Butcher extends Enemy {
     private List<Bullet> pendingBullets = new ArrayList<>();
 
     public Butcher(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
-        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 3, 10, bullets, new ButcherAI(roomBounds), gameMap, true);
+        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 30, 10, bullets, new ButcherAI(roomBounds), gameMap, true);
         this.roomBounds = roomBounds;
         this.bullets = bullets;
         this.currentWaveEnemies = currentWaveEnemies;

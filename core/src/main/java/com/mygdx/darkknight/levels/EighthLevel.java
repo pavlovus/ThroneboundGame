@@ -21,7 +21,7 @@ public class EighthLevel extends FightLevel {
     public EighthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height, 10, 40, Assets.meteorWarningTexture, Assets.meteorExplosionTexture);
 
-        this.totalWaves = 1; // TODO: змінити на 4
+        this.totalWaves = 4; // TODO: змінити на 4
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -32,12 +32,12 @@ public class EighthLevel extends FightLevel {
         this.levelEnemies = new EnemyType[][]{
             // Хвиля 1: 4× LONG_ATTACK + 2× SHORT_ATTACK
             {EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 2: 1× MATRIARCH + 1× TURRET_RANDOM + 3× LONG_ATTACK + 1× TELEPORTER
-//            {EnemyType.MATRIARCH, EnemyType.TURRET_RANDOM, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.TELEPORTER},
-//            // Хвиля 3: 2× TELEPORTER + 4× SHORT_ATTACK + 2× GHOST
-//            {EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.GHOST, EnemyType.GHOST},
-//            // Хвиля 4: 1× TURRET_BURST + 1× TURRET_RANDOM + 3× MATRIARCH + 1× HEALER
-//            {EnemyType.TURRET_BURST, EnemyType.TURRET_RANDOM, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.HEALER}
+            // Хвиля 2: 1× MATRIARCH + 1× TURRET_RANDOM + 3× LONG_ATTACK + 1× TELEPORTER
+            {EnemyType.MATRIARCH, EnemyType.TURRET_RANDOM, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.TELEPORTER},
+            // Хвиля 3: 2× TELEPORTER + 4× SHORT_ATTACK + 2× GHOST
+            {EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.GHOST, EnemyType.GHOST},
+            // Хвиля 4: 1× TURRET_BURST + 1× TURRET_RANDOM + 3× MATRIARCH + 1× HEALER
+            {EnemyType.TURRET_BURST, EnemyType.TURRET_RANDOM, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.HEALER}
         };
     }
 

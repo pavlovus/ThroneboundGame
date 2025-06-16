@@ -19,7 +19,7 @@ public class SeventhLevel extends FightLevel {
     public SeventhLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 1; // TODO: змінити на 4
+        this.totalWaves = 4; // TODO: змінити на 4
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -30,12 +30,12 @@ public class SeventhLevel extends FightLevel {
         this.levelEnemies = new EnemyType[][]{
             // Хвиля 1: 1× TURRET_AIMED + 1× TURRET_ROTATING + 1× TELEPORTER + 2× GHOST
             {EnemyType.TURRET_AIMED, EnemyType.TURRET_ROTATING, EnemyType.TELEPORTER, EnemyType.GHOST, EnemyType.GHOST},
-//            // Хвиля 2: 1× TURRET_RANDOM + 1× TURRET_BURST + 2× TELEPORTER + 1× HEALER + 1× MATRIARCH
-//            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.HEALER, EnemyType.MATRIARCH},
-//            // Хвиля 3: 1× HEALER + 1× TURRET_ROTATING + 3× GHOST + 3× LONG_ATTACK
-//            {EnemyType.HEALER, EnemyType.TURRET_ROTATING, EnemyType.GHOST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
-//            // Хвиля 4: 1× TURRET_RANDOM + 1× TURRET_BURST + 2× GHOST + 2× TELEPORTER + 2× MATRIARCH
-//            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.MATRIARCH, EnemyType.MATRIARCH}
+            // Хвиля 2: 1× TURRET_RANDOM + 1× TURRET_BURST + 2× TELEPORTER + 1× HEALER + 1× MATRIARCH
+            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.HEALER, EnemyType.MATRIARCH},
+            // Хвиля 3: 1× HEALER + 1× TURRET_ROTATING + 3× GHOST + 3× LONG_ATTACK
+            {EnemyType.HEALER, EnemyType.TURRET_ROTATING, EnemyType.GHOST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
+            // Хвиля 4: 1× TURRET_RANDOM + 1× TURRET_BURST + 2× GHOST + 2× TELEPORTER + 2× MATRIARCH
+            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.GHOST, EnemyType.GHOST, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.MATRIARCH, EnemyType.MATRIARCH}
         };
     }
 
@@ -52,7 +52,7 @@ public class SeventhLevel extends FightLevel {
             case SHORT_ATTACK:
                 return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
                 return new Healer(Assets.healerEnemyTexture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TELEPORTER:

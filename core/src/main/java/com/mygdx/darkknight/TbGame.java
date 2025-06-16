@@ -135,29 +135,21 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 10, weapon);
-        hero.addWeapon(sword, magic, wizard, axe, mace);
-//        hero.addEffect(testEffect);
-//        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
-//        hero.addEffect(testEffect1);
-//        Weakness testEffect = new Weakness(100f, 1, new Texture(Gdx.files.internal("weakness.png")));
-//        hero.addEffect(testEffect);
-//        hero.addEffect(testEffect);
-//        Poison testEffect = new Poison(20f, 1, 4f, new Texture(Gdx.files.internal("poison.png")));
-//        hero.addEffect(testEffect);
-//        hero.addEffect(testEffect);
 
 
-        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
-        fightLevels.add(new ThirdBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
+//        fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
+//        fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
+//        fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new FirstBossFightLevel(3933, 3713, 904, 768, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new FourthLevel(3709, 5281, 969, 639, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new FifthLevel(322, 6174, 997, 419, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SixthLevel(4798, 7550, 1288, 546, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SeventhLevel(2367, 8896, 1481, 480, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new SecondBossFightLevel(5123, 8900, 994, 669, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new EighthLevel(2433, 9919, 965, 706, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
+        fightLevels.add(new ThirdBossFightLevel(3234, 16093, 1438, 674, gameMap, bullets, enemiesToAdd));
 
         Swiftness swiftness = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
         Power power = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));

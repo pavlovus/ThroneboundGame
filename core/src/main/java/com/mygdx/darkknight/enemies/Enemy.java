@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.enemies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -64,7 +65,7 @@ public abstract class Enemy {
         this.gameMap = gameMap;
         this.bullets = bullets;
         this.armorIgnore = armorIgnore;
-        damageFont = new BitmapFont();
+        damageFont = new BitmapFont(Gdx.files.internal("assets/medievalLightFontSmaller.fnt"));
         damageFont.getData().setScale(1.0f);
     }
 

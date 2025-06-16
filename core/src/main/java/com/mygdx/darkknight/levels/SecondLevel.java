@@ -19,7 +19,7 @@ public class SecondLevel extends FightLevel {
         super(x, y, width, height);
 
         // maxEnemiesPerWave можна ігнорувати, оскільки getMaxEnemiesForCurrentWave буде динамічним
-        this.totalWaves = 1; // TODO: змінити на 3
+        this.totalWaves = 3; // TODO: змінити на 3
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -28,8 +28,8 @@ public class SecondLevel extends FightLevel {
 
         this.levelEnemies = new EnemyType[][]{
             {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}, // Хвиля 1: 4× Пацюк
-//            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}, // Хвиля 2: 3× Пацюк + 2× Скелет
-//            {EnemyType.MATRIARCH, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}  // Хвиля 3: 1× Спавнер + 3× Пацюк
+            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}, // Хвиля 2: 3× Пацюк + 2× Скелет
+            {EnemyType.MATRIARCH, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}  // Хвиля 3: 1× Спавнер + 3× Пацюк
         };
     }
 
@@ -46,7 +46,7 @@ public class SecondLevel extends FightLevel {
             case SHORT_ATTACK:
                 return new ShortAttackEnemy(Assets.short_1Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_1Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long1AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case MATRIARCH:
                 // Передаємо текстуру матки та текстуру міньйонів (пацюків)
                 return new Matriarch(Assets.mom_1Texture, Assets.short_1Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd, bullets);

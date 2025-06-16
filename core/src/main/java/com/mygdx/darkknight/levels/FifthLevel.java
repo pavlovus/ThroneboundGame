@@ -19,7 +19,7 @@ public class FifthLevel extends FightLevel {
     public FifthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 1; // TODO: змінити на 4
+        this.totalWaves = 4; // TODO: змінити на 4
 
 
         this.bulletTexture = Assets.enemyBulletTexture;
@@ -31,12 +31,12 @@ public class FifthLevel extends FightLevel {
         this.levelEnemies = new EnemyType[][]{
             // Хвиля 1: 2× TELEPORTER + 1× TURRET_AIMED + 3× SHORT_ATTACK
             {EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.TURRET_AIMED, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 2: 1× TURRET_ROTATING + 1× TURRET_RANDOM + 2× LONG_ATTACK + 2× SHORT_ATTACK
-//            {EnemyType.TURRET_ROTATING, EnemyType.TURRET_RANDOM, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 3: 1× HEALER + 1× TURRET_RANDOM + 1× TURRET_BURST + 1× TELEPORTER + 2× LONG_ATTACK
-//            {EnemyType.HEALER, EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
-//            // Хвиля 4: 1× TURRET_BURST + 1× TURRET_RANDOM + 2× TELEPORTER + 2× LONG_ATTACK
-//            {EnemyType.TURRET_BURST, EnemyType.TURRET_RANDOM, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}
+            // Хвиля 2: 1× TURRET_ROTATING + 1× TURRET_RANDOM + 2× LONG_ATTACK + 2× SHORT_ATTACK
+            {EnemyType.TURRET_ROTATING, EnemyType.TURRET_RANDOM, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
+            // Хвиля 3: 1× HEALER + 1× TURRET_RANDOM + 1× TURRET_BURST + 1× TELEPORTER + 2× LONG_ATTACK
+            {EnemyType.HEALER, EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK},
+            // Хвиля 4: 1× TURRET_BURST + 1× TURRET_RANDOM + 2× TELEPORTER + 2× LONG_ATTACK
+            {EnemyType.TURRET_BURST, EnemyType.TURRET_RANDOM, EnemyType.TELEPORTER, EnemyType.TELEPORTER, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}
         };
     }
 
@@ -53,7 +53,7 @@ public class FifthLevel extends FightLevel {
             case SHORT_ATTACK:
                 return new ShortAttackEnemy(Assets.short_2Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
                 return new Healer(Assets.healer_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TELEPORTER:

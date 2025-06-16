@@ -73,7 +73,7 @@ public class Matriarch extends Enemy {
             this.minionTexture, // Передаємо текстуру міньйона, отриману через конструктор
             spawnPos.x, spawnPos.y,
             32, 32,
-            180f,
+            60f,
             3,
             1,
             0.8f,

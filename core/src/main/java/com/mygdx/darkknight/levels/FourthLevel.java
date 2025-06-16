@@ -19,7 +19,7 @@ public class FourthLevel extends FightLevel {
     public FourthLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 1; // TODO: змінити на 3
+        this.totalWaves = 3; // TODO: змінити на 3
 
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -30,10 +30,10 @@ public class FourthLevel extends FightLevel {
         this.levelEnemies = new EnemyType[][]{
             // Хвиля 1: 4× LONG_ATTACK + 1× Turret (AIMED)
             {EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.TURRET_AIMED},
-//            // Хвиля 2: 2× Turret (1 AIMED, 1 ROTATING) + 3× SHORT_ATTACK
-//            {EnemyType.TURRET_AIMED, EnemyType.TURRET_ROTATING, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
-//            // Хвиля 3: 2× Turret (1 RANDOM, 1 BURST) + 1× HEALER + 3× SHORT_ATTACK
-//            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.HEALER, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}
+            // Хвиля 2: 2× Turret (1 AIMED, 1 ROTATING) + 3× SHORT_ATTACK
+            {EnemyType.TURRET_AIMED, EnemyType.TURRET_ROTATING, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK},
+            // Хвиля 3: 2× Turret (1 RANDOM, 1 BURST) + 1× HEALER + 3× SHORT_ATTACK
+            {EnemyType.TURRET_RANDOM, EnemyType.TURRET_BURST, EnemyType.HEALER, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}
         };
     }
 
@@ -50,7 +50,7 @@ public class FourthLevel extends FightLevel {
             case SHORT_ATTACK:
                 return new ShortAttackEnemy(Assets.short_2Texture, pos.x, pos.y, 40, 40, 120, 3, 1, 1, bullets, gameMap, new ShortAttackAI(this.roomArea));
             case LONG_ATTACK:
-                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.enemyBulletTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
+                return new LongAttackEnemy(Assets.long_2Texture, pos.x, pos.y, 40, 40, 80, 3, 1, 1, Assets.long2AttackTexture, bullets, gameMap, new LongAttackAI(this.roomArea));
             case HEALER:
                 return new Healer(Assets.healer_2Texture ,pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, bullets);
             case TURRET_AIMED:
