@@ -1,18 +1,362 @@
 {
-  "intro": {
+  "olwen_intro": {
     "scenes": [
       {
-        "speaker": "Andriy Ploskostipich",
-        "text": "Hi, warrior, welcome tp Tsiopichburg..."
+        "speaker": "Olwen the Ash-Spade",
+        "text": "You hear them too, don't you? The whispers in the brick?"
       },
       {
-        "speaker": "Andriy Ploskostipich",
-        "text":  "I'm going to be your dungeon master..."
+        "speaker": "Olwen the Ash-Spade",
+        "text": "This place... once fed a kingdom. Now, it feeds on whatever walks in."
       },
       {
-        "speaker": "Andriy Ploskostipich",
-        "text": "Fisting is three hundred bucks..."
+        "speaker": "Olwen the Ash-Spade",
+        "text": "The meat breathes. The ovens bleed. Nothing here has rested since the eclipse."
+      },
+      {
+        "speaker": "Olwen the Ash-Spade",
+        "text": "Garron... he’s still in there. Still stirring his pot."
+      },
+      {
+        "speaker": "Olwen the Ash-Spade",
+        "text": "He was loyal. More than a man should be."
+      },
+      {
+        "speaker": "Olwen the Ash-Spade",
+        "text": "When the King died, something inside him snapped. He started... cooking revenge."
+      },
+      {
+        "speaker": "Olwen the Ash-Spade",
+        "text": "You’ll smell lies in the air before you see the truth. Blood flows backward now."
+      },
+      {
+        "speaker": "Olwen the Ash-Spade",
+        "text": "Go. But listen closely. The stone speaks more honestly than the living ever did."
       }
+    ]
+  },
+  "warden_hobb_enemies": {
+    "scenes": [
+      {
+        "speaker": "Warden Hobb",
+        "text": "Halt! …Wait. You’re not one of mine."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "The pigs got out again. Can’t trust the witches with keys, no sir."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "Flame-snakes slithered right through the cracks! Bit the baker’s tongue off, they did!"
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "Kitchen's not a kitchen anymore. It's a battlefield. Grease and steel and squeals."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "Even the stew spoons have teeth now. Can’t blink, or something bites."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "Saw a butchered man walking yesterday — apron and entrails both dragging."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "The Butcher? Still cooking. For who? Don’t ask. He don’t like questions."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "If you see a turret blink — run. It already marked your neck."
+      },
+      {
+        "speaker": "Warden Hobb",
+        "text": "Right then. No lollygagging! The floor’s watching us..."
+      }
+    ]
+  },
+  "brother_caelen_crown": {
+    "scenes": [
+      {
+        "speaker": "Brother Caelen",
+        "text": "Listen... listen... rumors outlive truth."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "They say... the Crown shattered into three. Each piece... cursed."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "Gather them, and you claim the throne. Or it claims you."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "Break the crown... and maybe, just maybe, you’ll break the curse."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "This castle isn’t held together by stone. It’s bound by memory. By blood."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "The souls here? Not dead. Just... paused. Caught between pages of a closed book."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "You must choose: ruler... or redeemer."
+      },
+      {
+        "speaker": "Brother Caelen",
+        "text": "Some whisper you’ve already chosen once. But forgotten."
+      }
+    ]
+  },
+  "marrek_butcher": {
+    "scenes": [
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "Looking for Garron? He’s not a cook anymore."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "After the King fell, we were left with silence. Orders stopped. So did reason."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "But Garron... he clung to loyalty like it was a cleaver."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "The Queen asked for a final dish. “Special,” she said. He obeyed."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "No questions. Just fire. Just spice. Just ritual."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "He brewed a curse in the royal cauldron. And it cooked him, too."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "He’s not human. He’s rage. Boiling, bubbling. Waiting to be served."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "I don’t even know who he’s avenging anymore."
+      },
+      {
+        "speaker": "Marrek the Boneturned",
+        "text": "Go. Just don’t let him taste you — he never forgets a flavor."
+      }
+    ]
+  },
+  "knight_reflection": {
+    "scenes": [
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "This was once the Jewel Hall. Velvet on every chair, silver carved into the balconies."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "To the east lay the Royal Treasury, guarded by enchantments older than the kingdom itself."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "Gold flowed like wine, and laughter echoed like bells. We believed we were eternal."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "Then the Queen changed the script."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "She ordered a final play, a performance to cleanse grief — or so she claimed."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "The guard was dismissed. The vaults were unlocked. I remained, out of duty, not command."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "I watched the guests arrive in masks and jewels. Irius stood behind the curtain… twitching."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "He was meant to die on stage. That was the cruel twist of her comedy."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "But he turned the stage against us. The audience screamed, but none left alive."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "He dances now through the treasury, mocking the traps, speaking in riddles."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "Coins melt in his presence. Gems shatter from his laugh. Even shadows flee when he smiles."
+      },
+      {
+        "speaker": "Ser Caldrin the Maskless",
+        "text": "If you mean to pass, do not seek the vault’s riches… seek the soul he buried in his script."
+      }
+    ]
+  },
+  "ghostly_chorus": {
+    "scenes": [
+      {
+        "speaker": "Maera of the White Song",
+        "text": "I wore pearls that night… foolish things. They rattled like teeth when I screamed."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "The performance was meant to amuse us, to make us forget the falling towers, the empty throne."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "But the Queen’s grief had turned black. She fed it to the jester, and he fed it back as madness."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "Now he rules here — not with a crown, but with a stage."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "Have you heard them? The Laughing Phantoms? They crawl along the rafters, feeding on breath."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "The skeletons march when the drums sound. Dead men pulled by dead generals, stitched to rhythm."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "There are no musicians, no band. Only echoes that obey."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "And the turrets… oh, the turrets. Mechanical mouths of fire, still loyal to their master."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "They burn anything that forgets to bow."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "We were the audience once. Now, we are the scenery."
+      },
+      {
+        "speaker": "Maera of the White Song",
+        "text": "Be careful where you walk. The stage remembers blood… and rewards encores."
+      }
+    ]
+  },
+  "priest_of_truth": {
+    "scenes": [
+      {
+        "speaker": "Father Vaelmir",
+        "text": "Many come here to find gold. But this gold is cursed — a reflection of broken oaths."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "I came not for coin, but for penance. For truth buried in laughter."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "You, warrior… do you feel it too? The emptiness behind your eyes? That is not amnesia. That is theft."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "Your soul was ripped from you — sacrificed during the Queen’s ritual."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "You were once her son, hidden from all, used to seal the King's fate."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "Your blood formed the knot of the curse. A lock of flame and shadow."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "Irius guards that knot. Not just a madman… he is the keeper of the rite's echo."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "He is no longer human. His laughter binds souls. He feeds on memory, and twists it into farce."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "To face him is to face your own reflection — not in a mirror, but in a shattered mask."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "He knows your name, warrior. He may speak it before he dies."
+      },
+      {
+        "speaker": "Father Vaelmir",
+        "text": "If you can kill what laughs… perhaps you can reclaim what we all lost."
+      }
+    ]
+  },
+  "bramli_monologue": {
+    "scenes": [
+      { "speaker": "Bramli Flintborn", "text": "Heh... These walls still remember. They hum when you walk." },
+      { "speaker": "Bramli Flintborn", "text": "This was once the Queen’s Gallery. Paintings older than dynasties hung here — until she burned half of them." },
+      { "speaker": "Bramli Flintborn", "text": "I came lookin’ for a tome. A book. Her journal, if you’d believe it. It was said to hold the truth of the curse." },
+      { "speaker": "Bramli Flintborn", "text": "I found ashes instead… and fragments that screamed when touched." },
+      { "speaker": "Bramli Flintborn", "text": "See that wall? That crack isn’t from age. It’s from magic turned backward, tryin’ to forget itself." },
+      { "speaker": "Bramli Flintborn", "text": "She tore out the pages herself. Ripped 'em out with fire, fury, guilt... I reckon all three." },
+      { "speaker": "Bramli Flintborn", "text": "But one page stayed. I saw it. Words scorched in gold: 'He died a King of Chains. I was his key.'" },
+      { "speaker": "Bramli Flintborn", "text": "Some say if you gather the crown’s four pieces, you’ll sit the throne yourself." },
+      { "speaker": "Bramli Flintborn", "text": "Others whisper that meltin’ it frees the souls trapped here — yours included." },
+      { "speaker": "Bramli Flintborn", "text": "I ain’t got answers, warrior… but you’re gettin’ close. The gallery leads to her. To Elira." },
+      { "speaker": "Bramli Flintborn", "text": "And she’s waitin’. Not with open arms — but with open wounds." }
+    ]
+  },
+  "veyric_monologue": {
+    "scenes": [
+      { "speaker": "Captain Veyric Hallowbrand", "text": "Stand still. Let me look at you... You wear a warrior’s face, but something in your eyes—it bleeds silence." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "I was one of the last. Captain of the Queen’s Guard. Swore to protect her with blood and blade." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "But how do you shield someone from themselves?" },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "When the eclipse came, the throne hall filled with chanting. Not hymns. Rites." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "The King was already dying. Not by blade, but by bond — a curse that tore him from within." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "She was there, Elira. Draped in night. Her hands glowed with the light of our unborn future." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "And you... you were the offering. A child none of us knew she bore." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "She gave you up to the ritual, sealed the curse with your breath." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "Your soul fractured the King's, made him half-shadow, half-echo." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "I failed both of them. I let it happen. I still wear this armor out of shame, not duty." },
+      { "speaker": "Captain Veyric Hallowbrand", "text": "If you find her... ask if she remembers the lullaby she sang the night before the eclipse. I do." }
+    ]
+  },
+  "thaliel_monologue": {
+    "scenes": [
+      { "speaker": "Thaliel of the Dimming Light", "text": "You are close now. The air clings. The ground shivers. The veil is thinnest here." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "I am Thaliel. Once of the Choir. Now? Merely a crack in heaven’s mirror." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "The Queen is not your enemy. No… she is the wound bleeding beneath this world." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "She saw what others did not — a war of souls. One kingdom’s collapse would ignite a thousand deaths." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "To stop it, she broke fate. Not with armies, but with sacrifice." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "She cursed the King not from hatred… but desperation. To unmake the throne before it devoured all." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "And you, her blood, were the anchor. The fulcrum between salvation and sorrow." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "The world forgot you. But the curse did not." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "The crown you seek… it’s not a crown anymore. It’s a prison. A question with no answer." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "You may sit upon it and rule the dead… or shatter it and walk free, alone." },
+      { "speaker": "Thaliel of the Dimming Light", "text": "Your destiny is not to conquer, but to choose. And choice, warrior… is the only true power." }
+    ]
+  },
+  "pale_widow_monologue": {
+    "scenes": [
+      { "speaker": "The Pale Widow", "text": "She sings to herself now. Do you hear her?" },
+      { "speaker": "The Pale Widow", "text": "Her voice is broken glass. It cuts the silence." },
+      { "speaker": "The Pale Widow", "text": "She is not what she was. Elira... she is ash and light stitched together." },
+      { "speaker": "The Pale Widow", "text": "Her body burned when she unbound the curse — her soul, splintered between prophecy and guilt." },
+      { "speaker": "The Pale Widow", "text": "She wanders the throne hall, weeping into air, naming ghosts that won’t answer." },
+      { "speaker": "The Pale Widow", "text": "The crown’s last shard floats above her like a dying star. It pulses with her grief." },
+      { "speaker": "The Pale Widow", "text": "When you step before her, she may not know you. She may call you 'child'... or 'curse'... or 'king.'" },
+      { "speaker": "The Pale Widow", "text": "She will offer you the throne, or beg you to destroy it. She does not know which is mercy anymore." },
+      { "speaker": "The Pale Widow", "text": "But she remembers you. Oh yes, warrior. Her dreams still bleed your name." },
+      { "speaker": "The Pale Widow", "text": "And when she speaks, the castle will hold its breath. As if fate itself fears her answer." },
+      { "speaker": "The Pale Widow", "text": "Go. Let the truth shatter you. Only then can it be rebuilt." }
     ]
   }
 }
