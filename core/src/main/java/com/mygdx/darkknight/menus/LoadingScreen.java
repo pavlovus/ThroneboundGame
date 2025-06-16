@@ -30,7 +30,7 @@ public class LoadingScreen implements Screen {
     public LoadingScreen(Game game) {
         this.game = game;
         batch = new SpriteBatch();
-        font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("medievalLightFontBigger.fnt"));
         shapeRenderer = new ShapeRenderer();
 
         progress = 0f;

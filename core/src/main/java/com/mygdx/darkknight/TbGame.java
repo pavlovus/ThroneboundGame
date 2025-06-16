@@ -31,12 +31,12 @@ import java.util.List;
 import java.util.Map;
 
 public class TbGame implements Screen {
-    private static final float BAR_WIDTH = 110;
-    private static final float BAR_HEIGHT = 16;
-    private static final float BAR_MARGIN = 22;
-    private final float EFFECT_ICON_WIDTH = 32f;
-    private final float EFFECT_ICON_HEIGHT = 32f;
-    private final float EFFECT_PADDING = 12f;
+    private static final float BAR_WIDTH = Gdx.graphics.getWidth() * 8/100f;
+    private static final float BAR_HEIGHT = Gdx.graphics.getHeight() * 3/100f;
+    private static final float BAR_MARGIN = Gdx.graphics.getHeight() * 2/100f;
+    private final float EFFECT_ICON_WIDTH = Gdx.graphics.getHeight() * 4/100f;
+    private final float EFFECT_ICON_HEIGHT = Gdx.graphics.getHeight() * 4/100f;
+    private final float EFFECT_PADDING = Gdx.graphics.getWidth() / 100f;
     private final float EFFECT_ANIM_DURATION = 0.3f;
     private float mouseX;
     private float mouseY;
@@ -99,14 +99,14 @@ public class TbGame implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        font = new BitmapFont(Gdx.files.internal("medievalLightFontSmaller.fnt"));
+        font = new BitmapFont(Gdx.files.internal("medievalLightFont2.fnt"));
         font.setColor(Color.WHITE);
-        countFont = new BitmapFont(Gdx.files.internal("medievalLightFontSmaller.fnt"));
+        countFont = new BitmapFont(Gdx.files.internal("medievalLightFont1.fnt"));
         layout = new GlyphLayout();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/pixelText.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter smallParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        smallParam.size = 8;
+        smallParam.size = 10;
         smallFont = generator.generateFont(smallParam);
         smallParam.magFilter = Texture.TextureFilter.Nearest;
         smallParam.minFilter = Texture.TextureFilter.Nearest;
@@ -342,9 +342,6 @@ public class TbGame implements Screen {
             }
         }
 
-        float barX = camera.position.x - (width / 2) + 20;
-        float barY = camera.position.y + (height / 2) - 140;
-
         batch.end();
 
         // Рендеримо статичний інтерфейс
@@ -392,14 +389,14 @@ public class TbGame implements Screen {
     }
 
     private void renderUI(float delta) {
-        float barX = 20;
-        float barY = height - 140;
+        float barX = width*3/200f;
+        float barY = height - height*18/100f;
 
         // Малюємо фон бару + іконки
         uiBatch.begin();
-        uiBatch.draw(barBackgroundTexture, barX, barY, 200, 140);
-        uiBatch.draw(heartTexture, barX + 25, barY + 74, 32, 32);
-        uiBatch.draw(shieldTexture, barX + 25, barY + 34, 32, 32);
+        uiBatch.draw(barBackgroundTexture, barX, barY, width*15/100f, height*18/100f);
+        uiBatch.draw(heartTexture, barX + width*2/100f, barY + height*10/100f, height*4/100f, height*4/100f);
+        uiBatch.draw(shieldTexture, barX + width*2/100f, barY + height*9/200f, height*4/100f, height*4/100f);
         uiBatch.end();
         // Малюємо бари здоров’я / броні через ShapeRenderer
         drawHeroBars();
@@ -420,10 +417,10 @@ public class TbGame implements Screen {
 
     private void renderHeroEffects() {
         List<Effect> effects = hero.getActiveEffects();
-        float startX = 230;
-        float startY = height - 50;
-        float size = 48;
-        float padding = 8;
+        float startX = width*17/100f;
+        float startY = height - height*7/100f;
+        float size = width*4/100f;
+        float padding = width/200f;
 
         uiBatch.begin();
         for (int i = 0; i < effects.size(); i++) {
@@ -447,8 +444,8 @@ public class TbGame implements Screen {
     }
 
     private void drawHeroBarText() {
-        float barX = 80;
-        float barY = height - 58;
+        float barX = width*6/100f;
+        float barY = height - height*8/100f;
 
         String hpText = hero.getHealth() + " / " + hero.getMaxHealth();
         layout.setText(font, hpText);
@@ -465,8 +462,8 @@ public class TbGame implements Screen {
     }
 
     private void drawHeroBars() {
-        float barX = 80;
-        float barY = height - 58;
+        float barX = width*6/100f;
+        float barY = height - height*8/100f;
 
         float healthPercentage = (float) hero.getHealth() / hero.getMaxHealth();
         float armorPercentage = (float) hero.getArmor() / hero.getMaxArmor();
@@ -493,15 +490,15 @@ public class TbGame implements Screen {
     private void renderWeaponIcons(float delta) {
         List<Weapon> weapons = hero.getWeapons();
 
-        float iconSize = 32f;
-        float frameWidth = iconSize + 30;
-        float frameHeight = iconSize + 65;
-        float padding = 12f;
+        float iconSize = height*4/100f;
+        float frameWidth = iconSize + width*2/100f;
+        float frameHeight = iconSize + height*8/100f;
+        float padding = height*3/200f;
         int count = weapons.size();
         float totalWidth = count * frameWidth + (count - 1) * padding;
 
-        float startX = width - totalWidth - 20;
-        float startY = height - frameHeight - 20;
+        float startX = width - totalWidth - width*3/200f;
+        float startY = height - frameHeight - height*5/200f;
 
         // Оновлюємо таймер
         if (animationTimer > 0f) {
@@ -540,7 +537,6 @@ public class TbGame implements Screen {
             uiBatch.draw(w.getTexture(), iconX, iconY, iconSize, iconSize);
 
             // Цифра
-            font.getData().setScale(1f);
             font.setColor(Color.WHITE);
             font.draw(uiBatch, String.valueOf(i + 1), x + 16, y + frameHeight - 40);
 
@@ -563,9 +559,9 @@ public class TbGame implements Screen {
             }
         }
 
-        float startX = 20f;
-        float barY = height - 58 - 2 * BAR_HEIGHT - BAR_MARGIN;
-        float startY = barY - 40f - EFFECT_ICON_HEIGHT;
+        float startX = width*3/200f;
+        float barY = height - height*15/200f - 2 * BAR_HEIGHT - BAR_MARGIN;
+        float startY = barY - height*5/100f - EFFECT_ICON_HEIGHT;
 
         uiBatch.begin();
         int index = 0;
@@ -576,7 +572,7 @@ public class TbGame implements Screen {
                 continue;
             }
 
-            float x = startX + index * (EFFECT_ICON_WIDTH + EFFECT_PADDING + 10f) + 25f;
+            float x = startX + index * (EFFECT_ICON_WIDTH + EFFECT_PADDING + width*7/1000f) + width*18/1000f;
             float y = startY;
 
             // Анімація
@@ -600,7 +596,7 @@ public class TbGame implements Screen {
 
             // Фон
             if (effectBackgroundTexture != null)
-                uiBatch.draw(effectBackgroundTexture, x - offsetX - 10f, y - offsetY - 15f, scaledWidth * 1.8f, scaledHeight * 1.8f);
+                uiBatch.draw(effectBackgroundTexture, x - offsetX - width*7/1000f, y - offsetY - height*2/100f, scaledWidth * 1.8f, scaledHeight * 1.8f);
 
             // Іконка ефекту
             Texture iconTexture = effects.get(0).getTexture();
@@ -608,13 +604,11 @@ public class TbGame implements Screen {
 
             // Літера клавіші
             font.setColor(Color.WHITE);
-            font.getData().setScale(1f);
-            font.draw(uiBatch, String.valueOf(key), x + 10f, y - 10f);
+            font.draw(uiBatch, String.valueOf(key), x + width*7/1000f, y - height*13/1000f);
 
             // Кількість ефектів
             countFont.setColor(Color.YELLOW);
-            countFont.getData().setScale(1f);
-            countFont.draw(uiBatch, String.valueOf(effects.size()), x + EFFECT_ICON_WIDTH - 6f, y + 14f);
+            countFont.draw(uiBatch, String.valueOf(effects.size()), x + EFFECT_ICON_WIDTH - width*4/1000f, y + height*18/1000f);
 
             index++;
         }
@@ -769,8 +763,6 @@ public class TbGame implements Screen {
                 continue;
             }
 
-            boolean bulletRemoved = false;
-
             if (!b.isOpponent()) {
                 for (Enemy e : enemies) {
                     if (b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
@@ -782,7 +774,6 @@ public class TbGame implements Screen {
                         } else {
                             e.takeDamage(weapon.getDamage());
                             bullets.remove(i);
-                            bulletRemoved = true;
                         }
                         break;
                     }

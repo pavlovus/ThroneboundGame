@@ -31,6 +31,9 @@ public class PauseMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
         BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -57,11 +60,11 @@ public class PauseMenu {
         TextButton exitButton = new TextButton("Exit game", style);
         TextButton mainMenuButton = new TextButton("Main menu", style);
 
-        table.add(resumeButton).width(300).height(90).pad(20);
+        table.add(resumeButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
         table.row();
-        table.add(mainMenuButton).width(300).height(90).pad(20);
+        table.add(mainMenuButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
         table.row();
-        table.add(exitButton).width(300).height(90).pad(20);
+        table.add(exitButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
 
         stage.addActor(table);
 

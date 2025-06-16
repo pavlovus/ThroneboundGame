@@ -38,6 +38,9 @@ public class StartMenu implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
         backgroundTexture = new Texture(Gdx.files.internal("startingMenuImage.png"));
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
@@ -45,8 +48,9 @@ public class StartMenu implements Screen {
 
         titleTexture = new Texture(Gdx.files.internal("title.png"));
 
-        Image titleImage = new Image(titleTexture);
 
+        Image titleImage = new Image(titleTexture);
+        titleImage.setSize(screenWidth*37/100, screenHeight*65/100);
         titleImage.setPosition(
             (Gdx.graphics.getWidth() - titleImage.getWidth()) / 2f,  // Центрування по ширині
             Gdx.graphics.getHeight() - titleImage.getHeight()   // Відступ від верху
@@ -57,10 +61,10 @@ public class StartMenu implements Screen {
         subtitleTexture = new Texture(Gdx.files.internal("subtitle.png"));
 
         Image subtitleImage = new Image(subtitleTexture);
-
+        subtitleImage.setSize(screenWidth*37/100, screenHeight*65/100);
         subtitleImage.setPosition(
             (Gdx.graphics.getWidth() - subtitleImage.getWidth()) / 2f,  // Центрування по ширині
-            Gdx.graphics.getHeight() - subtitleImage.getHeight() - 150   // Відступ від верху
+            Gdx.graphics.getHeight() - subtitleImage.getHeight() - screenHeight/5  // Відступ від верху
         );
 
         stage.addActor(subtitleImage);
@@ -109,12 +113,12 @@ public class StartMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-        table.padTop(500);
+        table.padTop(screenHeight*65/100);
 
         table.row();
-        table.add(startButton).width(300).height(90).padBottom(20);
+        table.add(startButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
         table.row();
-        table.add(exitButton).width(300).height(90).padBottom(20);
+        table.add(exitButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
         stage.addActor(table);
 
     }

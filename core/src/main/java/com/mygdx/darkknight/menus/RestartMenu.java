@@ -34,6 +34,9 @@ public class RestartMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
         BitmapFont font = new BitmapFont(Gdx.files.internal("medievalLightFont.fnt"));
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -55,7 +58,7 @@ public class RestartMenu {
         titleTexture = new Texture(Gdx.files.internal("deathTitle.png"));
 
         Image titleImage = new Image(titleTexture);
-
+        titleImage.setSize(screenWidth*37/100, screenHeight*52/100);
         titleImage.setPosition(
             (Gdx.graphics.getWidth() - titleImage.getWidth()) / 2f,  // Центрування по ширині
             Gdx.graphics.getHeight() - titleImage.getHeight()   // Відступ від верху
@@ -66,17 +69,17 @@ public class RestartMenu {
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-        table.padTop(350);
+        table.padTop(screenHeight*46/100);
 
         TextButton resumeButton = new TextButton("Restart", style);
         TextButton exitButton = new TextButton("Exit game", style);
         TextButton mainMenuButton = new TextButton("Main menu", style);
 
-        table.add(resumeButton).width(300).height(90).pad(20);
+        table.add(resumeButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
         table.row();
-        table.add(mainMenuButton).width(300).height(90).pad(20);
+        table.add(mainMenuButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
         table.row();
-        table.add(exitButton).width(300).height(90).pad(20);
+        table.add(exitButton).width(screenWidth*22/100).height(screenHeight*12/100).padBottom(screenHeight*3/100);
 
         stage.addActor(table);
 
