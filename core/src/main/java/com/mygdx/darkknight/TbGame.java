@@ -367,21 +367,17 @@ public class TbGame implements Screen {
         float x = hero.getX();
         float y = hero.getY();
         if (x < 4440 && 4340 < x && y < 4600 && 4539 < y) {
-//            x = 2378;
-//            y = 4921;
-            if (fader != null) fader.startFadeOut(5f);
+            if (fader != null) fader.startFadeOut(25f);
             hero.setLocation(2378, 4921);
-            if (fader != null) fader.startFadeIn(5f);
+            if (fader != null) fader.startFadeIn(25f);
             hero.setArmor(30);
             hero.setMaxArmor(30);
         }
 
         if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
-//            x = 566;
-//            y = 10015;
-            if (fader != null) fader.startFadeOut(5f);
+            if (fader != null) fader.startFadeOut(25f);
             hero.setLocation(566, 10015);
-            if (fader != null) fader.startFadeIn(5f);
+            if (fader != null) fader.startFadeIn(25f);
             hero.setArmor(40);
             hero.setMaxArmor(40);
             hero.setHealth(100);

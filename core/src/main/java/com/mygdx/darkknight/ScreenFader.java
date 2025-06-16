@@ -24,7 +24,7 @@ public class ScreenFader {
         this.time = 0f;
         fadingOut = true;
         fadingIn = false;
-        alpha = 0f;
+        alpha = 1f;
     }
 
     public boolean isFading() {
