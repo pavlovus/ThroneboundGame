@@ -132,6 +132,7 @@ public class TbGame implements Screen {
         Weapon wizard = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
+        weapon = sword;
         hero = new Hero("core/assets/hero1.png",200, 120, 100, 10, weapon);
 
 
