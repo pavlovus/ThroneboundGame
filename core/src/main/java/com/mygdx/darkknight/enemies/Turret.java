@@ -47,16 +47,16 @@ public class Turret extends Enemy {
         // Встановлюємо значно меншу швидкість перезарядки для більшого спаму кулями
         switch (mode) {
             case AIMED:
-                setAttackCooldown(0.17f); // Було 1.5f
+                setAttackCooldown(0.7f); // Було 1.5f
                 break;
             case ROTATING:
-                setAttackCooldown(0.25f); // Було 0.8f
+                setAttackCooldown(1f); // Було 0.8f
                 break;
             case RANDOM:
-                setAttackCooldown(0.35f); // Було 1.0f
+                setAttackCooldown(1.2f); // Було 1.0f
                 break;
             case BURST:
-                setAttackCooldown(0.6f); // Було 2.5f
+                setAttackCooldown(1.5f); // Було 2.5f
                 break;
         }
     }
@@ -167,7 +167,7 @@ public class Turret extends Enemy {
     }
 
     private void shootBullet(float angle) {
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, true, this, 30, 10, 600));
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, true, this, 30, 10, 400));
     }
 
     @Override
