@@ -58,30 +58,6 @@ public class ShortAttackEnemy extends Enemy {
         isMovingBack = true;
         attackTimer = 0f;
         originalPosition.set(getX(), getY());
-        float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
-        String animationPath;
-        switch(getDamage()){
-            case 1:
-                animationPath = "core/assets/-1.png";
-                break;
-            case 2:
-                animationPath = "core/assets/-2.png";
-                break;
-            case 3:
-                animationPath = "core/assets/-3.png";
-                break;
-            case 4:
-                animationPath = "core/assets/-4.png";
-                break;
-            case 5:
-                animationPath = "core/assets/-5.png";
-                break;
-            default:
-                animationPath = "core/assets/sparkle.png";
-        }
-        Bullet b = new Bullet(hero.getCenterX(), hero.getCenterY(), angle, null, animationPath, true, this, 30, 10,450f);
-        bullets.add(b);
-        b.strike();
         resetAttackCooldown();
 
         this.hero = hero;

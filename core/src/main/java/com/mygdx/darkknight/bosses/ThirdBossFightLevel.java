@@ -50,7 +50,7 @@ public class ThirdBossFightLevel extends FightLevel {
         for (int i = bullets.size() - 1; i >= 0; i--) {
             Bullet bullet = bullets.get(i);
             bullet.update(deltaTime, gameMap, globalEnemies);
-            if (bullet.shouldRemove() || bullet.isStrike()) {
+            if (bullet.shouldRemove()) {
                 bullets.remove(i);
             }
         }
@@ -61,7 +61,6 @@ public class ThirdBossFightLevel extends FightLevel {
                 Enemy owner = bullet.getEnemy();
                 int damage = owner != null ? owner.getDamage() : 10;
                 hero.takeDamage(damage, owner.getArmorIgnore());
-                bullet.strike(owner, hero);
             }
         }
 

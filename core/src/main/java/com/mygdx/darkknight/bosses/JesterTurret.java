@@ -150,8 +150,7 @@ public class JesterTurret extends Enemy {
     }
 
     private void shootBullet(float angle, float speed, int damage) {
-        String animationPath = "core/assets/sparkle.png";
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, Assets.turretBulletTexture, animationPath, true, this, 20, 20, speed));
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, Assets.turretBulletTexture,true, this, 20, 20, speed));
     }
 
     private float calculateAngleToTarget(float targetX, float targetY) {

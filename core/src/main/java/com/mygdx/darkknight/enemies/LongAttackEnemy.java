@@ -21,27 +21,7 @@ public class LongAttackEnemy extends Enemy {
     @Override
     public void attack(Hero hero) {
         float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
-        String animationPath;
-        switch(getDamage()){
-            case 1:
-                animationPath = "core/assets/-1.png";
-                break;
-            case 2:
-                animationPath = "core/assets/-2.png";
-                break;
-            case 3:
-                animationPath = "core/assets/-3.png";
-                break;
-            case 4:
-                animationPath = "core/assets/-4.png";
-                break;
-            case 5:
-                animationPath = "core/assets/-5.png";
-                break;
-            default:
-                animationPath = "core/assets/sparkle.png";
-        }
-        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture, animationPath, true, this, 30, 10,450f));
+        bullets.add(new Bullet(getCenterX(), getCenterY(), angle, bulletTexture,true, this, 30, 10,450f));
         resetAttackCooldown();
     }
 }

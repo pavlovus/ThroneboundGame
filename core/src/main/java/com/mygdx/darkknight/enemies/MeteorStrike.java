@@ -97,29 +97,6 @@ public class MeteorStrike {
             // Перевіряємо, чи герой знаходиться в зоні ураження
             if (hero.getBoundingRectangle().overlaps(hitArea)) {
                 hero.takeDamage(damage, armorIgnore);
-                String animationPath;
-                switch(getDamage()){
-                    case 1:
-                        animationPath = "core/assets/-1.png";
-                        break;
-                    case 2:
-                        animationPath = "core/assets/-2.png";
-                        break;
-                    case 3:
-                        animationPath = "core/assets/-3.png";
-                        break;
-                    case 4:
-                        animationPath = "core/assets/-4.png";
-                        break;
-                    case 5:
-                        animationPath = "core/assets/-5.png";
-                        break;
-                    default:
-                        animationPath = "core/assets/sparkle.png";
-                }
-                Bullet b = new Bullet(hero.getCenterX(), hero.getCenterY(), 1f, null, animationPath, true, null, 30, 10,450f);
-                bullets.add(b);
-                b.strike();
                 damageDealt = true; // Переконаємося, що шкода нанесена лише один раз
             }
         }

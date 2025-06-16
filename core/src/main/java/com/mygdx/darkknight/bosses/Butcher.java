@@ -110,7 +110,7 @@ public class Butcher extends Enemy {
 
     private void throwCleaver(Hero hero) {
         float angle = (float) Math.toDegrees(Math.atan2(hero.getCenterY() - getCenterY(), hero.getCenterX() - getCenterX()));
-        Bullet cleaver = new Bullet(getCenterX(), getCenterY(), angle, Assets.cleaverTexture, "core/assets/sparkle.png", true, this, 20, 40, 200f);
+        Bullet cleaver = new Bullet(getCenterX(), getCenterY(), angle, Assets.cleaverTexture, true, this, 20, 40, 200f);
         pendingBullets.add(cleaver);
     }
 

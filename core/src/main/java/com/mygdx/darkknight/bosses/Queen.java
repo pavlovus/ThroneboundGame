@@ -142,8 +142,7 @@ public class Queen extends Enemy {
     }
 
     private void shootBullet(float x, float y, float angle, float speed) {
-        String animationPath = "core/assets/sparkle.png";
-        bullets.add(new Bullet(x, y, angle, Assets.queenBulletTexture, animationPath, true, this, BULLET_WIDTH, BULLET_HEIGHT, speed));
+        bullets.add(new Bullet(x, y, angle, Assets.queenBulletTexture,true, this, BULLET_WIDTH, BULLET_HEIGHT, speed));
     }
 
     private void spawnMinions() {

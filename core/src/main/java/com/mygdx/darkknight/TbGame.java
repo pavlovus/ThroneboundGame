@@ -769,6 +769,8 @@ public class TbGame implements Screen {
                 continue;
             }
 
+            boolean bulletRemoved = false;
+
             if (!b.isOpponent()) {
                 for (Enemy e : enemies) {
                     if (b.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
@@ -778,9 +780,9 @@ public class TbGame implements Screen {
                                 magicBullet.explode(enemies);
                             }
                         } else {
-                            if(!b.isStrike()){
-                                b.strike(e);
-                            }
+                            e.takeDamage(weapon.getDamage());
+                            bullets.remove(i);
+                            bulletRemoved = true;
                         }
                         break;
                     }
@@ -788,9 +790,8 @@ public class TbGame implements Screen {
             }
 
             if (b.isOpponent() && b.getBoundingRectangle().overlaps(hero.getBoundingRectangle())) {
-                if(!b.isStrike()){
-                    b.strike(b.getEnemy(), hero);
-                }
+                hero.takeDamage(b.getEnemy().getDamage(), b.getEnemy().getArmorIgnore());
+                bullets.remove(i);
                 break;
             }
         }

@@ -19,12 +19,14 @@ public class MagicBullet extends Bullet {
     private boolean exploded = false;
     private Vector2 explosionPosition;
     private float explosionSize;
+    private Texture animationTexture;
 
     public MagicBullet(float startX, float startY, float angleDegrees, Texture texture, String animationTexturePath, boolean isOpponent, int width, int height, float speed, float timeToLive, float explosionSize, Weapon weapon) {
-        super(startX, startY, angleDegrees, texture,animationTexturePath, isOpponent, width, height, speed, weapon);
+        super(startX, startY, angleDegrees, texture, isOpponent, width, height, speed, weapon);
         this.timeToLive = timeToLive;
         this.aliveTime = 0.0f;
         this.explosionSize = explosionSize;
+        this.animationTexture = new Texture(animationTexturePath);
         initExplosionAnimation();
     }
 
