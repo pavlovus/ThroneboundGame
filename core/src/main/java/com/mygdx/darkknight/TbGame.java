@@ -849,6 +849,7 @@ public class TbGame implements Screen {
         shieldTexture.dispose();
         pauseMenu.dispose();
         restartMenu.dispose();
+        Gdx.input.setInputProcessor(null);
     }
 
     public void setPaused(boolean paused) {
