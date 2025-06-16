@@ -128,25 +128,14 @@ public class TbGame implements Screen {
         bulletTexture = new Texture("core/assets/arrow.png");
 
 
-        weapon = new BowWeapon("core/assets/bowEpic.png", 1, 32, 64, "core/assets/arrowEpic.png");
+        Weapon bow = new BowWeapon("core/assets/bowEpic.png", 1, 32, 64, "core/assets/arrowEpic.png");
         Weapon sword = new SwordWeapon("core/assets/swordEpic.png", 3, 32, 32);
         Weapon magic = new MagicWeapon("core/assets/magicWand.png", 3, 32, 32, "core/assets/fireball.png");
         Weapon wizard = new WizardWeapon("core/assets/magicStaff.png", 3, 32, 32, "core/assets/spark.png");
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
-        hero = new Hero("core/assets/hero1.png",200, 120, 100, 10, weapon);
-        hero.addWeapon(sword, magic, wizard, axe, mace);
-//        hero.addEffect(testEffect);
-//        Slowness testEffect1 = new Slowness(10f, 500, new Texture(Gdx.files.internal("slowness.png")));
-//        hero.addEffect(testEffect1);
-//        Weakness testEffect = new Weakness(100f, 1, new Texture(Gdx.files.internal("weakness.png")));
-//        hero.addEffect(testEffect);
-//        hero.addEffect(testEffect);
-//        Poison testEffect = new Poison(20f, 1, 4f, new Texture(Gdx.files.internal("poison.png")));
-//        hero.addEffect(testEffect);
-//        hero.addEffect(testEffect);
-
-
+        hero = new Hero("core/assets/hero1.png",200, 120, 100, 10, sword);
+//
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new ThirdLevel(2241, 2592, 1248, 701, gameMap, bullets, enemiesToAdd));
@@ -163,12 +152,8 @@ public class TbGame implements Screen {
         Power power = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
         Regeneration regeneration = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
 
-        //        Chest chest1 = new Chest(114, 544, sword);
-//        Chest chest2 = new Chest(137, 462, magic);
-//        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
-        Chest chest1 = new Chest(11, 593, sword);
-        Chest chest2 = new Chest(137, 462, magic);
-        Chest chest3 = new Chest(170, 350, hero.getCurrentWeapon());
+        // Видалити
+        Chest chest1 = new Chest(11, 593, bow);
         Chest chest4 = new Chest(12, 593, swiftness);
         Chest chest5 = new Chest(13, 593, power);
         Chest chest6 = new Chest(14, 593, regeneration);
@@ -176,14 +161,52 @@ public class TbGame implements Screen {
         Chest chest8 = new Chest(16, 593, swiftness);
         Chest chest9 = new Chest(17, 593, swiftness);
         chests.add(chest1);
-        chests.add(chest2);
-        chests.add(chest3);
         chests.add(chest4);
         chests.add(chest5);
         chests.add(chest6);
         chests.add(chest7);
         chests.add(chest8);
         chests.add(chest9);
+        // Видалити
+
+        Chest chest11 = new Chest(151, 587, regeneration);
+        Chest chest21 = new Chest(4, 511, axe);
+        Chest chest31 = new Chest(6, 511, power);
+        Chest chest41 = new Chest(123, 248, power);
+        Chest chest51 = new Chest(166, 216, swiftness);
+        Chest chest61 = new Chest(162, 216, regeneration);
+        Chest chest71 = new Chest(52, 286, wizard);
+        Chest chest81 = new Chest(72, 407, power);
+        Chest chest91 = new Chest(95, 359, regeneration);
+        Chest chest111 = new Chest(100, 359, swiftness);
+        Chest chest121 = new Chest(17, 284, regeneration);
+        Chest chest131 = new Chest(20, 284, swiftness);
+        Chest chest141 = new Chest(164, 216, bow);
+        Chest chest151 = new Chest(78, 444, regeneration);
+        Chest chest161 = new Chest(157, 508, magic);
+        Chest chest171 = new Chest(159, 508, swiftness);
+        Chest chest181 = new Chest(161, 508, power);
+        Chest chest191 = new Chest(127, 386, mace);
+        Chest chest201 = new Chest(129, 386, regeneration);
+        chests.add(chest11);
+        chests.add(chest21);
+        chests.add(chest31);
+        chests.add(chest41);
+        chests.add(chest51);
+        chests.add(chest61);
+        chests.add(chest71);
+        chests.add(chest81);
+        chests.add(chest91);
+        chests.add(chest111);
+        chests.add(chest121);
+        chests.add(chest131);
+        chests.add(chest141);
+        chests.add(chest151);
+        chests.add(chest161);
+        chests.add(chest171);
+        chests.add(chest181);
+        chests.add(chest191);
+        chests.add(chest201);
         inventory = new Inventory(gameMap);
         MultiStoryManager multiManager = new MultiStoryManager("core/assets/story.json");
 

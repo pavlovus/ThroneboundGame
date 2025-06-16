@@ -88,8 +88,6 @@ public class RestartMenu {
                 clickSound.play();
                 hide();
                 dispose();
-                Gdx.input.setInputProcessor(null);
-
                 Game gameApp = (Game) Gdx.app.getApplicationListener();
                 Screen oldScreen = gameApp.getScreen();
                 TbGame newGame = new TbGame();
@@ -160,5 +158,7 @@ public class RestartMenu {
         shapeRenderer.dispose();
         clickSound.dispose();
         titleTexture.dispose();
+        Gdx.input.setInputProcessor(stage);
+
     }
 }
