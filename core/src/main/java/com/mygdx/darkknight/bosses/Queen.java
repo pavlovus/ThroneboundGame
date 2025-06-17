@@ -12,7 +12,7 @@ import com.mygdx.darkknight.enemies.*;
 import java.util.List;
 
 public class Queen extends Enemy {
-    private static final int MAX_HEALTH = 40; // Повернуто до 2000 для балансу
+    private static final int MAX_HEALTH = 160; // Повернуто до 2000 для балансу
     private static final float PHASE_2_THRESHOLD = 0.66f; // 66% HP
     private static final float PHASE_3_THRESHOLD = 0.33f; // 33% HP
     private static final float BULLET_COOLDOWN = 1f;
@@ -115,13 +115,13 @@ public class Queen extends Enemy {
             case PHASE_1:
                 // Віяловий залп: 5 куль, 20° між ними, центрований на героя
                 for (int i = -2; i <= 2; i++) {
-                    shootBullet(getCenterX(), getCenterY(), angleToHero + i * 20, 80f);
+                    shootBullet(getCenterX(), getCenterY(), angleToHero + i * 20, 100f);
                 }
                 break;
             case PHASE_2:
                 // Спіральний патерн: 6 куль, обертаються навколо кута до героя
                 for (int i = 0; i < 6; i++) {
-                    shootBullet(getCenterX(), getCenterY(), angleToHero + currentAngle + i * 60, 100f);
+                    shootBullet(getCenterX(), getCenterY(), angleToHero + currentAngle + i * 60, 120f);
                 }
                 break;
             case PHASE_3:
@@ -134,7 +134,7 @@ public class Queen extends Enemy {
                 }
                 if (MathUtils.randomBoolean(0.3f)) { // 30% шанс на кільце
                     for (int i = 0; i < 12; i++) {
-                        shootBullet(getCenterX(), getCenterY(), angleToHero + i * 30, 120f);
+                        shootBullet(getCenterX(), getCenterY(), angleToHero + i * 30, 100f);
                     }
                 }
                 break;
@@ -151,7 +151,7 @@ public class Queen extends Enemy {
             float spawnX = roomBounds.x + MathUtils.random(roomBounds.width - 32);
             float spawnY = roomBounds.y + MathUtils.random(roomBounds.height - 32);
             LongAttackEnemy minion = new LongAttackEnemy(
-                Assets.long_3Texture, spawnX, spawnY, 32, 32, 70f, 3, 1, 1f, Assets.queenBulletTexture, bullets, gameMap, new LongAttackAI(roomBounds)
+                Assets.long_3Texture, spawnX, spawnY, 32, 32, 70f, 3, 1, 1.5f, Assets.queenBulletTexture, bullets, gameMap, new LongAttackAI(roomBounds)
             );
             enemiesToAdd.add(minion);
         }
