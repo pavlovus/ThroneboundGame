@@ -9,26 +9,29 @@ public class Slowness extends Effect {
     private boolean applied = false;
 
     public Slowness(float duration, int speedDebuff, Texture texture) {
-        super(duration, texture);
+        super(duration, texture, "Slowness");
         this.speedDebuff = speedDebuff;
     }
 
     public Slowness(float duration) {
-        super(duration, new Texture(Gdx.files.internal("slowness.png")));
-        this.speedDebuff = 200; // Зменшення швидкості на 200 одиниць
+        super(duration, new Texture(Gdx.files.internal("core/assets/slowness.png")), "Slowness");
+        this.speedDebuff = 200;
     }
 
     @Override
     protected void apply(Hero hero, float deltaTime) {
         if (!applied) {
-            hero.setSpeed(hero.getSpeed() - speedDebuff);
+            hero.addSpeedBonus(-speedDebuff);  // додати негативний бонус
             applied = true;
         }
     }
 
     @Override
     protected void end(Hero hero) {
-        hero.setSpeed(hero.getSpeed() + speedDebuff);
+        if (applied) {
+            hero.addSpeedBonus(speedDebuff); // повернути бонус назад
+            applied = false;
+        }
         icon.dispose();
     }
 }

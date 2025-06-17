@@ -9,26 +9,30 @@ public class Weakness extends Effect {
     private boolean applied = false;
 
     public Weakness(float duration, int damageDebuff, Texture texture) {
-        super(duration, texture);
+        super(duration, texture, "Weakness");
         this.damageDebuff = damageDebuff;
     }
-    
+
     public Weakness(float duration) {
-        super(duration, new Texture(Gdx.files.internal("weakness.png")));
-        this.damageDebuff = 1; // Зменшення шкоди на 1 одиницю
+        super(duration, new Texture(Gdx.files.internal("core/assets/weakness.png")), "Weakness");
+        this.damageDebuff = 1;
     }
 
     @Override
     protected void apply(Hero hero, float deltaTime) {
         if (!applied) {
-            hero.getCurrentWeapon().setDamage(hero.getCurrentWeapon().getDamage() - damageDebuff);
+            hero.getCurrentWeapon().addDamageBonus(-damageDebuff);  // зменшити шкоду
             applied = true;
         }
     }
 
     @Override
     protected void end(Hero hero) {
-        hero.getCurrentWeapon().setDamage(hero.getCurrentWeapon().getDamage() + damageDebuff);
+        if (applied) {
+            hero.getCurrentWeapon().addDamageBonus(damageDebuff);  // відновити шкоду
+            applied = false;
+        }
         icon.dispose();
     }
 }
+

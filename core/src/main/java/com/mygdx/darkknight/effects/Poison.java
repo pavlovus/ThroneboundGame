@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.Hero;
-import com.mygdx.darkknight.enemies.Ghost;
-import com.mygdx.darkknight.enemies.GhostAI;
 
 import java.util.List;
 
@@ -14,14 +12,12 @@ public class Poison extends Effect {
     private boolean applied = false;
     private float timeSinceLastDamage = 0f;
     private float timePerDamage;
-    private List<Bullet> bullets;
     private boolean armorIgnore = true;
 
-    public Poison(float duration, int healthDamagePerSecond, float timePerDamage, Texture texture, List<Bullet> bullets) {
+    public Poison(float duration, int healthDamagePerSecond, float timePerDamage, Texture texture) {
         super(duration, texture);
         this.healthDamagePerSecond = healthDamagePerSecond;
         this.timePerDamage = timePerDamage;
-        this.bullets = bullets;
     }
 
     public Poison(float duration, int healthDamagePerSecond, Texture texture) {

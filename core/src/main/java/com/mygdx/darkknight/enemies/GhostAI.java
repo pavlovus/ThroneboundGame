@@ -83,10 +83,10 @@ public class GhostAI implements EnemyAI {
 
         switch (effectType) {
             case 0:
-                effect = new Poison(EFFECT_DURATION, 1, 1f, new Texture(Gdx.files.internal("poison.png")), bullets);
+                effect = new Poison(EFFECT_DURATION, 1, 1f, new Texture(Gdx.files.internal("poison.png")));
                 break;
             case 1:
-                effect = new Slowness(EFFECT_DURATION, 200, new Texture(Gdx.files.internal("slowness.png")));
+                effect = new Slowness(EFFECT_DURATION, 100, new Texture(Gdx.files.internal("slowness.png")));
                 break;
             case 2:
                 effect = new Weakness(EFFECT_DURATION, 1, new Texture(Gdx.files.internal("weakness.png")));

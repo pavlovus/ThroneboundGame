@@ -18,7 +18,8 @@ public class Hero {
     private Texture texture;
     private float x, y;
     private final int width = 25, height = 32;
-    private int speed = 400;
+    private int baseSpeed = 400;
+    private int bonusSpeed = 0;
     private int maxHealth;
     private int maxArmor;
     private int health;
@@ -101,7 +102,9 @@ public class Hero {
     }
 
     public void heal(int heal) {
-        health += heal;
+        if(health <= 100 - heal){
+            health += heal;
+        }
     }
 
     public void addSpell(Effect effect) {
@@ -180,6 +183,10 @@ public class Hero {
         this.y = y;
     }
 
+    public void addSpeedBonus(int bonus) {
+        bonusSpeed += bonus;
+    }
+
     public float getX() { return x; }
 
     public float getY() { return y; }
@@ -188,7 +195,9 @@ public class Hero {
 
     public int getHeight() { return height; }
 
-    public int getSpeed() { return speed; }
+    public int getSpeed() {
+        return Math.max(100, baseSpeed + bonusSpeed);
+    }
 
     public Rectangle getBoundingRectangle() { return new Rectangle(x, y, width, height); }
 
@@ -199,10 +208,6 @@ public class Hero {
     public int getHealth() { return health; }
 
     public int getArmor() { return armor; }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
 
     public Vector2 getCenter() {
         return new Vector2(getCenterX(), getCenterY());
@@ -220,5 +225,13 @@ public class Hero {
 
     public void setArmor(int armor) {
         this.armor = armor;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMaxArmor(int maxArmor) {
+        this.maxArmor = maxArmor;
     }
 }

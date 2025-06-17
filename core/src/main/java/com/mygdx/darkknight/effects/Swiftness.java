@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.darkknight.Hero;
 
-public class Swiftness extends Effect{
+public class Swiftness extends Effect {
     private int speedBoost;
     private boolean applied = false;
 
@@ -17,14 +17,17 @@ public class Swiftness extends Effect{
     @Override
     protected void apply(Hero hero, float deltaTime) {
         if (!applied) {
-            hero.setSpeed(hero.getSpeed() + speedBoost);
+            hero.addSpeedBonus(speedBoost);
             applied = true;
         }
     }
 
     @Override
     protected void end(Hero hero) {
-        hero.setSpeed(hero.getSpeed() - speedBoost);
+        if (applied) {
+            hero.addSpeedBonus(-speedBoost);
+            applied = false;
+        }
         icon.dispose();
     }
 }

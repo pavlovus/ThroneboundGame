@@ -150,18 +150,14 @@ public class TbGame implements Screen {
         fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new ThirdBossFightLevel(3234, 16093, 1438, 674, gameMap, bullets, enemiesToAdd));
 
-        Swiftness swiftness = new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png")));
-        Power power = new Power(100f, 2, new Texture(Gdx.files.internal("power.png")));
-        Regeneration regeneration = new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png")));
-
         // Видалити
         Chest chest1 = new Chest(11, 593, bow);
-        Chest chest4 = new Chest(12, 593, swiftness);
-        Chest chest5 = new Chest(13, 593, power);
-        Chest chest6 = new Chest(14, 593, regeneration);
-        Chest chest7 = new Chest(15, 593, swiftness);
-        Chest chest8 = new Chest(16, 593, swiftness);
-        Chest chest9 = new Chest(17, 593, swiftness);
+        Chest chest4 = new Chest(12, 593, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
+        Chest chest5 = new Chest(13, 593, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
+        Chest chest6 = new Chest(14, 593, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest7 = new Chest(15, 593, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
+        Chest chest8 = new Chest(16, 593, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
+        Chest chest9 = new Chest(17, 593, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
         chests.add(chest1);
         chests.add(chest4);
         chests.add(chest5);
@@ -171,25 +167,25 @@ public class TbGame implements Screen {
         chests.add(chest9);
         // Видалити
 
-        Chest chest11 = new Chest(151, 587, regeneration);
+        Chest chest11 = new Chest(151, 587, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest21 = new Chest(4, 511, axe);
-        Chest chest31 = new Chest(6, 511, power);
-        Chest chest41 = new Chest(123, 248, power);
-        Chest chest51 = new Chest(166, 216, swiftness);
-        Chest chest61 = new Chest(162, 216, regeneration);
+        Chest chest31 = new Chest(6, 511, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
+        Chest chest41 = new Chest(123, 248, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
+        Chest chest51 = new Chest(166, 216, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
+        Chest chest61 = new Chest(162, 216, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest71 = new Chest(52, 286, wizard);
-        Chest chest81 = new Chest(72, 407, power);
-        Chest chest91 = new Chest(95, 359, regeneration);
-        Chest chest111 = new Chest(100, 359, swiftness);
-        Chest chest121 = new Chest(17, 284, regeneration);
-        Chest chest131 = new Chest(20, 284, swiftness);
+        Chest chest81 = new Chest(72, 407, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
+        Chest chest91 = new Chest(95, 359, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest111 = new Chest(100, 359, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
+        Chest chest121 = new Chest(17, 284, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest131 = new Chest(20, 284, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
         Chest chest141 = new Chest(164, 216, bow);
-        Chest chest151 = new Chest(78, 444, regeneration);
+        Chest chest151 = new Chest(78, 444, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest161 = new Chest(157, 508, magic);
-        Chest chest171 = new Chest(159, 508, swiftness);
-        Chest chest181 = new Chest(161, 508, power);
+        Chest chest171 = new Chest(159, 508, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
+        Chest chest181 = new Chest(161, 508, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
         Chest chest191 = new Chest(127, 386, mace);
-        Chest chest201 = new Chest(129, 386, regeneration);
+        Chest chest201 = new Chest(129, 386, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
         chests.add(chest11);
         chests.add(chest21);
         chests.add(chest31);
@@ -376,7 +372,8 @@ public class TbGame implements Screen {
             if (fader != null) fader.startFadeOut(5f);
             hero.setLocation(2378, 4921);
             if (fader != null) fader.startFadeIn(5f);
-            hero.setArmor(20);
+            hero.setArmor(30);
+            hero.setMaxArmor(30);
         }
 
         if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
@@ -385,7 +382,9 @@ public class TbGame implements Screen {
             if (fader != null) fader.startFadeOut(5f);
             hero.setLocation(566, 10015);
             if (fader != null) fader.startFadeIn(5f);
-            hero.setArmor(20);
+            hero.setArmor(40);
+            hero.setMaxArmor(40);
+            hero.setHealth(100);
         }
         fader.update(delta);
         fader.render(shapeRenderer);

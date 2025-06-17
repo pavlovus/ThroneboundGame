@@ -14,6 +14,7 @@ public abstract class Weapon {
     private float angle = 0;
     private final int width, height;
     private String name;
+    private int bonusDamage = 0;
 
     public Weapon(String texturePath, int damage, int width, int height) {
         texture = new Texture(texturePath);
@@ -32,6 +33,10 @@ public abstract class Weapon {
             float dy = mouseY - heroY;
             angle = (float) Math.toDegrees(Math.atan2(dy, dx));
         }
+    }
+
+    public void addDamageBonus(int bonus) {
+        bonusDamage += bonus;
     }
 
     public float getAngle() {
@@ -54,7 +59,9 @@ public abstract class Weapon {
         return height;
     }
 
-    public int getDamage() {return damage;}
+    public int getDamage() {
+        return Math.max(1, damage + bonusDamage);
+    }
 
     public void setDamage(int damage) {this.damage = damage;}
 

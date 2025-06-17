@@ -8,8 +8,8 @@ public class Power extends Effect {
     private int damageBoost;
     private boolean applied = false;
 
-    public Power(float duration, int damageBoost, Texture texture) {
-        super(duration, texture, "Power");
+    public Power(float duration, int damageBoost, Texture icon) {
+        super(duration, icon, "Power");
         super.texture = new Texture(Gdx.files.internal("core/assets/power.png"));
         this.damageBoost = damageBoost;
     }
@@ -17,14 +17,15 @@ public class Power extends Effect {
     @Override
     protected void apply(Hero hero, float deltaTime) {
         if (!applied) {
-            hero.getCurrentWeapon().setDamage(hero.getCurrentWeapon().getDamage() + damageBoost);
+            hero.getCurrentWeapon().addDamageBonus(damageBoost);
             applied = true;
         }
     }
 
     @Override
     protected void end(Hero hero) {
-        hero.getCurrentWeapon().setDamage(hero.getCurrentWeapon().getDamage() - damageBoost);
-        icon.dispose();
+        hero.getCurrentWeapon().addDamageBonus(-damageBoost);
+        applied = false;
+        icon.dispose(); // Якщо текстура повторно не використовується
     }
 }
