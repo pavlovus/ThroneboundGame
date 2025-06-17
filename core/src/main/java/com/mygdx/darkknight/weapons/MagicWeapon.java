@@ -1,5 +1,7 @@
 package com.mygdx.darkknight.weapons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.darkknight.Bullet;
@@ -13,10 +15,12 @@ public class MagicWeapon extends Weapon {
     private Texture bulletTexture;
     private float cooldownTime = 0;
     private final float cooldownDuration = 0.7f;
+    private Music sound;
 
     public MagicWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
+        sound = Gdx.audio.newMusic(Gdx.files.internal("fireball.mp3"));
         this.setName("Staff of Awakening");
     }
 
@@ -47,6 +51,8 @@ public class MagicWeapon extends Weapon {
     }
     public void attack(Hero hero, List<Bullet> bullets, List<Enemy> enemies) {
         if (cooldownTime <= 0) {
+            sound.stop();
+            sound.play();
             float weaponAngle = getAngle();
             float gunX = hero.getCenterX() + getWidth()/2;
             float gunY = hero.getCenterY() + getHeight() /2;

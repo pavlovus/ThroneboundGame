@@ -1,5 +1,7 @@
 package com.mygdx.darkknight.weapons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +26,7 @@ public class MaceWeapon extends Weapon {
     private float startAngle, targetAngle;
     private List<Enemy> enemies;
     private Hero hero;
+    private Music sound;
 
     private enum AttackPhase { FORWARD, RETURN }
     private AttackPhase attackPhase = null;
@@ -44,6 +47,7 @@ public class MaceWeapon extends Weapon {
         this.animationTexture = new Texture(animationPath);
         this.hitSize = hitSize;
         this.position = new Vector2();
+        sound = Gdx.audio.newMusic(Gdx.files.internal("mace.mp3"));
         initHitAnimation();
         this.setName("???");
     }
@@ -137,6 +141,8 @@ public class MaceWeapon extends Weapon {
 
     public void startAttack(Hero hero, List<Enemy> enemies) {
         if (!attacking) {
+            sound.stop();
+            sound.play();
             attacking = true;
             attackPhase = AttackPhase.FORWARD;
             attackTime = 0;

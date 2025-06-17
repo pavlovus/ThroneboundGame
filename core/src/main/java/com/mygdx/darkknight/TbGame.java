@@ -3,6 +3,7 @@ package com.mygdx.darkknight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -82,6 +83,7 @@ public class TbGame implements Screen {
     private String currentLevelState = "INACTIVE";
 
     private List<Rectangle> weaponIconBounds = new ArrayList<>();
+    private Music backgroundMusic;
 
     @Override
     public void show() {
@@ -133,7 +135,7 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",200, 120, 100, 20, weapon);
+        hero = new Hero("core/assets/hero1.png",157*32, (600-318)*32, 100, 10, bow);
 
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
@@ -241,6 +243,10 @@ public class TbGame implements Screen {
         StoryManager finalWords = multiManager.getManager("pale_widow_monologue");
         PlotCharacter finalCharacter = new PlotCharacter(125, 146, finalWords, "core/assets/hero1.png");
         characters.add(finalCharacter);
+
+        // Завантаження музики
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("gameSound.mp3"));
+        backgroundMusic.setLooping(true); // повторювати без кінця
     }
 
     @Override

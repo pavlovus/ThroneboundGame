@@ -1,5 +1,7 @@
 package com.mygdx.darkknight.weapons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -23,9 +25,11 @@ public class SwordWeapon extends Weapon {
     private AttackPhase attackPhase = null;
     private Polygon bounds;
     private final List<Enemy> damagedEnemies = new ArrayList<>();
+    private Music sound;
 
     public SwordWeapon(String texturePath, int damage, int width, int height) {
         super(texturePath, damage, width, height);
+        sound = Gdx.audio.newMusic(Gdx.files.internal("sword.mp3"));
         this.setName("Sword of Insight");
     }
 
@@ -98,6 +102,8 @@ public class SwordWeapon extends Weapon {
     }
 
     public void startAttack(Hero hero, List<Enemy> enemies) {
+        sound.stop();
+        sound.play();
         if (!attacking) {
             attacking = true;
             attackPhase = AttackPhase.FORWARD;

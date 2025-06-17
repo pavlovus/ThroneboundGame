@@ -1,5 +1,7 @@
 package com.mygdx.darkknight.weapons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -13,20 +15,22 @@ import java.util.List;
 public class AxeWeapon extends Weapon {
     private boolean attacking = false;
     private float attackTime = 0;
-    private final float attackDuration = 0.5f; // у секундах
+    private final float attackDuration = 0.25f; // у секундах
     private float startAngle;
     private float targetAngle;
     private List<Enemy> enemies;
     private Hero hero;
     private Polygon bounds;
     private float cooldownTime = 0;
-    private final float cooldownDuration = 2f;
+    private final float cooldownDuration = 1f;
     private final List<Enemy> damagedEnemies = new ArrayList<>();
+    private Music sound;
 
     private final float fixedStartAngle = 45f;
 
     public AxeWeapon(String texturePath, int damage, int width, int height) {
         super(texturePath, damage, width, height);
+        sound = Gdx.audio.newMusic(Gdx.files.internal("axe.mp3"));
         setAngle(fixedStartAngle);
         this.setName("Axe of Divine Wrath");
     }
@@ -92,6 +96,8 @@ public class AxeWeapon extends Weapon {
     }
 
     public void startAttack(Hero hero, List<Enemy> enemies) {
+        sound.stop();
+        sound.play();
         this.attacking = true;
         this.attackTime = 0;
         this.enemies = enemies;
