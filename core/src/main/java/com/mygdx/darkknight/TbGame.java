@@ -135,7 +135,7 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",157*32, (600-318)*32, 100, 10, bow);
+        hero = new Hero("core/assets/hero1.png",11*32, (600-594)*32, 100, 10, sword);
 
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
@@ -151,23 +151,6 @@ public class TbGame implements Screen {
         fightLevels.add(new NinthLevel(3518, 11905, 841, 669, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new ThirdBossFightLevel(3234, 16093, 1438, 674, gameMap, bullets, enemiesToAdd));
-
-        // Видалити
-        Chest chest1 = new Chest(11, 593, bow);
-        Chest chest4 = new Chest(12, 593, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
-        Chest chest5 = new Chest(13, 593, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
-        Chest chest6 = new Chest(14, 593, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
-        Chest chest7 = new Chest(15, 593, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
-        Chest chest8 = new Chest(16, 593, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
-        Chest chest9 = new Chest(17, 593, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
-        chests.add(chest1);
-        chests.add(chest4);
-        chests.add(chest5);
-        chests.add(chest6);
-        chests.add(chest7);
-        chests.add(chest8);
-        chests.add(chest9);
-        // Видалити
 
         Chest chest11 = new Chest(151, 587, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest21 = new Chest(4, 511, axe);
