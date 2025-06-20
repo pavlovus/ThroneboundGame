@@ -195,10 +195,11 @@ public class MaceWeapon extends Weapon {
 
         Rectangle explosionArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
 
-        // Перевіряємо зіткнення ворогів із цією зоною
+        // Перевіряємо зіткнення ворогів із цією зоною, але не завдаємо урон тим, хто вже його отримав
         for (Enemy enemy : enemies) {
-            if (explosionArea.overlaps(enemy.getBoundingRectangle())) {
+            if (explosionArea.overlaps(enemy.getBoundingRectangle()) && !damagedEnemies.contains(enemy)) {
                 enemy.takeDamage(getDamage());
+                damagedEnemies.add(enemy); // Додаємо до списку уражених
             }
         }
 

@@ -31,10 +31,11 @@ public class SecondBossFightLevel extends FightLevel {
     public void update(float deltaTime, Hero hero, List<Enemy> globalEnemies) {
         super.update(deltaTime, hero, globalEnemies);
 
-        if (bossSpawned && jesterBoss != null && jesterBoss.isDead() && currentWaveEnemies.isEmpty()) {
+        // Check if boss is defeated but don't override the parent state machine
+        if (bossSpawned && jesterBoss != null && jesterBoss.isDead() && currentWaveEnemies.isEmpty() && !bossDefeated) {
             bossDefeated = true;
-            state = LevelState.COMPLETED;
-            gameMap.openDoors();
+            // Let the parent class handle the proper state transition to WAITING_FOR_DOOR_OPEN -> COMPLETED
+            // The parent FightLevel will automatically transition to WAITING_FOR_DOOR_OPEN when currentWaveEnemies is empty
         }
     }
 

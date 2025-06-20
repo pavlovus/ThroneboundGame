@@ -1,6 +1,8 @@
 package com.mygdx.darkknight.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
@@ -19,9 +21,9 @@ public class ShortAttackEnemy extends Enemy {
     private Vector2 attackDirection = new Vector2();
     private float attackTimer = 0f;
     private Vector2 originalPosition = new Vector2();
-
     private int damage = 1;
     private Hero hero;
+    protected boolean flip = false; // Нове поле для фліпу текстури
 
     public ShortAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, List<Bullet> bullets, GameMap gameMap, ShortAttackAI ai) {
         super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap, false);
@@ -39,9 +41,19 @@ public class ShortAttackEnemy extends Enemy {
     @Override
     public void update(Hero hero, float delta) {
         super.update(hero, delta);
+        this.hero = hero;
 
         if (isAttacking) {
             handleAttackMovement(delta);
+        } else {
+            // Встановлюємо фліп на основі напрямку руху, якщо не атакуємо
+            if (ai instanceof ShortAttackAI) {
+                ShortAttackAI shortAttackAI = (ShortAttackAI) ai;
+                float dx = shortAttackAI.getLastDx(); // Отримуємо dx із AI (припускаємо, що ShortAttackAI має метод getLastDx)
+                if (dx != 0) {
+                    setFlip(dx < 0); // Фліп, якщо рухаємося ліворуч (dx < 0)
+                }
+            }
         }
     }
 
@@ -50,8 +62,8 @@ public class ShortAttackEnemy extends Enemy {
         if (!canAttack()) return;
 
         attackDirection.set(
-                hero.getCenterX() - getCenterX(),
-                hero.getCenterY() - getCenterY()
+            hero.getCenterX() - getCenterX(),
+            hero.getCenterY() - getCenterY()
         ).nor();
 
         isAttacking = true;
@@ -61,6 +73,23 @@ public class ShortAttackEnemy extends Enemy {
         resetAttackCooldown();
 
         this.hero = hero;
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        // Використовуємо змінну flip для дзеркального відображення текстури
+        batch.draw(texture, x, y, getWidth()/2f, getHeight()/2f, (float) getWidth(), (float) getHeight(), 1, 1, 0f, 0, 0, texture.getWidth(), texture.getHeight(), flip, false);
+        // Малюємо індикатори шкоди
+        GlyphLayout layout = new GlyphLayout();
+        for (DamageIndicator indicator : damageIndicators) {
+            layout.setText(damageFont, indicator.text);
+            damageFont.setColor(1.0f, 1, 1, indicator.alpha);
+            float textX = indicator.isRight ? x + getWidth() : x - layout.width * 2;
+            textX += 13;
+            float textY = y + getHeight() + indicator.yOffset;
+            damageFont.draw(batch, indicator.text, textX, textY);
+        }
+        damageFont.setColor(1f, 1f, 1f, 1f);
     }
 
     private void handleAttackMovement(float delta) {
@@ -75,7 +104,7 @@ public class ShortAttackEnemy extends Enemy {
             if (attackTimer >= BACK_TIME) {
                 isMovingBack = false;
                 attackTimer = 0f;
-                originalPosition.set(getX(), getY()); // Точка старту атаки
+                originalPosition.set(getX(), getY());
             }
         } else {
             float progress = Math.min(attackTimer / ATTACK_TIME, 1f);
@@ -88,5 +117,14 @@ public class ShortAttackEnemy extends Enemy {
                 hero.takeDamage(damage, armorIgnore);
             }
         }
+    }
+
+    // Нові методи для керування фліпом
+    public void setFlip(boolean flip) {
+        this.flip = flip;
+    }
+
+    public boolean isFlip() {
+        return flip;
     }
 }

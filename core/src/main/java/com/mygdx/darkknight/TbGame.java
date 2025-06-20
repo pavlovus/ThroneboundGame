@@ -757,6 +757,8 @@ public class TbGame implements Screen {
                         if (b instanceof MagicBullet magicBullet) {
                             if (!magicBullet.isExploded()) {
                                 magicBullet.explode(enemies);
+                                // Видаляємо кулю після вибуху, щоб запобігти повторному урону
+                                bullets.remove(i);
                             }
                         } else {
                             e.takeDamage(weapon.getDamage());

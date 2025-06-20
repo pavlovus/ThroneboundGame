@@ -1,5 +1,9 @@
 package com.mygdx.darkknight.bosses;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -7,6 +11,7 @@ import com.mygdx.darkknight.Assets;
 import com.mygdx.darkknight.Bullet;
 import com.mygdx.darkknight.GameMap;
 import com.mygdx.darkknight.Hero;
+import com.mygdx.darkknight.bosses.ButcherAI;
 import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.enemies.ShortAttackAI;
 import com.mygdx.darkknight.enemies.ShortAttackEnemy;
@@ -47,6 +52,8 @@ public class Butcher extends Enemy {
 
     private List<Bullet> pendingBullets = new ArrayList<>();
 
+    protected boolean flip = false; // Новое поле для флипа текстуры
+
     public Butcher(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
         super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 280, 1, bullets, new ButcherAI(roomBounds), gameMap, true);
         this.roomBounds = roomBounds;
@@ -58,7 +65,7 @@ public class Butcher extends Enemy {
 
     @Override
     public void attack(Hero hero) {
-        // Не використовується
+        // Не используется
     }
 
     @Override
@@ -66,10 +73,15 @@ public class Butcher extends Enemy {
         super.update(hero, delta);
         if (isDead()) return;
 
+        // Устанавливаем флип на основе позиции героя, если не в ривке
+        if (!isPreparingCharge && !isCharging) {
+            setFlip(getCenterX() < hero.getCenterX()); // Флип, если герой справа
+        }
+
         cleaverThrowTimer -= delta;
         chargeAttackTimer -= delta;
         minionSpawnTimer -= delta;
-        postChargeDelayTimer -= delta; // Зменшуємо таймер затримки після ривка
+        postChargeDelayTimer -= delta;
 
         if (isPreparingCharge) {
             chargePrepTimer -= delta;
@@ -78,7 +90,7 @@ public class Butcher extends Enemy {
                 isCharging = true;
                 attackedByCharge = false;
                 setSpeed(CHARGE_SPEED);
-                chargeTarget = hero.getCenter().cpy(); // Фіксуємо позицію героя на початку ривка
+                chargeTarget = hero.getCenter().cpy();
                 chargeDirection = chargeTarget.cpy().sub(getCenter()).nor();
             }
         } else if (isCharging) {
@@ -86,14 +98,13 @@ public class Butcher extends Enemy {
                 hero.takeDamage(CHARGE_DAMAGE, armorIgnore);
                 attackedByCharge = true;
             }
-            // Зупиняємо ривок при зіткненні зі стіною
             if (getX() <= roomBounds.x + 20 || getX() + getWidth() >= roomBounds.x + roomBounds.width - 20 ||
                 getY() <= roomBounds.y + 20 || getY() + getHeight() >= roomBounds.y + roomBounds.height - 20) {
                 isCharging = false;
                 setSpeed(NORMAL_SPEED);
                 chargeAttackTimer = CHARGE_ATTACK_COOLDOWN;
                 attackedByCharge = false;
-                postChargeDelayTimer = POST_CHARGE_DELAY; // Починаємо затримку після ривка
+                postChargeDelayTimer = POST_CHARGE_DELAY;
             }
         } else {
             if (chargeAttackTimer <= 0) {
@@ -103,7 +114,6 @@ public class Butcher extends Enemy {
             }
         }
 
-        // Кидання тесаків тільки якщо бос не в ривку, не готується до нього і затримка після ривка закінчилася
         if (cleaverThrowTimer <= 0 && !isPreparingCharge && !isCharging && postChargeDelayTimer <= 0) {
             throwCleaver(hero);
             cleaverThrowTimer = CLEAVER_THROW_COOLDOWN;
@@ -115,6 +125,23 @@ public class Butcher extends Enemy {
 
         bullets.addAll(pendingBullets);
         pendingBullets.clear();
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        // Используем переменную flip для зеркального отображения текстуры
+        batch.draw(texture, x, y, getWidth()/2f, getHeight()/2f, (float) getWidth(), (float) getHeight(), 1, 1, 0f, 0, 0, texture.getWidth(), texture.getHeight(), flip, false);
+        // Рисуем индикаторы урона
+        GlyphLayout layout = new GlyphLayout();
+        for (DamageIndicator indicator : damageIndicators) {
+            layout.setText(damageFont, indicator.text);
+            damageFont.setColor(1.0f, 1, 1, indicator.alpha);
+            float textX = indicator.isRight ? x + getWidth() : x - layout.width * 2;
+            textX += 13;
+            float textY = y + getHeight() + indicator.yOffset;
+            damageFont.draw(batch, indicator.text, textX, textY);
+        }
+        damageFont.setColor(1f, 1f, 1f, 1f);
     }
 
     private void throwCleaver(Hero hero) {
@@ -148,5 +175,14 @@ public class Butcher extends Enemy {
 
     public Vector2 getChargeDirection() {
         return chargeDirection;
+    }
+
+    // Новые методы для управления флипом
+    public void setFlip(boolean flip) {
+        this.flip = flip;
+    }
+
+    public boolean isFlip() {
+        return flip;
     }
 }

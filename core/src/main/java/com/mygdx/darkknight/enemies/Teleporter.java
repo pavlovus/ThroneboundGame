@@ -208,7 +208,7 @@ public class Teleporter extends Enemy {
 
         // Створюємо ефект атаки на позиції героя з більшим розміром
         activeExplosions.add(new TeleportAttackEffect(
-            hero.getX(), hero.getY(),              // Позиція ефекту (лівий нижній кут героя)
+            hero,              // Позиція ефекту (лівий нижній кут героя)
             32, 32                                 // Розмір ефекту (збільшений для кращої видимості)
         ));
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.enemies.Enemy;
 import com.mygdx.darkknight.weapons.Weapon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MagicBullet extends Bullet {
@@ -20,6 +21,8 @@ public class MagicBullet extends Bullet {
     private Vector2 explosionPosition;
     private float explosionSize;
     private Texture animationTexture;
+    // Список ворогів, яким вже було завдано урон цією кулею
+    private List<Enemy> damagedEnemies = new ArrayList<>();
 
     public MagicBullet(float startX, float startY, float angleDegrees, Texture texture, String animationTexturePath, boolean isOpponent, int width, int height, float speed, float timeToLive, float explosionSize, Weapon weapon) {
         super(startX, startY, angleDegrees, texture, isOpponent, width, height, speed, weapon);
@@ -88,9 +91,11 @@ public class MagicBullet extends Bullet {
             explosionSize
         );
 
+        // Завдаємо урон лише тим ворогам, яким ще не завдавали урон цією кулею
         for (Enemy enemy : enemies) {
-            if (explosionArea.overlaps(enemy.getBoundingRectangle())) {
+            if (explosionArea.overlaps(enemy.getBoundingRectangle()) && !damagedEnemies.contains(enemy)) {
                 enemy.takeDamage(weapon.getDamage());
+                damagedEnemies.add(enemy); // Додаємо ворога до списку уражених
             }
         }
     }

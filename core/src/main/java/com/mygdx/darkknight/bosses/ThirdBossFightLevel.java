@@ -64,9 +64,10 @@ public class ThirdBossFightLevel extends FightLevel {
             }
         }
 
+        // Check if boss is defeated but don't override the parent state machine
         if (bossSpawned && queenBoss != null && queenBoss.isDead() && currentWaveEnemies.isEmpty()) {
-            state = LevelState.COMPLETED;
-            gameMap.openDoors();
+            // Let the parent class handle the proper state transition to WAITING_FOR_DOOR_OPEN -> COMPLETED
+            // The parent FightLevel will automatically transition when currentWaveEnemies is empty
         }
     }
 

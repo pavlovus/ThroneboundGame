@@ -17,29 +17,30 @@ import java.util.List;
 
 public abstract class Enemy {
     protected Texture texture;
-    float x;
-    float y;
+    protected float x;
+    protected float y;
     private int width, height;
     private float speed;
-    private int health;
+    int health;
     private int damage;
     private boolean dead;
     protected boolean armorIgnore;
     protected List<Bullet> bullets;
     protected EnemyAI ai;
     protected GameMap gameMap;
-    private float attackCooldown = 0;
+    protected float attackCooldown = 0;
     private float attackTimer = 0;
-    private BitmapFont damageFont;
-    private List<DamageIndicator> damageIndicators = new ArrayList<>();
-    private boolean nextIsRight = true;
+    protected BitmapFont damageFont;
+    protected List<DamageIndicator> damageIndicators = new ArrayList<>();
+    protected boolean nextIsRight = true;
+    private int lastDamageFrame = -1; // Для відстеження дубльованих уронів в одному кадрі
 
-    private static class DamageIndicator {
-        String text;
+    protected static class DamageIndicator {
+        public String text;
         float timer;
-        float yOffset;
-        float alpha;
-        boolean isRight;
+        public float yOffset;
+        public float alpha;
+        public boolean isRight;
         int damage;
 
         DamageIndicator(String text, boolean isRight, int dmg) {
@@ -86,9 +87,12 @@ public abstract class Enemy {
     }
 
     public void draw(SpriteBatch batch) {
-        GlyphLayout layout = new GlyphLayout();
-
         batch.draw(texture, x, y, width, height);
+        drawDamageIndicators(batch);
+    }
+
+    protected void drawDamageIndicators(SpriteBatch batch) {
+        GlyphLayout layout = new GlyphLayout();
         for (DamageIndicator indicator : damageIndicators) {
             layout.setText(damageFont, indicator.text);
             damageFont.setColor(1.0f, 1, 1, indicator.alpha);
@@ -217,7 +221,7 @@ public abstract class Enemy {
         damageFont.dispose();
     }
 
-    public void setX(float x){
+    public void setX(float x) {
         this.x = x;
     }
 
@@ -233,5 +237,7 @@ public abstract class Enemy {
         this.dead = dead;
     }
 
-    public boolean getArmorIgnore(){ return armorIgnore;}
+    public boolean getArmorIgnore() {
+        return armorIgnore;
+    }
 }

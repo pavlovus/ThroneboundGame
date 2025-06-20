@@ -71,7 +71,7 @@ public class EighthLevel extends FightLevel {
             case GHOST:
                 return new Ghost(Assets.ghost_3Texture, pos.x, pos.y, gameMap, this.roomArea, bullets);
             case MATRIARCH:
-                return new Matriarch(Assets.mom_3Texture, Assets.short_2Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd, bullets);
+                return new Matriarch(Assets.mom_3Texture, Assets.short_3Texture, pos.x, pos.y, gameMap, this.roomArea, currentWaveEnemies, enemiesToAdd, bullets);
             case TURRET_RANDOM:
                 return new Turret(pos.x, pos.y, gameMap, this.roomArea, bullets, Turret.TurretMode.RANDOM);
             case TURRET_BURST:
