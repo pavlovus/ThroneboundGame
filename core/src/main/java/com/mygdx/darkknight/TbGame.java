@@ -135,7 +135,8 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",11*32, (600-594)*32, 100, 10, sword);
+        hero = new Hero("core/assets/hero1.png",150*32, (600-88)*32, 100, 10, sword);
+        hero.addWeapon(axe, magic, wizard,  bow);
 
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
@@ -230,6 +231,7 @@ public class TbGame implements Screen {
         // Завантаження музики
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("gameSound.mp3"));
         backgroundMusic.setLooping(true); // повторювати без кінця
+        backgroundMusic.play();
     }
 
     @Override
@@ -394,7 +396,7 @@ public class TbGame implements Screen {
         uiBatch.end();
 
         // Координати героя
-        drawCoordinates();
+//        drawCoordinates();
         renderHeroEffects();
 
         // Іконки зброї
@@ -836,6 +838,7 @@ public class TbGame implements Screen {
         pauseMenu.dispose();
         restartMenu.dispose();
         Gdx.input.setInputProcessor(null);
+        backgroundMusic.dispose();
     }
 
     public void setPaused(boolean paused) {
