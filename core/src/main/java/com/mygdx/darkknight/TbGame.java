@@ -84,6 +84,7 @@ public class TbGame implements Screen {
 
     private List<Rectangle> weaponIconBounds = new ArrayList<>();
     private Music backgroundMusic;
+    private Music chooseSound;
 
     @Override
     public void show() {
@@ -230,6 +231,7 @@ public class TbGame implements Screen {
 
         // Завантаження музики
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("gameSound.mp3"));
+        chooseSound = Gdx.audio.newMusic(Gdx.files.internal("chooseWeapon.mp3"));
         backgroundMusic.setLooping(true); // повторювати без кінця
         backgroundMusic.play();
     }
@@ -250,6 +252,7 @@ public class TbGame implements Screen {
 
         if (hero.isDead() && !gameOver) {
             gameOver = true;
+            backgroundMusic.stop();
             restartMenu.show();
         }
 
@@ -724,6 +727,8 @@ public class TbGame implements Screen {
         List<Weapon> weapons = hero.getWeapons();
         for (int i = 0; i < weapons.size(); i++) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
+                chooseSound.stop();
+                chooseSound.play();
                 if (selectedWeaponIndex != i) {
                     selectedWeaponIndex = i;
                     hero.setCurrentWeapon(weapons.get(i));

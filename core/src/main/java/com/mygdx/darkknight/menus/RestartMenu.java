@@ -3,6 +3,7 @@ package com.mygdx.darkknight.menus;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -28,6 +29,7 @@ public class RestartMenu {
     private Texture titleTexture;
     private boolean visible;
     private boolean disposed = false;
+    private Music music;
 
     public RestartMenu(TbGame game) {
         this.game = game;
@@ -43,6 +45,7 @@ public class RestartMenu {
         textButtonStyle.font = font;
         textButtonStyle.fontColor = Color.BLACK;
 
+        music = Gdx.audio.newMusic(Gdx.files.internal("zaika-davai.mp3"));
         Texture textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
         Texture textureOver = new Texture(Gdx.files.internal("startButtonOver.png"));
         Texture textureDown = new Texture(Gdx.files.internal("startButtonClicked.png"));
@@ -127,6 +130,7 @@ public class RestartMenu {
     }
 
     public void show() {
+        music.play();
         Gdx.input.setInputProcessor(stage);
         visible = true;
     }

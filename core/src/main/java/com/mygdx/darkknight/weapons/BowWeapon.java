@@ -16,7 +16,7 @@ public class BowWeapon extends Weapon {
 
     public BowWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
-        sound = Gdx.audio.newMusic(Gdx.files.internal("bow.mp3"));
+        sound = Gdx.audio.newMusic(Gdx.files.internal("bow_shoot.mp3"));
         bulletTexture = new Texture(bulletTexturePath);
         this.setName("Starbeam Bow");
     }

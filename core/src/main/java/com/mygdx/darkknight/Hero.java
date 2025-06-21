@@ -1,6 +1,7 @@
 package com.mygdx.darkknight;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -33,6 +34,7 @@ public class Hero {
     private BitmapFont damageFont;
     private List<DamageIndicator> damageIndicators = new ArrayList<>();
     private boolean nextIsRight = true;
+    private Music hitSound;
 
     private static class DamageIndicator {
         String text;
@@ -65,6 +67,7 @@ public class Hero {
         weapons.add(weapon);
         damageFont = new BitmapFont(Gdx.files.internal("assets/medievalLightFontSmaller.fnt"));
         damageFont.getData().setScale(1.0f);
+        hitSound = Gdx.audio.newMusic(Gdx.files.internal("hurt.mp3"));
     }
 
     public void moveWithCollision(float dx, float dy, GameMap map) {
@@ -80,6 +83,8 @@ public class Hero {
     }
 
     public void takeDamage(int dmg, boolean shieldIgnore) {
+        hitSound.stop();
+        hitSound.play();
         if(shieldIgnore){
             health -= dmg;
             if (health <= 0){

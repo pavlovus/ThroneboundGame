@@ -1,5 +1,7 @@
 package com.mygdx.darkknight;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -18,12 +20,14 @@ public class GameMap {
     private MapObjects obstacles;
     private MapObjects doors;
     private boolean doorsClosed = false;
+    private Music doorSound;
 
     public GameMap(String mapFilePath) {
         try {
             map = new TmxMapLoader().load(mapFilePath);
             renderer = new OrthogonalTiledMapRenderer(map);
             obstacles = map.getLayers().get("Obstacles").getObjects();
+            doorSound = Gdx.audio.newMusic(Gdx.files.internal("door.mp3"));
             if (map.getLayers().get("Doors") != null)
                 doors = map.getLayers().get("Doors").getObjects();
 
@@ -99,6 +103,7 @@ public class GameMap {
         doorsClosed = true;
 
         if (map.getLayers().get("DoorsModels") != null) {
+            doorSound.play();
             map.getLayers().get("DoorsModels").setVisible(true);
         }
     }
@@ -107,6 +112,7 @@ public class GameMap {
         doorsClosed = false;
 
         if (map.getLayers().get("DoorsModels") != null) {
+            doorSound.play();
             map.getLayers().get("DoorsModels").setVisible(false);
         }
     }
