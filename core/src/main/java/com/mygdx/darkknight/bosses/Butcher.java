@@ -55,7 +55,7 @@ public class Butcher extends Enemy {
     protected boolean flip = false; // Новое поле для флипа текстуры
 
     public Butcher(float x, float y, GameMap gameMap, Rectangle roomBounds, List<Bullet> bullets, List<Enemy> currentWaveEnemies, List<Enemy> enemiesToAdd) {
-        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 280, 1, bullets, new ButcherAI(roomBounds), gameMap, true);
+        super(Assets.butcherTexture, x, y, 110, 110, NORMAL_SPEED, 100, 1, bullets, new ButcherAI(roomBounds), gameMap, true);
         this.roomBounds = roomBounds;
         this.bullets = bullets;
         this.currentWaveEnemies = currentWaveEnemies;
