@@ -20,7 +20,7 @@ public class MagicWeapon extends Weapon {
     public MagicWeapon(String texturePath, int damage, int width, int height, String bulletTexturePath) {
         super(texturePath, damage, width, height);
         bulletTexture = new Texture(bulletTexturePath);
-        sound = Gdx.audio.newMusic(Gdx.files.internal("fireball.mp3"));
+        sound = Gdx.audio.newMusic(Gdx.files.internal("fireballWeapon.mp3"));
         this.setName("Staff of Awakening");
     }
 

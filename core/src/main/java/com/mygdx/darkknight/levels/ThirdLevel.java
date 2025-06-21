@@ -1,5 +1,7 @@
 package com.mygdx.darkknight.levels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.darkknight.Assets;
@@ -14,12 +16,13 @@ import java.util.List;
 public class ThirdLevel extends FightLevel {
 
     private int id = 0; // Для відстеження ворога всередині хвилі
+    private Music music;
 
     public ThirdLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
         this.totalWaves = 4; // TODO: змінити на 4
-
+        music = Gdx.audio.newMusic(Gdx.files.internal("pigDied.mp3"));
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
         this.gameMap = gameMap;

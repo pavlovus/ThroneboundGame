@@ -1,5 +1,7 @@
 package com.mygdx.darkknight.enemies; // Або com.mygdx.darkknight.effects, як я пропонував раніше
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -39,6 +41,7 @@ public class MeteorStrike {
     private float initialMeteorScale = 0.5f; // Початковий розмір метеорита
     private float finalMeteorScale = 0.25f;  // Кінцевий розмір метеорита (можна налаштувати)
     private List<Bullet> bullets;
+    private Music sound;
 
 
     public MeteorStrike(float x, float y, Hero hero, GameMap gameMap, Texture warningTexture, Texture explosionTexture, int damage, List<Bullet> bullets) {
@@ -60,6 +63,7 @@ public class MeteorStrike {
         this.finished = false;
         this.damageDealt = false;
         this.bullets = bullets;
+        sound = Gdx.audio.newMusic(Gdx.files.internal("fireball.mp3"));
 
         // Встановлюємо початкову позицію для падіння вище цільової
         // Можна налаштувати висоту падіння (наприклад, 100-200 пікселів вище)
@@ -93,6 +97,8 @@ public class MeteorStrike {
 
     // Метод для нанесення шкоди
     private void dealDamage() {
+        sound.stop();
+        sound.play();
         if (!damageDealt && hero != null) {
             // Перевіряємо, чи герой знаходиться в зоні ураження
             if (hero.getBoundingRectangle().overlaps(hitArea)) {

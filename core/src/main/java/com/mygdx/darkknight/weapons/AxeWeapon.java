@@ -25,6 +25,7 @@ public class AxeWeapon extends Weapon {
     private final float cooldownDuration = 1f;
     private final List<Enemy> damagedEnemies = new ArrayList<>();
     private Music sound;
+    private boolean soundPlayed = false;
 
     private final float fixedStartAngle = 45f;
 
@@ -66,6 +67,12 @@ public class AxeWeapon extends Weapon {
             cooldownTime -= deltaTime;
         }
 
+        if (!soundPlayed && attackTime > 0) {
+            soundPlayed = true;
+            sound.stop();
+            sound.play();
+        }
+
         if (!attacking || cooldownTime > 0) return;
 
         attackTime += deltaTime;
@@ -86,6 +93,7 @@ public class AxeWeapon extends Weapon {
             attacking = false;
             cooldownTime = cooldownDuration;
             setAngle(fixedStartAngle); // повернути до стартового кута після атаки
+            soundPlayed = false;
         }
     }
 
@@ -96,8 +104,6 @@ public class AxeWeapon extends Weapon {
     }
 
     public void startAttack(Hero hero, List<Enemy> enemies) {
-        sound.stop();
-        sound.play();
         this.attacking = true;
         this.attackTime = 0;
         this.enemies = enemies;

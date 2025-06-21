@@ -85,6 +85,8 @@ public class TbGame implements Screen {
     private List<Rectangle> weaponIconBounds = new ArrayList<>();
     private Music backgroundMusic;
     private Music chooseSound;
+    private Music spellSound;
+    private Music chestSound;
 
     @Override
     public void show() {
@@ -136,7 +138,11 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",150*32, (600-88)*32, 100, 10, sword);
+        hero = new Hero("core/assets/hero1.png",154*32, (600-480)*32, 100, 10, sword);
+        //150 : 88 Королева
+        //156 : 318 Jester
+        //154 : 480 Butcher
+        //11 : 595
         hero.addWeapon(axe, magic, wizard,  bow);
 
 
@@ -232,6 +238,8 @@ public class TbGame implements Screen {
         // Завантаження музики
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("gameSound.mp3"));
         chooseSound = Gdx.audio.newMusic(Gdx.files.internal("chooseWeapon.mp3"));
+        spellSound = Gdx.audio.newMusic(Gdx.files.internal("spell.mp3"));
+        chestSound = Gdx.audio.newMusic(Gdx.files.internal("chest1.mp3"));
         backgroundMusic.setLooping(true); // повторювати без кінця
         backgroundMusic.play();
     }
@@ -628,6 +636,8 @@ public class TbGame implements Screen {
 
     private void activateEffect(List<Effect> effects, Hero hero) {
         if (effects != null && !effects.isEmpty()) {
+            spellSound.stop();
+            spellSound.play();
             Effect toApply = effects.get(0);
             hero.addEffect(toApply);     // Додаємо у список активних
             hero.consumeEffect(toApply); // Видаляємо з запасу
@@ -650,6 +660,7 @@ public class TbGame implements Screen {
                 batch.end();
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    chestSound.play();
                     inventory.openChest(chest);
                     justOpenedChest = true;
                     break;

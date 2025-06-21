@@ -1,5 +1,6 @@
 package com.mygdx.darkknight.enemies;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,10 +25,17 @@ public class ShortAttackEnemy extends Enemy {
     private int damage = 1;
     private Hero hero;
     protected boolean flip = false; // Нове поле для фліпу текстури
+    private Music deathSound = null;
 
     public ShortAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, List<Bullet> bullets, GameMap gameMap, ShortAttackAI ai) {
         super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap, false);
         setAttackCooldown(attackCooldown);
+    }
+
+    public ShortAttackEnemy(Texture texture, float x, float y, int width, int height, float speed, int health, int damage, float attackCooldown, List<Bullet> bullets, GameMap gameMap, ShortAttackAI ai, Music sound) {
+        super(texture, x, y, width, height, speed, health, damage, bullets, ai, gameMap, false);
+        setAttackCooldown(attackCooldown);
+        deathSound = sound;
     }
 
     @Override
@@ -65,7 +73,6 @@ public class ShortAttackEnemy extends Enemy {
             hero.getCenterX() - getCenterX(),
             hero.getCenterY() - getCenterY()
         ).nor();
-
         isAttacking = true;
         isMovingBack = true;
         attackTimer = 0f;
@@ -126,5 +133,16 @@ public class ShortAttackEnemy extends Enemy {
 
     public boolean isFlip() {
         return flip;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        super.takeDamage(damage);
+        if (health <= 0) {
+            if (deathSound != null) {
+                deathSound.stop();
+                deathSound.play();
+            }
+        }
     }
 }
