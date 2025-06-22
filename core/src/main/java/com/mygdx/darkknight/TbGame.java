@@ -87,6 +87,7 @@ public class TbGame implements Screen {
     private Music chooseSound;
     private Music spellSound;
     private Music chestSound;
+    private boolean musicPlaying = false;
 
     @Override
     public void show() {
@@ -138,7 +139,7 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",154*32, (600-480)*32, 100, 10, sword);
+        hero = new Hero("core/assets/hero1.png",150*32, (600-88)*32, 100, 10, sword);
         //150 : 88 Королева
         //156 : 318 Jester
         //154 : 480 Butcher
@@ -371,7 +372,7 @@ public class TbGame implements Screen {
         if (x < 4440 && 4340 < x && y < 4600 && 4539 < y) {
             if (fader != null) fader.startFadeOut(25f);
             hero.setLocation(2378, 4921);
-            if (fader != null) fader.startFadeIn(25f);
+            if (fader != null) fader.startFadeIn(5f);
             hero.setArmor(30);
             hero.setMaxArmor(30);
         }
@@ -379,7 +380,7 @@ public class TbGame implements Screen {
         if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
             if (fader != null) fader.startFadeOut(25f);
             hero.setLocation(566, 10015);
-            if (fader != null) fader.startFadeIn(25f);
+            if (fader != null) fader.startFadeIn(5f);
             hero.setArmor(40);
             hero.setMaxArmor(40);
             hero.setHealth(100);

@@ -45,7 +45,7 @@ public class RestartMenu {
         textButtonStyle.font = font;
         textButtonStyle.fontColor = Color.BLACK;
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("zaika-davai.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("death.mp3"));
         Texture textureUp = new Texture(Gdx.files.internal("startButtonImage.png"));
         Texture textureOver = new Texture(Gdx.files.internal("startButtonOver.png"));
         Texture textureDown = new Texture(Gdx.files.internal("startButtonClicked.png"));
