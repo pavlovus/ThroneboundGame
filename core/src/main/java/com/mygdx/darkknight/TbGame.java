@@ -87,6 +87,7 @@ public class TbGame implements Screen {
     private Music chooseSound;
     private Music spellSound;
     private Music chestSound;
+    private boolean musicPlaying = false;
 
     @Override
     public void show() {
@@ -371,7 +372,7 @@ public class TbGame implements Screen {
         if (x < 4440 && 4340 < x && y < 4600 && 4539 < y) {
             if (fader != null) fader.startFadeOut(25f);
             hero.setLocation(2378, 4921);
-            if (fader != null) fader.startFadeIn(25f);
+            if (fader != null) fader.startFadeIn(5f);
             hero.setArmor(30);
             hero.setMaxArmor(30);
         }
@@ -379,7 +380,7 @@ public class TbGame implements Screen {
         if (x < 5988 && 5851 < x && y < 9690 && 9640 < y) {
             if (fader != null) fader.startFadeOut(25f);
             hero.setLocation(566, 10015);
-            if (fader != null) fader.startFadeIn(25f);
+            if (fader != null) fader.startFadeIn(5f);
             hero.setArmor(40);
             hero.setMaxArmor(40);
             hero.setHealth(100);

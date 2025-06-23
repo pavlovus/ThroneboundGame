@@ -3,35 +3,43 @@
     "scenes": [
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "You hear them too, don't you? The whispers in the brick?"
+        "text": "You hear them too, don't you? The whispers in the brick?",
+        "textUkr": "Ти теж його чуєш, правда? Шепіт у цеглі?"
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "This place... once fed a kingdom. Now, it feeds on whatever walks in."
+        "text": "This place... once fed a kingdom. Now, it feeds on whatever walks in.",
+        "textUkr": "Це місце... колись годувало королівство. Тепер воно пожирає все, що заходить усередину."
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "The meat breathes. The ovens bleed. Nothing here has rested since the eclipse."
+        "text": "The meat breathes. The ovens bleed. Nothing here has rested since the eclipse.",
+        "textUkr": "М’ясо дихає. Печі кровоточать. Ніщо тут не знало спокою з часів затемнення."
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "Garron... he’s still in there. Still stirring his pot."
+        "text": "Garron... he’s still in there. Still stirring his pot.",
+        "textUkr": "Гаррон... він досі там. Досі помішує свій казан."
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "He was loyal. More than a man should be."
+        "text": "He was loyal. More than a man should be.",
+        "textUkr": "Він був вірним. Більше, ніж личило людині."
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "When the King died, something inside him snapped. He started... cooking revenge."
+        "text": "When the King died, something inside him snapped. He started... cooking revenge.",
+        "textUkr": "Коли Король помер, щось в ньому зламалося. Він почав... готувати помсту."
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "You’ll smell lies in the air before you see the truth. Blood flows backward now."
+        "text": "You’ll smell lies in the air before you see the truth. Blood flows backward now.",
+        "textUkr": "Ти відчуєш брехню в повітрі ще до того, як побачиш правду. Кров у жилах почала холонути."
       },
       {
         "speaker": "Olwen the Ash-Spade",
-        "text": "Go. But listen closely. The stone speaks more honestly than the living ever did."
+        "text": "Go. But listen closely. The stone speaks more honestly than the living ever did.",
+        "textUkr": "Іди. Але слухай уважно. Камінь може говорити відвертіше, ніж будь-хто з коли-небудь живих."
       }
     ]
   },
@@ -39,39 +47,48 @@
     "scenes": [
       {
         "speaker": "Warden Hobb",
-        "text": "Halt! …Wait. You’re not one of mine."
+        "text": "Halt! …Wait. You’re not one of mine.",
+        "textUkr": "Стій! …Зачекай. Ти не один з моїх."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "The pigs got out again. Can’t trust the witches with keys, no sir."
+        "text": "The pigs got out again. Can’t trust the witches with keys, no sir.",
+        "textUkr": "Свині знову повтікали. Не можна довіряти відьмам ключі, от ні в якому разі."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "Flame-snakes slithered right through the cracks! Bit the baker’s tongue off, they did!"
+        "text": "Flame-snakes slithered right through the cracks! Want to bit your tongue off, they did!",
+        "textUkr": "Вогняні змії прослизнули крізь щілини! Хочуть відкусити тобі язика, от що!"
       },
       {
         "speaker": "Warden Hobb",
-        "text": "Kitchen's not a kitchen anymore. It's a battlefield. Grease and steel and squeals."
+        "text": "Kitchen's not a kitchen anymore. It's a battlefield. Grease and steel and squeals.",
+        "textUkr": "Кухня більше не кухня. Це тепер поле бою. Жир, сталь і верески."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "Even the stew spoons have teeth now. Can’t blink, or something bites."
+        "text": "Even the stew spoons have teeth now. Can’t blink, or something bites.",
+        "textUkr": "Навіть ополоники тепер із зубами. Моргнеш — і щось уже кусає."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "Saw a butchered man walking yesterday — apron and entrails both dragging."
+        "text": "Saw a butchered man walking yesterday — apron and entrails both dragging.",
+        "textUkr": "Учора бачив розрубаного чоловіка, що йшов — з фартухом і кишками, що тяглися по підлозі."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "The Butcher? Still cooking. For who? Don’t ask. He don’t like questions."
+        "text": "The Butcher? Still cooking. For who? Don’t ask. He don’t like questions.",
+        "textUkr": "М'ясник? Досі готує. Для кого? Не питай. Він не любить запитань."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "If you see a turret blink — run. It already marked your neck."
+        "text": "If you see a turret blink — run. It already marked your neck.",
+        "textUkr": "Якщо побачиш відблиск турелі — тікай. Вона вже прицілилась тобі в шию."
       },
       {
         "speaker": "Warden Hobb",
-        "text": "Right then. No lollygagging! The floor’s watching us..."
+        "text": "Right then. No lollygagging! The wall’s watching us...",
+        "textUkr": "Добре. Не зволікай! Стіни за нами стежать..."
       }
     ]
   },
@@ -79,35 +96,43 @@
     "scenes": [
       {
         "speaker": "Brother Caelen",
-        "text": "Listen... listen... rumors outlive truth."
+        "text": "Listen... listen... rumors outlive truth.",
+        "textUkr": "Слухай... слухай... чутки живуть довше за правду."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "They say... the Crown shattered into three. Each piece... cursed."
+        "text": "They say... the Crown shattered into three. Each piece... cursed.",
+        "textUkr": "Кажуть... Корона розлетілась на три частини. І кожна... проклята."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "Gather them, and you claim the throne. Or it claims you."
+        "text": "Gather them, and you claim the throne. Or it claims you.",
+        "textUkr": "Збери їх — і трон буде твій. Або це він заволодіє тобою."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "Break the crown... and maybe, just maybe, you’ll break the curse."
+        "text": "Break the crown... and maybe, just maybe, you’ll break the curse.",
+        "textUkr": "Зламай корону... і, можливо, лише можливо, зламаєш і прокляття."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "This castle isn’t held together by stone. It’s bound by memory. By blood."
+        "text": "This castle isn’t held together by stone. It’s bound by memory. By blood.",
+        "textUkr": "Цей замок тримається не на камені. А на пам’яті. На крові."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "The souls here? Not dead. Just... paused. Caught between pages of a closed book."
+        "text": "The souls here? Not dead. Just... paused. Caught between pages of a closed book.",
+        "textUkr": "Душі тут? Не мертві. Вони наче... зупинені. Застрягли між сторінками закритої книги."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "You must choose: ruler... or redeemer."
+        "text": "You must choose: ruler... or redeemer.",
+        "textUkr": "Ти мусиш обрати: володар... чи визволитель."
       },
       {
         "speaker": "Brother Caelen",
-        "text": "Some whisper you’ve already chosen once. But forgotten."
+        "text": "Some whisper you’ve already chosen once. But forgotten.",
+        "textUkr": "Дехто шепоче, що ти вже обранний Долею колись. Але давно забутий."
       }
     ]
   },
@@ -115,39 +140,48 @@
     "scenes": [
       {
         "speaker": "Marrek the Boneturned",
-        "text": "Looking for Garron? He’s not a cook anymore."
+        "text": "Looking for Garron? He’s not a cook anymore.",
+        "textUkr": "Шукаєш Гаррона? Він більше не кухар."
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "After the King fell, we were left with silence. Orders stopped. So did reason."
+        "text": "After the King fell, we were left with silence. Orders stopped. So did reason.",
+        "textUkr": "Після падіння Короля залишилась лише тиша. Накази зникли. І його розум — теж."
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "But Garron... he clung to loyalty like it was a cleaver."
+        "text": "But Garron... he clung to loyalty like it was a cleaver.",
+        "textUkr": "Але Гаррон... чіплявся за вірність, немов за його м’ясницький ніж."
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "The Queen asked for a final dish. “Special,” she said. He obeyed."
+        "text": "The Queen asked for a final dish. “Special,” she said. He obeyed.",
+        "textUkr": "Королева попросила останню страву. \"Особливу,\" — сказала вона. І він підкорився."
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "No questions. Just fire. Just spice. Just ritual."
+        "text": "No questions. Just fire. Just spice. Just ritual.",
+        "textUkr": "Жодних питань. Лише вогонь. Лише спеції. Лише ритуал."
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "He brewed a curse in the royal cauldron. And it cooked him, too."
+        "text": "He brewed a curse in the royal cauldron. And it cooked him, too.",
+        "textUkr": "Він зварив прокляття в королівському казані. І воно знищило його здоровий глузд.",
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "He’s not human. He’s rage. Boiling, bubbling. Waiting to be served."
+        "text": "He’s not human. He’s rage. Boiling, bubbling. Waiting to be served.",
+        "textUkr": "Він не людина. Він — чиста лють. Кипляча, шипляча. Готова до подачі."
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "I don’t even know who he’s avenging anymore."
+        "text": "I don’t even know who he’s avenging anymore. Maybe, he doesn't know too.",
+        "textUkr": "Я вже й не знаю, за кого він мститься. Можливо, він й сам не знає"
       },
       {
         "speaker": "Marrek the Boneturned",
-        "text": "Go. Just don’t let him taste you — he never forgets a flavor."
+        "text": "Go. Just don’t let him bite you — he has excellent memory for flavors.",
+        "textUkr": "Іди. Тільки не дай йому себе вкусити — він має ну дуже хорошу пам'ять на смаки."
       }
     ]
   },
@@ -155,51 +189,63 @@
     "scenes": [
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "This was once the Jewel Hall. Velvet on every chair, silver carved into the balconies."
+        "text": "This was once the Jewel Hall. Velvet on every chair, silver carved into the balconies.",
+        "textUkr": "Колись це була Зала Коштовностей. Оксамит на кожному стільці, балкони прикрашені сріблом."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "To the east lay the Royal Treasury, guarded by enchantments older than the kingdom itself."
+        "text": "To the east lay the Royal Treasury, guarded by enchantments older than the kingdom itself.",
+        "textUkr": "На сході лежала Королівська Скарбниця, захищена чарами, старішими за саме королівство."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "Gold flowed like wine, and laughter echoed like bells. We believed we were eternal."
+        "text": "Gold flowed like wine, and laughter echoed like bells. We believed that it'll last for eternity.",
+        "textUkr": "Золото текло, як вино, а сміх лунав, як дзвони. Ми вірили, що все це буде тривати вічно."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "Then the Queen changed the script."
+        "text": "Then the Queen decided to change the script.",
+        "textUkr": "А потім Королева вирішила змінити сценарій."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "She ordered a final play, a performance to cleanse grief — or so she claimed."
+        "text": "She ordered a  play, a performance to cleanse grief in the castle — or so she claimed.",
+        "textUkr": "Вона наказала зробити виставу — дійство, щоб очистити скорботу в замку ... принаймні, так вона казала."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "The guard was dismissed. The vaults were unlocked. I remained, out of duty, not command."
+        "text": "The guard was dismissed. The vaults were unlocked. I remained, out of duty, not command.",
+        "textUkr": "Варту розпустили. Сейфи відкрили. Один я зі всіх залишився — не з наказу, а з обов’язку."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "I watched the guests arrive in masks and jewels. Irius stood behind the curtain… twitching."
+        "text": "I watched the guests arrive in masks and jewels. Irius stood behind the curtain… twitching.",
+        "textUkr": "Я бачив, як прибували гості — в масках і в коштовностях. Іріус стояв за кулісами... сіпаючись."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "He was meant to die on stage. That was the cruel twist of her comedy."
+        "text": "He was meant to die on stage. That was the cruel twist of her comedy.",
+        "textUkr": "Він мав би померти на сцені. Така була жорстока суть її комедії."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "But he turned the stage against us. The audience screamed, but none left alive."
+        "text": "But he turned the stage against us. The audience screamed, but none left alive. he killed them all without mercy",
+        "textUkr": "Але він обернув сцену проти нас. Глядачі кричали — та жоден з них не вийшов живим звідти."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "He dances now through the treasury, mocking the traps, speaking in riddles."
+        "text": "He dances now through the treasury, setting the traps, speaking in riddles.",
+        "textUkr": "Тепер він танцює скарбницею, розставляючи з пасток, говорячи загадками."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "Coins melt in his presence. Gems shatter from his laugh. Even shadows flee when he smiles."
+        "text": "Coins melt in his presence. Gems shatter from his laugh. Even shadows flee when he smiles.",
+        "textUkr": "Монети тануть в його присутності. Самоцвіти тріскаються від його сміху. Навіть тіні тікають, коли він усміхається."
       },
       {
         "speaker": "Ser Caldrin the Maskless",
-        "text": "If you mean to pass, do not seek the vault’s riches… seek the soul he buried in his script."
+        "text": "If you mean to pass, do not seek the vault’s riches… seek the soul he buried in his script.",
+        "textUkr": "Якщо хочеш пройти — не шукай скарбів в цьому сховищі… шукай душу, яка була похована в його п'єсі."
       }
     ]
   },
@@ -207,47 +253,58 @@
     "scenes": [
       {
         "speaker": "Maera of the White Song",
-        "text": "I wore pearls that night… foolish things. They rattled like teeth when I screamed."
+        "text": "I wore pearls that night… foolish things. They rattled like teeth when I screamed.",
+        "textUkr": "Того вечора я носила перли… дурниці. Вони торохтіли, мов зуби, коли я кричала."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "The performance was meant to amuse us, to make us forget the falling towers, the empty throne."
+        "text": "The performance was meant to amuse us, to make us forget the falling towers, the empty throne.",
+        "textUkr": "Вистава мала нас розважити, змусити забути про падіння веж і порожній трон."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "But the Queen’s grief had turned black. She fed it to the jester, and he fed it back as madness."
+        "text": "But the Queen’s soul had turned black. She gave order to the jester to create an entertainment for people, and he turn it back as madness.",
+        "textUkr": "Але душа Королеви почорніла. Вона віддала наказ блазневі створити розвагу для народу, а він обернув це все на божевілля."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "Now he rules here — not with a crown, but with a stage."
+        "text": "Now he rules here — not with a crown, but with a stage.",
+        "textUkr": "Тепер він править тут — не короною, а сценою."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "Have you heard them? The Laughing Phantoms? They crawl along the rafters, feeding on breath."
+        "text": "Have you heard them? The Laughing Phantoms? They crawl along the rafters, feeding on your breath.",
+        "textUkr": "Ти чув їх? Примари, що сміються? Вони повзають балками й живляться твоїм диханням."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "The skeletons march when the drums sound. Dead men pulled by dead generals, stitched to rhythm."
+        "text": "The skeletons march when the drums sound. Dead men pulled by dead generals, stitched to that rhythm.",
+        "textUkr": "Скелети марширують, щойно звучать барабани. Мерці, що йдуть за мертвими генералами, пришиті до цього ритму."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "There are no musicians, no band. Only echoes that obey."
+        "text": "There are no musicians, no band. Only echoes that roll.",
+        "textUkr": "Немає музикантів, немає оркестру. Лише відлуння, що котиться."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "And the turrets… oh, the turrets. Mechanical mouths of fire, still loyal to their master."
+        "text": "And the turrets… oh, the turrets. Mechanical mouths of fire, still loyal to their master.",
+        "textUkr": "А турелі… ох, турелі. Механічні вогненні роти, що досі вірні своєму хазяїну."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "They burn anything that forgets to bow."
+        "text": "They burn anything that forgets to bow.",
+        "textUkr": "Вони палять усе, що забуває вклонитися."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "We were the audience once. Now, we are the scenery."
+        "text": "We were the audience once. Now, we are the scenery.",
+        "textUkr": "Колись ми були глядачами. Тепер ми — декорації."
       },
       {
         "speaker": "Maera of the White Song",
-        "text": "Be careful where you walk. The stage remembers blood… and rewards encores."
+        "text": "Be careful where you walk. The stage remembers blood… and rewards efforts.",
+        "textUkr": "Обачно ступай. Сцена пам’ятає кров… і винагороджує старання."
       }
     ]
   },
@@ -255,108 +312,295 @@
     "scenes": [
       {
         "speaker": "Father Vaelmir",
-        "text": "Many come here to find gold. But this gold is cursed — a reflection of broken oaths."
+        "text": "Many come here to find gold. But this gold is cursed — a reflection of broken oaths.",
+        "textUkr": "Багато хто приходить сюди за золотом. Але це золото прокляте — відображення зламаних присяг."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "I came not for coin, but for penance. For truth buried in laughter."
+        "text": "I came not for coin, but for penance. For truth buried in laughter.",
+        "textUkr": "Я прийшов не за монетами, а за покутою. За правдою, похованою в сміхові."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "You, warrior… do you feel it too? The emptiness behind your eyes? That is not amnesia. That is theft."
+        "text": "You, warrior… do you feel it too? The emptiness behind your eyes? That is not amnesia. That is theft.",
+        "textUkr": "Ти, воїне… ти теж це відчуваєш? Порожнечу за своїми очима? Це не амнезія. Це — крадіжка."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "Your soul was ripped from you — sacrificed during the Queen’s ritual."
+        "text": "Your soul was ripped from you — sacrificed during the Queen’s ritual.",
+        "textUkr": "Твою душу вирвали — принесено в жертву під час ритуалу Королеви."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "You were once her son, hidden from all, used to seal the King's fate."
+        "text": "You were once her son, hidden from all, used to seal the King's fate.",
+        "textUkr": "Ти був її сином, прихованим від усіх, використаним, щоб запечатати долю Короля."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "Your blood formed the knot of the curse. A lock of flame and shadow."
+        "text": "Your blood formed the knot of the curse. A lock of flame and shadow.",
+        "textUkr": "Твоя кров стала вузлом прокляття. Замком із полум’я та тіні."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "Irius guards that knot. Not just a madman… he is the keeper of the rite's echo."
+        "text": "Irius guards that knot. Not just a madman… he is the keeper of the rite's echo, He was a witness to it.",
+        "textUkr": "Іріус стереже той вузол. Не просто божевільний… він — хранитель відлуння ритуалу, він бачив його на власні очі."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "He is no longer human. His laughter binds souls. He feeds on memory, and twists it into farce."
+        "text": "He is no longer human. His laughter binds souls. He feeds on memory, and twists it into farce.",
+        "textUkr": "Він уже не людина. Його сміх зв’язує душі. Він живиться пам’яттю й перекручує її на фарс."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "To face him is to face your own reflection — not in a mirror, but in a shattered mask."
+        "text": "To face him is to face your own reflection — not in a mirror, but in a shattered mask.",
+        "textUkr": "Зустрітися з ним — це зустріти власне відображення. Не в дзеркалі, а в розбитій масці."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "He knows your name, warrior. He may speak it before he dies."
+        "text": "He knows your name, warrior. He may speak it before he dies.",
+        "textUkr": "Він знає твоє ім’я, воїне. Можливо, вимовить його перед власною смертю."
       },
       {
         "speaker": "Father Vaelmir",
-        "text": "If you can kill what laughs… perhaps you can reclaim what we all lost."
+        "text": "If you can kill what laughs… perhaps you can reclaim what we all lost.",
+        "textUkr": "Якщо зможеш вбити те, що сміється… можливо, повернеш те, що ми всі втратили."
       }
     ]
   },
   "bramli_monologue": {
     "scenes": [
-      { "speaker": "Bramli Flintborn", "text": "Heh... These walls still remember. They hum when you walk." },
-      { "speaker": "Bramli Flintborn", "text": "This was once the Queen’s Gallery. Paintings older than dynasties hung here — until she burned half of them." },
-      { "speaker": "Bramli Flintborn", "text": "I came lookin’ for a tome. A book. Her journal, if you’d believe it. It was said to hold the truth of the curse." },
-      { "speaker": "Bramli Flintborn", "text": "I found ashes instead… and fragments that screamed when touched." },
-      { "speaker": "Bramli Flintborn", "text": "See that wall? That crack isn’t from age. It’s from magic turned backward, tryin’ to forget itself." },
-      { "speaker": "Bramli Flintborn", "text": "She tore out the pages herself. Ripped 'em out with fire, fury, guilt... I reckon all three." },
-      { "speaker": "Bramli Flintborn", "text": "But one page stayed. I saw it. Words scorched in gold: 'He died a King of Chains. I was his key.'" },
-      { "speaker": "Bramli Flintborn", "text": "Some say if you gather the crown’s three pieces, you’ll sit the throne yourself." },
-      { "speaker": "Bramli Flintborn", "text": "Others whisper that meltin’ it frees the souls trapped here — yours included." },
-      { "speaker": "Bramli Flintborn", "text": "I ain’t got answers, warrior… but you’re gettin’ close. The gallery leads to her. To Elira." },
-      { "speaker": "Bramli Flintborn", "text": "And she’s waitin’. Not with open arms — but with open wounds." }
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "Heh... These walls still remember. They hum when you walk.",
+        "textUkr": "Еех... Ці стіни все ще пам’ятають. Вони гудуть, коли ти йдеш."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "This was once the Queen’s Gallery. Paintings older than dynasties hung here — until she burned half of them.",
+        "textUkr": "Колись це була Галерея Королеви. Тут висіли картини старші за династії — поки вона не спалила половину."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "I came lookin’ for a tome. A book. Her journal, if you’d believe it. It was said to hold the truth of the curse.",
+        "textUkr": "Я прийшов у пошуках тому. Книги. Її щоденника, якщо хочеш вірити. Казали, в ньому — правда про прокляття."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "I found ashes instead… and fragments that screamed when touched.",
+        "textUkr": "Натомість я знайшов попіл... і уламки, що кричали, коли їх торкалися."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "See that wall? That crack isn’t from age. It’s from magic turned backward, tryin’ to forget itself.",
+        "textUkr": "Бачиш ту стіну? Тріснула не від старості. А від магії, що спробувала себе забути."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "She tore out the pages herself. Ripped 'em out with fire, fury, guilt... I reckon all three.",
+        "textUkr": "Вона сама вирвала ті сторінки. Вогнем, люттю, провиною... або всім одразу."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "But one page stayed. I saw it. Words scorched in gold: 'He died, the Crown was broken. I had to fulfill my mission'",
+        "textUkr": "Та одна сторінка вціліла. Я бачив її. Слова, випалені золотом: 'Він помер Король Ув’язнений. Я була його ключем.'"
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "Some say if you gather the crown’s three pieces, you’ll sit the throne yourself.",
+        "textUkr": "Кажуть, якщо зібрати три уламки корони — сам сядеш на трон."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "Others whisper that breakin’ it frees the souls trapped here — yours included.",
+        "textUkr": "А інші шепочуть, що зламати її — значить звільнити душі, замкнені тут. І твою також."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "I ain’t got answers, warrior… but you’re gettin’ close. The gallery leads to her. To Elira.",
+        "textUkr": "Відповідей у мене нема, воїне… але ти вже близько. Галерея веде до неї. До Еліри."
+      },
+      {
+        "speaker": "Bramli Flintborn",
+        "text": "And she’s waitin’. Not with open arms — but with open wounds.",
+        "textUkr": "І вона чекає. Не з розкритими обіймами, а з розкритими ранами."
+      }
     ]
   },
   "veyric_monologue": {
     "scenes": [
-      { "speaker": "Captain Veyric Hallowbrand", "text": "Stand still. Let me look at you... You wear a warrior’s face, but something in your eyes—it bleeds silence." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "I was one of the last. Captain of the Queen’s Guard. Swore to protect her with blood and blade." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "But how do you shield someone from themselves?" },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "When the eclipse came, the throne hall filled with chanting. Not hymns. Rites." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "The King was already dying. Not by blade, but by bond — a curse that tore him from within." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "She was there, Elira. Draped in night. Her hands glowed with the light of our unborn future." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "And you... you were the offering. A child none of us knew she bore." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "She gave you up to the ritual, sealed the curse with your breath." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "Your soul fractured the King's, made him half-shadow, half-echo." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "I failed both of them. I let it happen. I still wear this armor out of shame, not duty." },
-      { "speaker": "Captain Veyric Hallowbrand", "text": "If you find her... ask if she remembers the lullaby she sang the night before the eclipse. I do." }
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "Stand still. Let me look at you... You wear a warrior’s face, but something in your eyes—it bleeds silence.",
+        "textUkr": "Завмри. Дай погляну на тебе... Обличчя в тебе воїна, але в очах — тече тиша."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "I was one of the last. Captain of the Queen’s Guard. Swore to protect her with blood and blade.",
+        "textUkr": "Я був одним із останніх. Капітаном Королівської Варти. Присягнув захищати її кров’ю й мечем."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "But how do you shield someone from themselves?",
+        "textUkr": "Але як захистити когось від них самих?"
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "When the eclipse came, the throne hall filled with chanting. Not hymns. Rites.",
+        "textUkr": "Коли настало затемнення, тронну залу заполонили співи. Не гімни. Обряди."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "The King was already dying. Not by blade, but by bond — a curse that tore him from within.",
+        "textUkr": "Король уже вмирав. Не від меча, а від уза — прокляття, що розривало його зсередини."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "She was there, Elira. Draped in night. Her hands glowed with the light of our unborn future.",
+        "textUkr": "Вона була там, Еліра. Закутана в ніч. Її руки світилися світлом нашого ненародженого майбутнього."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "And you... you were the offering. A child none of us knew she bore.",
+        "textUkr": "А ти... ти був жертвою. Дитиною, про яку ніхто з нас не знав, що вона її носила."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "She gave you up to the ritual, sealed the curse with your breath.",
+        "textUkr": "Вона віддала тебе ритуалу, запечатала прокляття твоїм подихом."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "Your soul fractured the King's, made him half-shadow, half-echo.",
+        "textUkr": "Твоя душа розколола душу Короля, зробила його напівтінню, напіввідлунням."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "I failed both of them. I let it happen. I still wear this armor out of shame, not duty.",
+        "textUkr": "Я підвів обох. Я дозволив цьому статись. Я досі ношу цю броню не з обов’язку, а з ганьби."
+      },
+      {
+        "speaker": "Captain Veyric Hallowbrand",
+        "text": "If you find her... ask if she remembers the lullaby she sang the night before the eclipse. I do.",
+        "textUkr": "Якщо знайдеш її... спитай, чи пам’ятає вона колискову, яку співала в ніч перед затемненням. Я — пам’ятаю."
+      }
     ]
   },
   "thaliel_monologue": {
     "scenes": [
-      { "speaker": "Thaliel of the Dimming Light", "text": "You are close now. The air clings. The ground shivers. The veil is thinnest here." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "I am Thaliel. Once of the Choir. Now? Merely a crack in heaven’s mirror." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "The Queen is not your enemy. No… she is the wound bleeding beneath this world." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "She saw what others did not — a war of souls. One kingdom’s collapse would ignite a thousand deaths." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "To stop it, she broke fate. Not with armies, but with sacrifice." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "She cursed the King not from hatred… but desperation. To unmake the throne before it devoured all." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "And you, her blood, were the anchor. The fulcrum between salvation and sorrow." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "The world forgot you. But the curse did not." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "The crown you seek… it’s not a crown anymore. It’s a prison. A question with no answer." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "You may sit upon it and rule the dead… or shatter it and walk free, alone." },
-      { "speaker": "Thaliel of the Dimming Light", "text": "Your destiny is not to conquer, but to choose. And choice, warrior… is the only true power." }
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "You are close now. The air clings. The ground shivers. The veil is thinnest here.",
+        "textUkr": "Ти вже близько. Повітря липке. Земля тремтить. Тут завіса найтонша."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "I am Thaliel. Once of the Choir. Now? Merely a crack in heaven’s mirror.",
+        "textUkr": "Я — Таліель. Колись - один із Хору. А тепер? Лише тріщина в дзеркалі небес."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "The Queen is not your enemy. No… she is the wound bleeding beneath this world.",
+        "textUkr": "Королева — не твій ворог. Ні… вона — рана, що кровоточить під цим світом."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "She saw what others did not — a war of souls. One kingdom’s collapse would ignite a thousand deaths.",
+        "textUkr": "Вона бачила те, чого не бачили інші — війну душ. Падіння одного королівства могло запалити тисячу смертей."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "To stop it, she broke fate. Not with armies, but with sacrifice.",
+        "textUkr": "Щоб зупинити це, вона зламала долю. Не арміями — жертвою."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "She cursed the King not from hatred… but desperation. To unmake the throne before it devoured all.",
+        "textUkr": "Вона прокляла Короля не з ненависті… а з відчаю. Щоб знищити трон, перш ніж він поглине всіх."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "And you, her blood, were the anchor. The fulcrum between salvation and sorrow.",
+        "textUkr": "А ти, її кров, був якорем. Точкою рівноваги між спасінням і скорботою."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "The world forgot you. But the curse did not.",
+        "textUkr": "Світ забув тебе. Але прокляття — ні."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "The crown you seek… it’s not a crown anymore. It’s a prison. A question with no answer.",
+        "textUkr": "Корона, яку ти шукаєш… вона вже не корона. Вона — в’язниця. Питання без відповіді."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "You may sit upon it and rule the dead… or shatter it and walk free, alone.",
+        "textUkr": "Ти можеш сісти на неї й правити мертвими… або знищити й піти вільним, самотнім."
+      },
+      {
+        "speaker": "Thaliel of the Dimming Light",
+        "text": "Your destiny is not to conquer, but to choose. And choice, warrior… is the only true power.",
+        "textUkr": "Твоя доля — не завойовувати, а обирати. І вибір, воїне… єдина справжня сила."
+      }
     ]
   },
   "pale_widow_monologue": {
     "scenes": [
-      { "speaker": "The Pale Widow", "text": "She sings to herself now. Do you hear her?" },
-      { "speaker": "The Pale Widow", "text": "Her voice is broken glass. It cuts the silence." },
-      { "speaker": "The Pale Widow", "text": "She is not what she was. Elira... she is ash and light stitched together." },
-      { "speaker": "The Pale Widow", "text": "Her body burned when she unbound the curse — her soul, splintered between prophecy and guilt." },
-      { "speaker": "The Pale Widow", "text": "She wanders the throne hall, weeping into air, naming ghosts that won’t answer." },
-      { "speaker": "The Pale Widow", "text": "The crown’s last shard floats above her like a dying star. It pulses with her grief." },
-      { "speaker": "The Pale Widow", "text": "When you step before her, she may not know you. She may call you 'child'... or 'curse'... or 'king.'" },
-      { "speaker": "The Pale Widow", "text": "She will offer you the throne, or beg you to destroy it. She does not know which is mercy anymore." },
-      { "speaker": "The Pale Widow", "text": "But she remembers you. Oh yes, warrior. Her dreams still bleed your name." },
-      { "speaker": "The Pale Widow", "text": "And when she speaks, the castle will hold its breath. As if fate itself fears her answer." },
-      { "speaker": "The Pale Widow", "text": "Go. Let the truth shatter you. Only then can it be rebuilt." }
+      {
+        "speaker": "The Pale Widow",
+        "text": "She sings to herself now. Do you hear her?",
+        "textUkr": "Вона тепер співає сама собі. Ти її чуєш?"
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "Her voice is broken glass. It cuts the silence.",
+        "textUkr": "Її голос — мов розбите скло. Він ріже тишу."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "She is not what she was. Elira... she is ash and light stitched together.",
+        "textUkr": "Вона вже не та, ким була. Еліра... вона — попіл і світло, зшиті докупи."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "Her body burned when she unbound the curse — her soul, splintered between prophecy and guilt.",
+        "textUkr": "Її тіло згоріло, коли вона розірвала прокляття — душа розкололась між пророцтвом і провиною."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "She wanders the throne hall, weeping into air, naming ghosts that won’t answer.",
+        "textUkr": "Вона блукає тронною залою, ридаючи в порожнечу, називаючи імена примар, що не відповідають."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "The crown’s last shard floats above her like a dying star. It pulses with her grief.",
+        "textUkr": "Останній уламок корони завис над нею, мов згасаюча зоря. Він пульсує її скорботою."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "When you step before her, she may not know you. She may call you 'child'... or 'curse'... or 'king.'",
+        "textUkr": "Коли ти постанеш перед нею, вона може не впізнати тебе. Може назвати тебе 'дитиною'... або 'прокляттям'... або 'королем.'"
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "She will offer you the throne, or beg you to destroy it. She does not know which is mercy anymore.",
+        "textUkr": "Вона або запропонує тобі трон, або благатиме його знищити. Вона вже не знає, що з цього — милість."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "But she remembers you. Oh yes, warrior. Her dreams still bleed your name.",
+        "textUkr": "Але вона пам’ятає тебе. О так, воїне. Її сни досі кровоточать твоїм іменем."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "And when she speaks, the castle will hold its breath. As if fate itself fears her answer.",
+        "textUkr": "І коли вона заговорить — замок затамує подих. Наче сама доля боїться її відповіді."
+      },
+      {
+        "speaker": "The Pale Widow",
+        "text": "Go. Let the truth shatter you. Only then can it be rebuilt.",
+        "textUkr": "Іди. Нехай правда зруйнує тебе. Лише тоді її можна буде відновити."
+      }
     ]
   }
 }

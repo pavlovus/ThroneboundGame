@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
@@ -24,6 +25,7 @@ public class StoryScreen {
 
     private Texture panelTexture;
     private BitmapFont font;
+    private BitmapFont ukrFont;
     private BitmapFont speakerFont;
     private GlyphLayout layout;
 
@@ -42,6 +44,14 @@ public class StoryScreen {
         panelTexture = new Texture(Gdx.files.internal("assets/plotPanel.png"));
         font = new BitmapFont(Gdx.files.internal("medievalLightFontBigger.fnt"));
         font.setColor(Color.valueOf("#C0C0C0"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/Moyenage.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter smallParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        smallParam.size = 36;
+        smallParam.characters = "абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.!?-—:;()[]\"' ";
+        ukrFont = generator.generateFont(smallParam);
+        ukrFont.setColor(Color.valueOf("#C0C0C0"));
+        smallParam.magFilter = Texture.TextureFilter.Nearest;
+        smallParam.minFilter = Texture.TextureFilter.Nearest;
         speakerFont = new BitmapFont(Gdx.files.internal("medievalLightFontBiggest.fnt"));
         speakerFont.setColor(Color.valueOf("#C0C0C0"));
         layout = new GlyphLayout();
@@ -101,10 +111,14 @@ public class StoryScreen {
             // Основний текст (у панелі, з відступами)
             float textX = screenWidth*12/100;
             float textY = panelHeight - screenHeight*14/100;
+            float textUkrY = panelHeight - screenHeight*26/100;
             float textWidth = screenWidth*4/5;
 
             layout.setText(font, scene.getText(), font.getColor(), textWidth, Align.left, true);
             font.draw(batch, layout, textX, textY);
+
+            layout.setText(ukrFont, scene.getUkrText(), ukrFont.getColor(), textWidth, Align.left, true);
+            ukrFont.draw(batch, layout, textX, textUkrY);
         }
 
         batch.end();
