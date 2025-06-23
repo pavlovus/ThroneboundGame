@@ -138,12 +138,12 @@ public class TbGame implements Screen {
         Weapon axe = new AxeWeapon("core/assets/axeEpic.png", 3, 32, 32);
         Weapon mace = new MaceWeapon("core/assets/mace.png", 3, 32, 32, "core/assets/maceHit.png",32);
         weapon = sword;
-        hero = new Hero("core/assets/hero1.png",154*32, (600-480)*32, 100, 10, sword);
+        hero = new Hero("core/assets/hero1.png",11*32, (600-595)*32, 100, 10, sword);
         //150 : 88 Королева
         //156 : 318 Jester
         //154 : 480 Butcher
         //11 : 595
-        hero.addWeapon(axe, magic, wizard,  bow);
+        hero.addWeapon(axe, magic, wizard,  bow, mace);
 
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));

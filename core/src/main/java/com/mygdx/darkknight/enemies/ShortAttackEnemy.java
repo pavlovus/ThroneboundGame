@@ -16,6 +16,7 @@ public class ShortAttackEnemy extends Enemy {
     private static final float MAX_ATTACK_FORWARD_DISTANCE = 12f;
     private static final float BACK_TIME = 0.3f;
     private static final float ATTACK_TIME = 0.15f;
+    private static final float MIN_DISTANCE_FOR_FLIP = 30f; // Мінімальна відстань для фліпу
 
     private boolean isAttacking = false;
     private boolean isMovingBack = false;
@@ -54,8 +55,11 @@ public class ShortAttackEnemy extends Enemy {
         if (isAttacking) {
             handleAttackMovement(delta);
         } else {
-            // Встановлюємо фліп на основі напрямку руху, якщо не атакуємо
-            if (ai instanceof ShortAttackAI) {
+            // Перевіряємо відстань до героя
+            float distanceToHero = Vector2.dst(getCenterX(), getCenterY(), hero.getCenterX(), hero.getCenterY());
+
+            // Встановлюємо фліп на основі напрямку руху, тільки якщо відстань більша за мінімальну
+            if (distanceToHero > MIN_DISTANCE_FOR_FLIP && ai instanceof ShortAttackAI) {
                 ShortAttackAI shortAttackAI = (ShortAttackAI) ai;
                 float dx = shortAttackAI.getLastDx(); // Отримуємо dx із AI (припускаємо, що ShortAttackAI має метод getLastDx)
                 if (dx != 0) {
