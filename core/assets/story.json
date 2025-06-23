@@ -602,5 +602,89 @@
         "textUkr": "Іди. Нехай правда зруйнує тебе. Лише тоді її можна буде відновити."
       }
     ]
+  },
+  "final_crown_monologue": {
+    "scenes": [
+      {
+        "speaker": "Voice of the Walls",
+        "text": "You found it... not hidden, but waiting. As all truths do.",
+        "textUkr": "Ти знайшов її... не сховану, а ту, що чекала. Як і всі приховані правди."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "You think this is an end. But endings are illusions told by the living to forget the dead.",
+        "textUkr": "Ти вважаєш, що це кінець. Але кінці — це ілюзії, які живі розповідають собі, щоб забути мертвих."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "What is broken does not always beg to be mended. Sometimes, it waits to be buried.",
+        "textUkr": "Те, що зламане, не завжди прагне зцілення. Іноді воно лише чекає поховання."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "They carved your name from history. Burned it from books. But not from blood.",
+        "textUkr": "Твоє ім’я вирізали з історії. Спалили в книгах. Але не в крові."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "Once, they offered your soul to seal a dying king. Now, they offer you a choice that can unseal all of them.",
+        "textUkr": "Колись вони віддали твою душу, щоб запечатати вмираючого короля. Тепер тобі пропонують вибір, що може розпечатати всіх."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "Each time someone raises the crown, believing they can keep it clean... the story begins again.",
+        "textUkr": "Щоразу, коли хтось піднімає корону, думаючи, що зможе втримати її чистою… історія починається знову."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "We crave leaders who's similar to ourselves.. And then curse them, when they become our reflection.",
+        "textUkr": "Ми жадаємо лідера схожого на нас. А потім проклинаємо його, коли він стає нашим відображенням."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "This crown does not speak. It listens. And then it remembers.",
+        "textUkr": "Ця корона не говорить. Вона слухає. А потім — запам’ятовує."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "History never vanishes. It merely whispers in shadow... until it screams again.",
+        "textUkr": "Історія не зникає. Вона лише шепоче в тіні… поки знову не закричить."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "You were not born to be what they made. But if not that — then who?",
+        "textUkr": "Ти не маєш бути тим, ким тебе створили. Але якщо ні — то ким?"
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "The crown whispers: 'It is for the people.' But never asks if they are willing to pay the price.",
+        "textUkr": "Корона шепоче: «Це потрібно народу». Але вона ніколи не питає, чи вони готові платити цю ціну."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "You are the child of a war between prophecy and regret. The last voice in a song no one remembers.",
+        "textUkr": "Ти — дитя війни між пророцтвом і жалем. Останній голос у пісні, яку вже ніхто не пам’ятає."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "Step forward, and let the world remake itself through you. Or step back — and let it forget.",
+        "textUkr": "Зроби крок вперед — і світ перебудується через тебе. Або відійди — і дай йому забути."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "There is no right choice. Only a reflection of what you believe must be remembered.",
+        "textUkr": "Правильного вибору немає. Є лише відображення того, що ти вважаєш варте пам’яті."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "So choose. Rule the echo... or silence the scream.",
+        "textUkr": "Обирай. Правити луною… чи заглушити крик."
+      },
+      {
+        "speaker": "Voice of the Walls",
+        "text": "Some crowns weigh more when left untouched...",
+        "textUkr": "Деякі корони важать більше, коли залишаються недоторканими..."
+      }
+    ]
   }
 }

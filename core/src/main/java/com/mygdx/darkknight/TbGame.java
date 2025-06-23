@@ -161,25 +161,25 @@ public class TbGame implements Screen {
         fightLevels.add(new TenthLevel(3363, 13311, 1157, 510, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new ThirdBossFightLevel(3234, 16093, 1438, 674, gameMap, bullets, enemiesToAdd));
 
-        Chest chest11 = new Chest(151, 587, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest11 = new Chest(151, 587, new Regeneration(20f, 1, 2f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest21 = new Chest(4, 511, axe);
         Chest chest31 = new Chest(6, 511, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
         Chest chest41 = new Chest(123, 248, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
         Chest chest51 = new Chest(166, 216, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
-        Chest chest61 = new Chest(162, 216, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest61 = new Chest(162, 216, new Regeneration(20f, 1, 2f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest71 = new Chest(52, 286, wizard);
         Chest chest81 = new Chest(72, 407, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
-        Chest chest91 = new Chest(95, 359, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest91 = new Chest(95, 359, new Regeneration(20f, 1, 2f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest111 = new Chest(100, 359, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
-        Chest chest121 = new Chest(17, 284, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest121 = new Chest(17, 284, new Regeneration(20f, 1, 2f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest131 = new Chest(20, 284, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
         Chest chest141 = new Chest(164, 216, bow);
-        Chest chest151 = new Chest(78, 444, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest151 = new Chest(78, 444, new Regeneration(20f, 1, 2f, new Texture(Gdx.files.internal("regeneration.png"))));
         Chest chest161 = new Chest(157, 508, magic);
         Chest chest171 = new Chest(159, 508, new Swiftness(10f, 500, new Texture(Gdx.files.internal("swiftness.png"))));
         Chest chest181 = new Chest(161, 508, new Power(15f, 2, new Texture(Gdx.files.internal("power.png"))));
         Chest chest191 = new Chest(127, 386, mace);
-        Chest chest201 = new Chest(129, 386, new Regeneration(40f, 1, 4f, new Texture(Gdx.files.internal("regeneration.png"))));
+        Chest chest201 = new Chest(129, 386, new Regeneration(20f, 1, 2f, new Texture(Gdx.files.internal("regeneration.png"))));
         chests.add(chest11);
         chests.add(chest21);
         chests.add(chest31);
@@ -235,6 +235,9 @@ public class TbGame implements Screen {
         StoryManager finalWords = multiManager.getManager("pale_widow_monologue");
         PlotCharacter finalCharacter = new PlotCharacter(125, 146, finalWords, "core/assets/hero1.png");
         characters.add(finalCharacter);
+        StoryManager crownDialogue = multiManager.getManager("final_crown_monologue");
+        PlotCharacter crownCharacter = new PlotCharacter(186, 88, crownDialogue, "core/assets/hero1.png");
+        characters.add(crownCharacter);
 
         // Завантаження музики
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("gameSound.mp3"));
