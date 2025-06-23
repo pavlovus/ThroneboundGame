@@ -10,7 +10,7 @@ import com.mygdx.darkknight.enemies.Enemy;
 import java.util.List;
 
 public class Jester extends Enemy {
-    private static final int MAX_HEALTH = 100;
+    private static final int MAX_HEALTH = 180;
     private static final float PHASE_2_THRESHOLD = 0.66f; // 66% HP
     private static final float PHASE_3_THRESHOLD = 0.33f; // 33% HP
 
