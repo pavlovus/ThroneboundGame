@@ -21,7 +21,7 @@ public class ThirdLevel extends FightLevel {
     public ThirdLevel(float x, float y, float width, float height, GameMap gameMap, List<Bullet> bullets, List<Enemy> enemiesToAdd) {
         super(x, y, width, height);
 
-        this.totalWaves = 4; // TODO: змінити на 4
+        this.totalWaves = 3;
         music = Gdx.audio.newMusic(Gdx.files.internal("pigDied.mp3"));
         this.bulletTexture = Assets.enemyBulletTexture;
         this.bullets = bullets;
@@ -32,7 +32,6 @@ public class ThirdLevel extends FightLevel {
         this.levelEnemies = new EnemyType[][]{
             {EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}, // Хвиля 1: 3× Скелет + 3× Пацюк
             {EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK}, // Хвиля 2: 2× Спавнер + 3× Скелет + 3× Пацюк
-            {EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.SHORT_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK}, // Хвиля 3: 5× Пацюк + 3× Скелет
             {EnemyType.MATRIARCH, EnemyType.MATRIARCH, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK, EnemyType.LONG_ATTACK} // Хвиля 4: 2× Спавнер + 5× Скелет
         };
     }

@@ -144,8 +144,6 @@ public class TbGame implements Screen {
         //156 : 318 Jester
         //154 : 480 Butcher
         //11 : 595
-        hero.addWeapon(axe, magic, wizard,  bow, mace);
-
 
         fightLevels.add(new FirstLevel(3130, 70, 640, 380, gameMap, bullets, enemiesToAdd));
         fightLevels.add(new SecondLevel(3072, 1470, 1128, 576, gameMap, bullets, enemiesToAdd));

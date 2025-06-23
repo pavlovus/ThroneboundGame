@@ -15,15 +15,15 @@ import java.util.List;
 
 public class JesterTurret extends Enemy {
     private static final float ROTATION_SPEED = 60f; // Градуси/секунду
-    private static final float AIMED_SHOT_COOLDOWN = 1f; // Базова перезарядка для прицільних пострілів
-    private static final float PATTERN_SHOT_COOLDOWN = 1.5f; // Базова перезарядка для патернів
+    private static final float AIMED_SHOT_COOLDOWN = 1.7f; // Базова перезарядка для прицільних пострілів
+    private static final float PATTERN_SHOT_COOLDOWN = 2.5f; // Базова перезарядка для патернів
     private static final float AIMED_SHOT_SPEED_PHASE_1 = 100f;
     private static final float AIMED_SHOT_SPEED_PHASE_2 = 150f;
     private static final float AIMED_SHOT_SPEED_PHASE_3 = 200f;
-    private static final float PATTERN_SHOT_SPEED_PHASE_1 = 50f;
-    private static final float PATTERN_SHOT_SPEED_PHASE_2 = 100f;
-    private static final float PATTERN_SHOT_SPEED_PHASE_3 = 150f;
-    private static final float CHAOS_SHOT_SPEED = 200f;
+    private static final float PATTERN_SHOT_SPEED_PHASE_1 = 80f;
+    private static final float PATTERN_SHOT_SPEED_PHASE_2 = 130f;
+    private static final float PATTERN_SHOT_SPEED_PHASE_3 = 180f;
+    private static final float CHAOS_SHOT_SPEED = 220f;
 
     private Jester boss;
     private float currentAngle;
