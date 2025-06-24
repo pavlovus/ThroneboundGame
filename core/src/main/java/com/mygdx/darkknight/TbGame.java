@@ -201,40 +201,40 @@ public class TbGame implements Screen {
         MultiStoryManager multiManager = new MultiStoryManager("core/assets/story.json");
 
         StoryManager intro = multiManager.getManager("olwen_intro");
-        PlotCharacter introductionCharacter = new PlotCharacter(68, 594, intro, "core/assets/hero1.png");
+        PlotCharacter introductionCharacter = new PlotCharacter(68, 594, intro, "core/assets/hero1.png", false);
         characters.add(introductionCharacter);
         StoryManager enemyLore = multiManager.getManager("warden_hobb_enemies");
-        PlotCharacter afterFirstFightCharacter = new PlotCharacter(160, 590, enemyLore, "core/assets/hero1.png");
+        PlotCharacter afterFirstFightCharacter = new PlotCharacter(160, 590, enemyLore, "core/assets/hero1.png", false);
         characters.add(afterFirstFightCharacter);
         StoryManager crownLore = multiManager.getManager("brother_caelen_crown");
-        PlotCharacter elfCharacter = new PlotCharacter(189, 549, crownLore, "core/assets/hero1.png");
+        PlotCharacter elfCharacter = new PlotCharacter(189, 549, crownLore, "core/assets/hero1.png", false);
         characters.add(elfCharacter);
         StoryManager butcherLore = multiManager.getManager("marrek_butcher");
-        PlotCharacter wizardCharacter = new PlotCharacter(192, 515, butcherLore, "core/assets/hero1.png");
+        PlotCharacter wizardCharacter = new PlotCharacter(192, 515, butcherLore, "core/assets/hero1.png", false);
         characters.add(wizardCharacter);
         StoryManager secondIntro = multiManager.getManager("knight_reflection");
-        PlotCharacter knightCharacter = new PlotCharacter(77, 406, secondIntro, "core/assets/hero1.png");
+        PlotCharacter knightCharacter = new PlotCharacter(77, 406, secondIntro, "core/assets/hero1.png", false);
         characters.add(knightCharacter);
         StoryManager loreAndJesterStory = multiManager.getManager("ghostly_chorus");
-        PlotCharacter ghostCharacter = new PlotCharacter(132, 386, loreAndJesterStory, "core/assets/hero1.png");
+        PlotCharacter ghostCharacter = new PlotCharacter(132, 386, loreAndJesterStory, "core/assets/hero1.png", false);
         characters.add(ghostCharacter);
         StoryManager jesterLore = multiManager.getManager("priest_of_truth");
-        PlotCharacter priestCharacter = new PlotCharacter(44, 359, jesterLore, "core/assets/hero1.png");
+        PlotCharacter priestCharacter = new PlotCharacter(44, 359, jesterLore, "core/assets/hero1.png", false);
         characters.add(priestCharacter);
         StoryManager thirdIntro = multiManager.getManager("bramli_monologue");
-        PlotCharacter dwarfCharacter = new PlotCharacter(54, 286, thirdIntro, "core/assets/hero1.png");
+        PlotCharacter dwarfCharacter = new PlotCharacter(54, 286, thirdIntro, "core/assets/hero1.png", false);
         characters.add(dwarfCharacter);
         StoryManager heroLore = multiManager.getManager("veyric_monologue");
-        PlotCharacter fighterCharacter = new PlotCharacter(141, 285, heroLore, "core/assets/hero1.png");
+        PlotCharacter fighterCharacter = new PlotCharacter(141, 285, heroLore, "core/assets/hero1.png", false);
         characters.add(fighterCharacter);
         StoryManager queenLore = multiManager.getManager("thaliel_monologue");
-        PlotCharacter angelCharacter = new PlotCharacter(164, 179, queenLore, "core/assets/hero1.png");
+        PlotCharacter angelCharacter = new PlotCharacter(164, 179, queenLore, "core/assets/hero1.png", false);
         characters.add(angelCharacter);
         StoryManager finalWords = multiManager.getManager("pale_widow_monologue");
-        PlotCharacter finalCharacter = new PlotCharacter(125, 146, finalWords, "core/assets/hero1.png");
+        PlotCharacter finalCharacter = new PlotCharacter(125, 146, finalWords, "core/assets/hero1.png", false);
         characters.add(finalCharacter);
         StoryManager crownDialogue = multiManager.getManager("final_crown_monologue");
-        PlotCharacter crownCharacter = new PlotCharacter(186, 88, crownDialogue, "core/assets/hero1.png");
+        PlotCharacter crownCharacter = new PlotCharacter(186, 88, crownDialogue, "core/assets/hero1.png", true);
         characters.add(crownCharacter);
 
         // Завантаження музики
@@ -726,7 +726,11 @@ public class TbGame implements Screen {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     plotActive = !plotActive;
                     if (plotActive) {
-                        storyScreen = new StoryScreen(this, character.getScene());
+                        if(character.isEnd()){
+                            storyScreen = new StoryScreen(this, character.getScene(), true);
+                        } else{
+                            storyScreen = new StoryScreen(this, character.getScene());
+                        }
                         storyScreen.show();
                     }
                     character.setTalked(true);

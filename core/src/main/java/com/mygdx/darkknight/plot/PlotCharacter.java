@@ -9,13 +9,14 @@ public class PlotCharacter {
     private boolean talked = false;
     private Texture texture;
     private boolean visible = false;
+    private boolean end;
 
-
-    public PlotCharacter(float x, float y, StoryManager scene, String texturePath) {
+    public PlotCharacter(float x, float y, StoryManager scene, String texturePath, boolean end) {
         this.x = x;
         this.y = 600 - y;
         this.scene = scene;
         this.texture = new Texture(texturePath);
+        this.end = end;
     }
 
     public boolean isPlayerNearCharacter(Hero hero) {
@@ -69,4 +70,6 @@ public class PlotCharacter {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
+
+    public boolean isEnd(){return end;}
 }
