@@ -115,13 +115,9 @@ public class RestartMenu {
             public void clicked(InputEvent event, float x, float y) {
                 clickSound.play();
                 hide();
-                game.setPaused(false);
                 Game game = (Game) Gdx.app.getApplicationListener();
                 Screen oldScreen = game.getScreen();
-                Gdx.input.setInputProcessor(null);
                 game.setScreen(new StartMenu());
-                if (oldScreen != null) oldScreen.dispose();
-                dispose();
                 if (oldScreen != null) {
                     oldScreen.dispose();  // Звільняємо ресурси старого екрану
                 }

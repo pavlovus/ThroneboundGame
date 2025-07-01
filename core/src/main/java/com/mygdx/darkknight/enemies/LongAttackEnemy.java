@@ -38,11 +38,6 @@ public class LongAttackEnemy extends Enemy {
 
     @Override
     public void takeDamage(int dmg) {
-        if (damageCooldownTimer > 0) {
-            System.out.println("LongAttackEnemy ignored damage: " + dmg + ", cooldown: " + damageCooldownTimer);
-            return;
-        }
-        System.out.println("LongAttackEnemy took " + dmg + " damage");
         health -= dmg;
         if (health <= 0) {
             this.setDead(true);
